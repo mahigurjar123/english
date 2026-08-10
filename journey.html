@@ -1,0 +1,2164 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>30-Din Learning Journey — सीखो</title>
+<meta name="description" content="Day-by-day English learning journey for Hindi speakers — ek tense, kuch shabd, aur ek practice check, roz.">
+<style>
+/* ============================================================
+   TOKENS — Language Dojo design system (matches english_learning_site.html)
+   ============================================================ */
+:root{
+  --ink:#2a2416;
+  --paper:#f7f2e7;
+  --paper-raised:#fffdf8;
+  --paper-sunk:#ede5d3;
+  --accent:#c97a1a;
+  --accent-soft:#f0d9ad;
+  --sage:#2f7566;
+  --sage-soft:#d3e7e1;
+  --coral:#c8503b;
+  --coral-soft:#f3d9d2;
+  --line:#d9cbaa;
+  --line-strong:#b8a67e;
+  --muted:#6b6047;
+  --muted-2:#8a7d5e;
+  --shadow: 20 16% 20%;
+
+  --font-dev: 'Nirmala UI','Noto Sans Devanagari','Noto Serif Devanagari','Mangal','Kohinoor Devanagari',sans-serif;
+  --font-dev-serif: 'Noto Serif Devanagari','Nirmala UI','Mangal',serif;
+  --font-display: 'Fraunces','Iowan Old Style','Palatino Linotype','Georgia',serif;
+  --font-body: 'Sora','Segoe UI',system-ui,-apple-system,sans-serif;
+  --font-mono: 'Cascadia Mono','Consolas',monospace;
+
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#f4ecd8;
+    --paper:#1a1f3a;
+    --paper-raised:#232a4d;
+    --paper-sunk:#141833;
+    --accent:#e8952e;
+    --accent-soft:#4a3a1e;
+    --sage:#4bab98;
+    --sage-soft:#1d3c37;
+    --coral:#e0654f;
+    --coral-soft:#432521;
+    --line:#3a4270;
+    --line-strong:#525c92;
+    --muted:#a9a2c4;
+    --muted-2:#8781a8;
+    --shadow: 240 60% 3%;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#f4ecd8;
+  --paper:#1a1f3a;
+  --paper-raised:#232a4d;
+  --paper-sunk:#141833;
+  --accent:#e8952e;
+  --accent-soft:#4a3a1e;
+  --sage:#4bab98;
+  --sage-soft:#1d3c37;
+  --coral:#e0654f;
+  --coral-soft:#432521;
+  --line:#3a4270;
+  --line-strong:#525c92;
+  --muted:#a9a2c4;
+  --muted-2:#8781a8;
+  --shadow: 240 60% 3%;
+  color-scheme: dark;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } }
+
+body{
+  margin:0;
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:16px;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  position:relative;
+}
+
+.hi{ font-family:var(--font-dev); }
+h1,h2,h3,h4{ font-family:var(--font-display); text-wrap:balance; margin:0 0 .4em; font-weight:600; }
+p{ margin:0 0 1em; }
+a{ color:var(--accent); }
+::selection{ background:var(--accent-soft); color:var(--ink); }
+
+.container{ max-width:1100px; margin:0 auto; padding:0 1.5rem; }
+
+button{ font-family:var(--font-body); cursor:pointer; }
+:focus-visible{ outline:3px solid var(--sage); outline-offset:2px; border-radius:4px; }
+
+/* ============================================================
+   AMBIENT BACKGROUND — subtle drifting blobs + glyphs
+   ============================================================ */
+#ambient{
+  position:fixed; inset:0; z-index:-1; overflow:hidden; pointer-events:none;
+}
+.blob{
+  position:absolute; border-radius:50%; filter:blur(60px); opacity:.16;
+  will-change:transform;
+}
+.blob-a{
+  width:38vw; height:38vw; top:-10%; left:-8%;
+  background:radial-gradient(circle, var(--accent), transparent 70%);
+  animation:driftA 46s ease-in-out infinite;
+}
+.blob-b{
+  width:32vw; height:32vw; bottom:-12%; right:-6%;
+  background:radial-gradient(circle, var(--sage), transparent 70%);
+  animation:driftB 54s ease-in-out infinite;
+}
+.blob-c{
+  width:26vw; height:26vw; top:40%; left:60%;
+  background:radial-gradient(circle, var(--coral), transparent 70%);
+  animation:driftC 60s ease-in-out infinite;
+}
+@keyframes driftA{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(6vw,8vh) scale(1.12); }
+}
+@keyframes driftB{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(-7vw,-6vh) scale(1.08); }
+}
+@keyframes driftC{
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%{ transform:translate(-5vw,7vh) scale(.94); }
+}
+.glyph{
+  position:absolute; font-family:var(--font-dev-serif); color:var(--muted-2);
+  opacity:.05; user-select:none; font-weight:700;
+}
+.glyph-1{ top:8%; left:12%; font-size:11rem; animation:spinSlow 120s linear infinite; }
+.glyph-2{ bottom:6%; right:8%; font-size:9rem; animation:spinSlow 150s linear infinite reverse; }
+.glyph-3{ top:55%; left:78%; font-size:7rem; font-family:var(--font-display); animation:spinSlow 100s linear infinite; }
+@keyframes spinSlow{
+  0%{ transform:rotate(0deg); }
+  100%{ transform:rotate(360deg); }
+}
+@media (prefers-reduced-motion: reduce){
+  .blob, .glyph{ animation:none !important; }
+}
+@media (max-width:700px){
+  .glyph-1{ font-size:7rem; }
+  .glyph-2{ font-size:6rem; }
+  .glyph-3{ display:none; }
+}
+
+/* ============================================================
+   NAV
+   ============================================================ */
+header.site-nav{
+  position:sticky; top:0; z-index:190;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px) saturate(1.2);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1200px; margin:0 auto; padding:.7rem 1.2rem;
+  display:flex; align-items:center; gap:1rem; flex-wrap:wrap;
+}
+.brand{
+  font-family:var(--font-display); font-weight:700; font-size:1.25rem;
+  display:flex; align-items:baseline; gap:.35rem; white-space:nowrap;
+  color:var(--ink); text-decoration:none;
+}
+.brand .dev{ font-family:var(--font-dev-serif); color:var(--accent); }
+.back-link{
+  white-space:nowrap; text-decoration:none; color:var(--muted);
+  font-size:.85rem; font-weight:600; letter-spacing:.02em;
+  padding:.45rem .65rem; border-radius:6px; transition:color .15s, background .15s;
+  border:1px solid var(--line);
+}
+.back-link:hover, .back-link:focus-visible{ color:var(--ink); background:var(--paper-sunk); }
+.nav-spacer{ flex:1; }
+.theme-toggle{
+  border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink);
+  border-radius:20px; padding:.4rem .8rem; font-size:.8rem; font-weight:600;
+  flex-shrink:0;
+}
+.theme-toggle:hover{ border-color:var(--accent); }
+
+/* ============================================================
+   PAGE HEAD
+   ============================================================ */
+.page-head{ padding:2.2rem 0 1rem; text-align:center; }
+.page-head .eyebrow{
+  display:inline-block; font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
+  font-weight:700; color:var(--coral); margin-bottom:.5rem; font-family:var(--font-body);
+}
+.page-head h1{ font-size:clamp(1.9rem,4.4vw,2.9rem); margin-bottom:.3rem; }
+.page-head .sub{ font-family:var(--font-dev); color:var(--muted); font-size:1.05rem; max-width:44rem; margin:0 auto; }
+
+/* ============================================================
+   JOURNEY MAP — horizontal day-node scroller
+   ============================================================ */
+.journey-map-wrap{
+  position:sticky; top:53px; z-index:150;
+  background:color-mix(in srgb, var(--paper) 92%, transparent);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--line);
+  padding:.85rem 0;
+}
+.journey-map{
+  display:flex; gap:.55rem; overflow-x:auto; padding:.2rem 1.5rem .5rem;
+  scrollbar-width:thin;
+}
+.journey-map::-webkit-scrollbar{ height:6px; }
+.journey-map::-webkit-scrollbar-thumb{ background:var(--line-strong); border-radius:4px; }
+.day-node{
+  flex-shrink:0; width:3rem; height:3rem; border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:700; font-size:1.05rem;
+  background:var(--paper-raised); border:2px solid var(--line); color:var(--muted);
+  transition:transform .15s, border-color .15s, background .15s, color .15s;
+  position:relative;
+}
+.day-node:hover:not(:disabled){ transform:translateY(-3px); border-color:var(--accent); color:var(--ink); }
+.day-node.done{ border-color:var(--sage); color:var(--sage); background:var(--sage-soft); }
+.day-node.active{
+  background:var(--accent); border-color:var(--accent); color:var(--paper-raised);
+  transform:scale(1.12);
+  box-shadow:0 6px 18px -6px hsl(var(--shadow) / .5);
+}
+.day-node.soon{ opacity:.4; cursor:not-allowed; }
+.day-node.soon::after{
+  content:"soon"; position:absolute; bottom:-1.1rem; left:50%; transform:translateX(-50%);
+  font-size:.55rem; text-transform:uppercase; letter-spacing:.05em; color:var(--muted-2);
+  white-space:nowrap;
+}
+@media (max-width:700px){
+  .journey-map-wrap{ top:49px; }
+  .day-node{ width:2.5rem; height:2.5rem; font-size:.9rem; }
+}
+
+/* ============================================================
+   DAY STAGE — the main content that swaps
+   ============================================================ */
+.day-stage{ padding:2.4rem 0 4rem; }
+#dayContent{
+  transition:opacity .35s ease, transform .35s ease;
+}
+#dayContent.transitioning{ opacity:0; transform:translateY(14px); }
+@media (prefers-reduced-motion: reduce){
+  #dayContent{ transition:none; }
+  #dayContent.transitioning{ opacity:1; transform:none; }
+}
+
+.day-banner{
+  display:flex; align-items:center; gap:1.1rem; flex-wrap:wrap;
+  background:linear-gradient(120deg, var(--accent-soft), transparent);
+  border:1px solid var(--line); border-radius:16px; padding:1.3rem 1.6rem; margin-bottom:2rem;
+}
+.day-banner .day-num{
+  font-family:var(--font-display); font-weight:700; font-size:2.4rem; color:var(--accent);
+  line-height:1;
+}
+.day-banner .day-info h2{ margin-bottom:.15rem; font-size:1.5rem; }
+.day-banner .day-info .dev-name{ font-family:var(--font-dev); color:var(--muted); font-size:1rem; }
+.day-banner .day-stats{
+  margin-left:auto; display:flex; gap:1.4rem; flex-wrap:wrap;
+}
+.day-stat{ text-align:center; }
+.day-stat .num{ font-family:var(--font-display); font-weight:700; font-size:1.3rem; color:var(--sage); display:block; }
+.day-stat .lbl{ font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; color:var(--muted-2); }
+
+/* Section shells within a day */
+.day-section{ margin-bottom:2.6rem; }
+.day-section-head{ display:flex; align-items:baseline; gap:.7rem; margin-bottom:1rem; flex-wrap:wrap; }
+.day-section-head h3{ font-size:1.3rem; margin:0; }
+.day-section-head .hi-tag{ font-family:var(--font-dev); color:var(--muted); font-size:.95rem; }
+.section-num{
+  font-family:var(--font-display); font-size:.85rem; font-weight:700; color:var(--paper-raised);
+  background:var(--accent); border-radius:50%; width:1.8rem; height:1.8rem;
+  display:inline-flex; align-items:center; justify-content:center; flex-shrink:0;
+}
+
+.tense-rule{
+  font-family:var(--font-dev); background:var(--sage-soft); color:var(--ink);
+  border-left:4px solid var(--sage); padding:.9rem 1.1rem; border-radius:6px; margin:0 0 1.2rem;
+}
+.formula-grid{
+  display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:.8rem;
+}
+.formula-card{
+  background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:.9rem 1rem;
+}
+.formula-card .flabel{
+  font-size:.7rem; text-transform:uppercase; letter-spacing:.1em; font-weight:700; color:var(--muted-2); margin-bottom:.4rem;
+}
+.formula-card code{
+  display:block; font-family:var(--font-mono); font-size:.85rem; color:var(--accent); margin-bottom:.4rem; word-break:break-word;
+}
+.formula-card .fex{ font-size:.87rem; color:var(--muted); }
+.formula-card.affirmative{ border-color:var(--sage); }
+.formula-card.negative{ border-color:var(--coral); }
+.formula-card.question{ border-color:var(--accent); }
+
+/* ============================================================
+   3D FLIP CARDS
+   ============================================================ */
+.flip-grid{
+  display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:1rem;
+}
+.flip-card{
+  perspective:1200px; height:9.5rem;
+}
+.flip-card-inner{
+  position:relative; width:100%; height:100%;
+  transition:transform .55s cubic-bezier(.2,.8,.3,1.1);
+  transform-style:preserve-3d;
+  cursor:pointer;
+}
+.flip-card.flipped .flip-card-inner{ transform:rotateY(180deg); }
+.flip-face{
+  position:absolute; inset:0; backface-visibility:hidden; -webkit-backface-visibility:hidden;
+  border-radius:12px; border:1px solid var(--line); background:var(--paper-raised);
+  padding:1rem 1.1rem; display:flex; flex-direction:column; justify-content:center;
+  transition:border-color .18s, box-shadow .18s;
+}
+.flip-card:hover .flip-face{ border-color:var(--accent); box-shadow:0 10px 24px -12px hsl(var(--shadow) / .35); }
+.flip-face.front .eng{ font-weight:700; font-size:1rem; margin-bottom:.5rem; }
+.flip-face.front .hint{ font-size:.68rem; color:var(--muted-2); text-transform:uppercase; letter-spacing:.06em; }
+.flip-face.back{ transform:rotateY(180deg); background:var(--sage-soft); border-color:var(--sage); }
+.flip-face.back .pron{ font-family:var(--font-dev); color:var(--coral); font-size:.95rem; margin-bottom:.5rem; }
+.flip-face.back .pron::before{ content:"उच्चारण · "; color:var(--muted-2); font-size:.7rem; }
+.flip-face.back .meaning{ font-family:var(--font-dev); color:var(--sage); font-weight:600; font-size:1rem; }
+.flip-face.back .meaning::before{ content:"अर्थ · "; color:var(--muted-2); font-size:.7rem; font-weight:400; }
+@media (prefers-reduced-motion: reduce){
+  .flip-card-inner{ transition:none; }
+}
+
+.word-flip .flip-card{ height:7.5rem; }
+.word-flip .flip-face.front .eng{ font-size:1.15rem; }
+
+.more-note{ font-size:.85rem; color:var(--muted-2); margin-top:1rem; font-style:italic; }
+.more-note a{ color:var(--sage); }
+
+/* ============================================================
+   PRACTICE CHECK — quiz
+   ============================================================ */
+.quiz-card{
+  background:var(--paper-raised); border:1px solid var(--line); border-radius:12px;
+  padding:1.3rem 1.4rem; margin-bottom:1.1rem;
+}
+.quiz-q{ font-weight:700; margin-bottom:.85rem; font-size:1.02rem; }
+.quiz-q .qn{ color:var(--accent); }
+.quiz-opts{ display:flex; flex-direction:column; gap:.5rem; }
+.quiz-opt{
+  text-align:left; background:var(--paper); border:1px solid var(--line-strong); border-radius:8px;
+  padding:.65rem .85rem; font-size:.92rem; color:var(--ink); font-family:var(--font-body);
+  transition:border-color .15s, background .15s;
+}
+.quiz-opt:hover:not(:disabled){ border-color:var(--accent); }
+.quiz-opt.correct{ background:var(--sage-soft); border-color:var(--sage); font-weight:700; }
+.quiz-opt.incorrect{ background:var(--coral-soft); border-color:var(--coral); }
+.quiz-opt:disabled{ cursor:default; }
+.quiz-feedback{ margin-top:.65rem; font-weight:600; font-family:var(--font-dev); font-size:.92rem; }
+.quiz-feedback.correct{ color:var(--sage); }
+.quiz-feedback.incorrect{ color:var(--coral); }
+
+/* Day nav footer buttons */
+.day-footer-nav{
+  display:flex; justify-content:space-between; align-items:center; margin-top:2.5rem;
+  gap:1rem; flex-wrap:wrap;
+}
+.day-footer-nav button{
+  border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink);
+  border-radius:10px; padding:.7rem 1.2rem; font-weight:600; font-size:.92rem;
+  display:flex; align-items:center; gap:.5rem;
+}
+.day-footer-nav button:hover:not(:disabled){ border-color:var(--accent); }
+.day-footer-nav button:disabled{ opacity:.4; cursor:not-allowed; }
+
+/* Coming soon state */
+.coming-soon{
+  text-align:center; padding:4rem 1.5rem; background:var(--paper-raised);
+  border:1px dashed var(--line-strong); border-radius:16px;
+}
+.coming-soon .big{ font-family:var(--font-dev-serif); font-size:3rem; color:var(--accent); margin-bottom:.6rem; }
+.coming-soon p{ color:var(--muted); max-width:32rem; margin:0 auto; }
+
+footer.site-footer{
+  padding:3rem 0 2.5rem; text-align:center; background:var(--ink); color:var(--paper);
+}
+footer.site-footer .hi{ font-size:1.1rem; margin-bottom:.4rem; }
+footer.site-footer .en{ color:color-mix(in srgb, var(--paper) 65%, transparent); font-style:italic; font-size:.85rem; }
+footer.site-footer a{ color:var(--accent); }
+
+@media (max-width:640px){
+  .day-banner .day-stats{ margin-left:0; width:100%; justify-content:space-between; }
+  .day-footer-nav{ flex-direction:column; }
+  .day-footer-nav button{ width:100%; justify-content:center; }
+}
+</style>
+</head>
+<body>
+
+<div id="ambient" aria-hidden="true">
+  <div class="blob blob-a"></div>
+  <div class="blob blob-b"></div>
+  <div class="blob blob-c"></div>
+  <div class="glyph glyph-1 hi">सी</div>
+  <div class="glyph glyph-2 hi">ख</div>
+  <div class="glyph glyph-3">Aa</div>
+</div>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="english_learning_site.html" class="brand"><span class="dev hi">सी</span>kho</a>
+    <a href="english_learning_site.html" class="back-link">&larr; Main site</a>
+    <div class="nav-spacer"></div>
+    <button class="theme-toggle" id="themeToggle" type="button">Theme</button>
+  </div>
+</header>
+
+<div class="page-head container">
+  <div class="eyebrow">30-Din Learning Journey</div>
+  <h1>Day-by-Day English Journey</h1>
+  <div class="sub hi">Har din ek tense, kuch shabd, aur ek practice check — sab kuch ek hi screen par.</div>
+</div>
+
+<div class="journey-map-wrap">
+  <div class="journey-map" id="journeyMap" role="tablist" aria-label="Select a day"></div>
+</div>
+
+<main class="day-stage container">
+  <div id="dayContent"></div>
+</main>
+
+<footer class="site-footer">
+  <div class="hi">रोज़ थोड़ा-थोड़ा — यही सीखने का सबसे अच्छा तरीका है।</div>
+  <div class="en">A little every day, for thirty days. <a href="english_learning_site.html">Back to the main dojo &rarr;</a></div>
+</footer>
+
+<script>
+/* ============================================================
+   THEME TOGGLE
+   ============================================================ */
+(function(){
+  var root = document.documentElement;
+  var btn = document.getElementById('themeToggle');
+  var stored = null;
+  try{ stored = localStorage.getItem('dojo-theme'); }catch(e){}
+  if(stored === 'light' || stored === 'dark'){ root.setAttribute('data-theme', stored); }
+  function currentIsDark(){
+    var attr = root.getAttribute('data-theme');
+    if(attr === 'dark') return true;
+    if(attr === 'light') return false;
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  }
+  function updateLabel(){
+    btn.textContent = currentIsDark() ? '☀ Light' : '🌙 Dark';
+  }
+  btn.addEventListener('click', function(){
+    var next = currentIsDark() ? 'light' : 'dark';
+    root.setAttribute('data-theme', next);
+    try{ localStorage.setItem('dojo-theme', next); }catch(e){}
+    updateLabel();
+  });
+  updateLabel();
+})();
+
+/* ============================================================
+   DAYS DATA — indices 0-11 fully populated (Day 1-12).
+   Indices 12-29 (Day 13-30) will be appended by a follow-up task.
+   Each element: {day, focusEn, focusHi, devTag, rule, formulas:{aff,neg,q}, sentences:[{en,pron,hi}], vocabTitle, words:[{en,pron,hi}], quiz:[{q,options:[],correctIndex}]}
+   ============================================================ */
+var DAYS = [];
+window.DAYS = DAYS; // exposed early so a follow-up script can push() more days safely
+
+/* -------- helper (used while authoring) -------- */
+function T(en,pron,hi){ return {en:en,pron:pron,hi:hi}; }
+
+/* ---------------------------------------------------------------
+   DAY 1 — Present Simple
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 1,
+  focusEn: "Present Simple",
+  focusHi: "वर्तमान सामान्य काल",
+  devTag: "Present · Simple",
+  rule: "Roz ka kaam, habit, fact, ya sachai batane ke liye. Hindi identification: sentence 'ता है / ती है / ते हैं' par khatam hota hai.",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + V1(s/es) + O", ex:"He plays cricket. / I play cricket."},
+    neg: {label:"Negative", f:"S + do/does + not + V1 + O", ex:"He does not play cricket."},
+    q:   {label:"Question", f:"Do/Does + S + V1 + O?", ex:"Does he play cricket?"}
+  },
+  sentences: [
+    T("I wake up at six every morning.","आइ वेक अप एट सिक्स एवरी मॉर्निंग","मैं हर सुबह छह बजे उठता हूँ।"),
+    T("You drink tea in the morning.","यू ड्रिंक टी इन द मॉर्निंग","तुम सुबह चाय पीते हो।"),
+    T("He takes a bath every day.","ही टेक्स अ बाथ एवरी डे","वह हर दिन नहाता है।"),
+    T("She cooks dinner every evening.","शी कुक्स डिनर एवरी ईवनिंग","वह हर शाम रात का खाना बनाती है।"),
+    T("We eat breakfast together.","वी ईट ब्रेकफास्ट टुगेदर","हम साथ में नाश्ता करते हैं।"),
+    T("They watch the news at night.","दे वॉच द न्यूज़ एट नाइट","वे रात को समाचार देखते हैं।"),
+    T("The sun rises in the east.","द सन राइज़ेज़ इन द ईस्ट","सूरज पूरब में उगता है।"),
+    T("I do not (don't) drink alcohol.","आइ डोंट ड्रिंक अल्कोहॉल","मैं शराब नहीं पीता।"),
+    T("She does not like spicy food.","शी डज़ नॉट लाइक स्पाइसी फूड","उसे तीखा खाना पसंद नहीं है।"),
+    T("Do you drink tea?","डू यू ड्रिंक टी","क्या तुम चाय पीते हो?"),
+    T("Does he play cricket?","डज़ ही प्ले क्रिकेट","क्या वह क्रिकेट खेलता है?"),
+    T("Where do you live?","वेयर डू यू लिव","तुम कहाँ रहते हो?")
+  ],
+  vocabTitle: "Greetings & Numbers",
+  words: [
+    T("One","वन","एक"), T("Two","टू","दो"), T("Three","थ्री","तीन"),
+    T("Four","फोर","चार"), T("Five","फाइव","पांच"), T("Morning","मॉर्निंग","सुबह"),
+    T("Evening","ईवनिंग","शाम"), T("Night","नाइट","रात"), T("Today","टुडे","आज"),
+    T("Hello","हेलो","नमस्ते")
+  ],
+  quiz: [
+    {
+      q: "He ___ cricket every Sunday. (correct verb form)",
+      options: ["play","plays","playing","played"],
+      correctIndex: 1
+    },
+    {
+      q: "Choose the correct negative sentence.",
+      options: ["She don't like tea.","She doesn't likes tea.","She does not like tea.","She not like tea."],
+      correctIndex: 2
+    },
+    {
+      q: "'सूरज पूरब में उगता है' — pick the matching sentence.",
+      options: ["The sun rose in the east.","The sun is rising in the east.","The sun rises in the east.","The sun will rise in the east."],
+      correctIndex: 2
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 2 — Present Continuous
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 2,
+  focusEn: "Present Continuous",
+  focusHi: "वर्तमान अपूर्ण काल",
+  devTag: "Present · Continuous",
+  rule: "Abhi is waqt ho raha kaam. Hindi identification: 'रहा है / रही है / रहे हैं'।",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + is/am/are + V1-ing", ex:"I am eating food. / She is playing."},
+    neg: {label:"Negative", f:"S + is/am/are + not + V1-ing", ex:"She is not playing."},
+    q:   {label:"Question", f:"Is/Am/Are + S + V1-ing?", ex:"Is she playing?"}
+  },
+  sentences: [
+    T("I am reading a book.","आइ एम रीडिंग अ बुक","मैं एक किताब पढ़ रहा हूँ।"),
+    T("You are watching TV.","यू आर वॉचिंग टीवी","तुम टीवी देख रहे हो।"),
+    T("He is cooking food.","ही इज़ कुकिंग फूड","वह खाना बना रहा है।"),
+    T("She is talking on the phone.","शी इज़ टॉकिंग ऑन द फोन","वह फोन पर बात कर रही है।"),
+    T("We are waiting for the bus.","वी आर वेटिंग फॉर द बस","हम बस का इंतज़ार कर रहे हैं।"),
+    T("It is raining outside.","इट इज़ रेनिंग आउटसाइड","बाहर बारिश हो रही है।"),
+    T("I am learning English.","आइ एम लर्निंग इंग्लिश","मैं अंग्रेज़ी सीख रहा हूँ।"),
+    T("I am not sleeping.","आइ एम नॉट स्लीपिंग","मैं सो नहीं रहा हूँ।"),
+    T("She is not feeling well.","शी इज़ नॉट फीलिंग वेल","उसकी तबीयत ठीक नहीं है।"),
+    T("What are you doing?","व्हॉट आर यू डूइंग","तुम क्या कर रहे हो?"),
+    T("Is he sleeping?","इज़ ही स्लीपिंग","क्या वह सो रहा है?"),
+    T("Where are you going?","वेयर आर यू गोइंग","तुम कहाँ जा रहे हो?")
+  ],
+  vocabTitle: "Family Members",
+  words: [
+    T("Father","फादर","पिता"), T("Mother","मदर","माता"), T("Brother","ब्रदर","भाई"),
+    T("Sister","सिस्टर","बहन"), T("Son","सन","बेटा"), T("Daughter","डॉटर","बेटी"),
+    T("Friend","फ्रेंड","दोस्त"), T("Family","फैमिली","परिवार"), T("Husband","हसबैंड","पति"),
+    T("Wife","वाइफ","पत्नी")
+  ],
+  quiz: [
+    {
+      q: "She ___ dinner right now.",
+      options: ["cook","cooks","is cooking","cooked"],
+      correctIndex: 2
+    },
+    {
+      q: "Pick the correct question form.",
+      options: ["What you are doing?","What are you doing?","What doing you are?","What do you doing?"],
+      correctIndex: 1
+    },
+    {
+      q: "'बाहर बारिश हो रही है' — which sentence matches?",
+      options: ["It rains outside.","It is raining outside.","It rained outside.","It will rain outside."],
+      correctIndex: 1
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 3 — Present Perfect
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 3,
+  focusEn: "Present Perfect",
+  focusHi: "पूर्ण वर्तमान काल",
+  devTag: "Present · Perfect",
+  rule: "Kaam abhi-abhi khatam hua hai, ya past mein hua tha aur uska result present mein hai. Hindi: 'चुका है / चुकी है / चुके हैं'।",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + has/have + V3", ex:"I have finished my work. / She has gone home."},
+    neg: {label:"Negative", f:"S + has/have + not + V3", ex:"I have not finished my work."},
+    q:   {label:"Question", f:"Has/Have + S + V3?", ex:"Have you finished your work?"}
+  },
+  sentences: [
+    T("I have seen this movie.","आइ हैव सीन दिस मूवी","मैंने यह फिल्म देखी है।"),
+    T("He has finished his homework.","ही हैज़ फिनिश्ड हिज़ होमवर्क","उसने अपना होमवर्क खत्म कर लिया है।"),
+    T("She has passed her exam.","शी हैज़ पास्ड हर एग्ज़ाम","वह अपनी परीक्षा पास कर चुकी है।"),
+    T("I have already had lunch.","आइ हैव ऑलरेडी हैड लंच","मैं पहले ही लंच कर चुका हूँ।"),
+    T("The train has arrived.","द ट्रेन हैज़ अराइव्ड","ट्रेन आ चुकी है।"),
+    T("The rain has stopped.","द रेन हैज़ स्टॉप्ड","बारिश रुक चुकी है।"),
+    T("I have never been to Goa.","आइ हैव नेवर बीन टू गोवा","मैं कभी गोवा नहीं गया।"),
+    T("I have not seen that movie.","आइ हैव नॉट सीन दैट मूवी","मैंने वह फिल्म नहीं देखी है।"),
+    T("She has not called me yet.","शी हैज़ नॉट कॉल्ड मी येट","उसने अभी तक मुझे फोन नहीं किया है।"),
+    T("Have you seen this movie?","हैव यू सीन दिस मूवी","क्या तुमने यह फिल्म देखी है?"),
+    T("Has she called you yet?","हैज़ शी कॉल्ड यू येट","क्या उसने तुम्हें अभी तक फोन किया है?"),
+    T("Have you ever been to Mumbai?","हैव यू एवर बीन टू मुंबई","क्या तुम कभी मुंबई गए हो?")
+  ],
+  vocabTitle: "Colors & Days of the Week",
+  words: [
+    T("Red","रेड","लाल"), T("Blue","ब्लू","नीला"), T("Green","ग्रीन","हरा"),
+    T("Yellow","येलो","पीला"), T("Black","ब्लैक","काला"), T("White","व्हाइट","सफेद"),
+    T("Monday","मंडे","सोमवार"), T("Friday","फ्राइडे","शुक्रवार"), T("Sunday","संडे","रविवार"),
+    T("Week","वीक","सप्ताह")
+  ],
+  quiz: [
+    {
+      q: "I ___ my homework already.",
+      options: ["finish","finished","have finished","finishing"],
+      correctIndex: 2
+    },
+    {
+      q: "Which sentence uses Present Perfect correctly?",
+      options: ["She has go home.","She has went home.","She has gone home.","She have gone home."],
+      correctIndex: 2
+    },
+    {
+      q: "'क्या तुमने यह फिल्म देखी है?' — pick the match.",
+      options: ["Did you see this movie?","Have you seen this movie?","Do you see this movie?","Are you seeing this movie?"],
+      correctIndex: 1
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 4 — Present Perfect Continuous
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 4,
+  focusEn: "Present Perfect Continuous",
+  focusHi: "पूर्ण निरंतर वर्तमान काल",
+  devTag: "Present · Perfect Cont.",
+  rule: "Kaam past mein shuru hua tha aur ab tak chal raha hai. 'Since' (ek point se, jaise since 2020) aur 'For' (duration, jaise for 3 hours) ke saath use hota hai.",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + has/have + been + V1-ing", ex:"I have been studying since morning."},
+    neg: {label:"Negative", f:"S + has/have + not + been + V1-ing", ex:"I have not been studying."},
+    q:   {label:"Question", f:"Has/Have + S + been + V1-ing?", ex:"Have you been studying since morning?"}
+  },
+  sentences: [
+    T("I have been studying since morning.","आइ हैव बीन स्टडीइंग सिंस मॉर्निंग","मैं सुबह से पढ़ रहा हूँ।"),
+    T("You have been working here for five years.","यू हैव बीन वर्किंग हियर फॉर फाइव ईयर्स","तुम यहाँ पाँच साल से काम कर रहे हो।"),
+    T("He has been living in Delhi since 2015.","ही हैज़ बीन लिविंग इन देल्ही सिंस ट्वेंटी फिफ्टीन","वह 2015 से दिल्ली में रह रहा है।"),
+    T("She has been waiting for you for an hour.","शी हैज़ बीन वेटिंग फॉर यू फॉर एन आवर","वह एक घंटे से तुम्हारा इंतज़ार कर रही है।"),
+    T("It has been raining since yesterday.","इट हैज़ बीन रेनिंग सिंस यस्टरडे","कल से बारिश हो रही है।"),
+    T("I have been trying to call you.","आइ हैव बीन ट्राइंग टू कॉल यू","मैं तुम्हें फोन करने की कोशिश कर रहा हूँ।"),
+    T("We have been saving money for a car.","वी हैव बीन सेविंग मनी फॉर अ कार","हम गाड़ी के लिए पैसे बचा रहे हैं।"),
+    T("I have not been sleeping well.","आइ हैव नॉट बीन स्लीपिंग वेल","मैं ठीक से सो नहीं पा रहा हूँ।"),
+    T("She has not been feeling well lately.","शी हैज़ नॉट बीन फीलिंग वेल लेटली","वह आजकल ठीक महसूस नहीं कर रही है।"),
+    T("Have you been waiting long?","हैव यू बीन वेटिंग लॉन्ग","क्या तुम काफी देर से इंतज़ार कर रहे हो?"),
+    T("How long have you been studying English?","हाउ लॉन्ग हैव यू बीन स्टडीइंग इंग्लिश","तुम कब से अंग्रेज़ी पढ़ रहे हो?"),
+    T("Has she been crying?","हैज़ शी बीन क्राइंग","क्या वह रो रही थी?")
+  ],
+  vocabTitle: "Body Parts & Health",
+  words: [
+    T("Head","हेड","सिर"), T("Eye","आइ","आंख"), T("Hand","हैंड","हाथ"),
+    T("Leg","लेग","टांग"), T("Face","फेस","चेहरा"), T("Health","हेल्थ","स्वास्थ्य"),
+    T("Fever","फीवर","बुखार"), T("Headache","हेडेक","सिरदर्द"), T("Medicine","मेडिसिन","दवाई"),
+    T("Doctor","डॉक्टर","डॉक्टर")
+  ],
+  quiz: [
+    {
+      q: "I ___ English since 2020.",
+      options: ["study","have studied","have been studying","studied"],
+      correctIndex: 2
+    },
+    {
+      q: "Which word pairs with a duration like '3 hours'?",
+      options: ["Since","For","At","On"],
+      correctIndex: 1
+    },
+    {
+      q: "'तुम कब से अंग्रेज़ी पढ़ रहे हो?' — pick the match.",
+      options: ["How long do you study English?","How long have you studied English?","How long have you been studying English?","How long you study English?"],
+      correctIndex: 2
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 5 — Past Simple
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 5,
+  focusEn: "Past Simple",
+  focusHi: "सामान्य भूत काल",
+  devTag: "Past · Simple",
+  rule: "Jo kaam past mein khatam ho chuka hai. Hindi identification: 'आ / ई / ए / या' (kiya, gaya, khaya).",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + V2", ex:"I went to school. / She played cricket."},
+    neg: {label:"Negative", f:"S + did not + V1", ex:"I did not go to school."},
+    q:   {label:"Question", f:"Did + S + V1?", ex:"Did you go to school?"}
+  },
+  sentences: [
+    T("I went to school yesterday.","आइ वेंट टू स्कूल यस्टरडे","मैं कल स्कूल गया था।"),
+    T("He played cricket last Sunday.","ही प्लेड क्रिकेट लास्ट संडे","उसने पिछले रविवार क्रिकेट खेला था।"),
+    T("We watched a movie last week.","वी वॉच्ड अ मूवी लास्ट वीक","हमने पिछले हफ्ते फिल्म देखी थी।"),
+    T("My father bought a new car last year.","माइ फादर बॉट अ न्यू कार लास्ट ईयर","मेरे पिताजी ने पिछले साल नई गाड़ी खरीदी थी।"),
+    T("I woke up late this morning.","आइ वोक अप लेट दिस मॉर्निंग","मैं आज सुबह देर से उठा।"),
+    T("She wrote a letter to her friend.","शी रोट अ लेटर टू हर फ्रेंड","उसने अपने दोस्त को चिट्ठी लिखी।"),
+    T("I was born in 1995.","आइ वॉज़ बॉर्न इन नाइंटीन नाइंटी फाइव","मेरा जन्म 1995 में हुआ था।"),
+    T("I did not go to school yesterday.","आइ डिड नॉट गो टू स्कूल यस्टरडे","मैं कल स्कूल नहीं गया।"),
+    T("She did not pass the exam.","शी डिड नॉट पास द एग्ज़ाम","वह परीक्षा में पास नहीं हुई।"),
+    T("Did you go to school yesterday?","डिड यू गो टू स्कूल यस्टरडे","क्या तुम कल स्कूल गए थे?"),
+    T("Where did you go yesterday?","वेयर डिड यू गो यस्टरडे","तुम कल कहाँ गए थे?"),
+    T("Did it rain yesterday?","डिड इट रेन यस्टरडे","क्या कल बारिश हुई?")
+  ],
+  vocabTitle: "Food & Drinks",
+  words: [
+    T("Rice","राइस","चावल"), T("Water","वॉटर","पानी"), T("Tea","टी","चाय"),
+    T("Milk","मिल्क","दूध"), T("Egg","एग","अंडा"), T("Fruit","फ्रूट","फल"),
+    T("Vegetable","वेजिटेबल","सब्ज़ी"), T("Sweet","स्वीट","मीठा"), T("Hungry","हंग्री","भूखा"),
+    T("Delicious","डिलिशियस","स्वादिष्ट")
+  ],
+  quiz: [
+    {
+      q: "She ___ cricket last Sunday. (past form of 'play')",
+      options: ["play","plays","played","playing"],
+      correctIndex: 2
+    },
+    {
+      q: "Pick the correct negative sentence.",
+      options: ["I not went to school.","I didn't went to school.","I didn't go to school.","I don't go to school yesterday."],
+      correctIndex: 2
+    },
+    {
+      q: "'मेरा जन्म 1995 में हुआ था' — which tense/sentence fits?",
+      options: ["I am born in 1995.","I was born in 1995.","I have been born in 1995.","I will be born in 1995."],
+      correctIndex: 1
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 6 — Past Continuous
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 6,
+  focusEn: "Past Continuous",
+  focusHi: "भूत अपूर्ण काल",
+  devTag: "Past · Continuous",
+  rule: "Past mein koi kaam chal raha tha jab dusra kaam hua. Hindi: 'रहा था / रही थी / रहे थे'।",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + was/were + V1-ing", ex:"I was watching TV when he came."},
+    neg: {label:"Negative", f:"S + was/were + not + V1-ing", ex:"I was not watching TV."},
+    q:   {label:"Question", f:"Was/Were + S + V1-ing?", ex:"Was he watching TV?"}
+  },
+  sentences: [
+    T("I was watching TV when he came.","आइ वॉज़ वॉचिंग टीवी वेन ही केम","जब वह आया तब मैं टीवी देख रहा था।"),
+    T("You were sleeping when I called.","यू वर स्लीपिंग वेन आइ कॉल्ड","जब मैंने फोन किया तब तुम सो रहे थे।"),
+    T("She was cooking when the phone rang.","शी वॉज़ कुकिंग वेन द फोन रैंग","जब फोन बजा तब वह खाना बना रही थी।"),
+    T("They were studying when the light went off.","दे वर स्टडीइंग वेन द लाइट वेंट ऑफ","जब बत्ती चली गई तब वे पढ़ रहे थे।"),
+    T("We were having dinner when the power went out.","वी वर हैविंग डिनर वेन द पावर वेंट आउट","जब बिजली चली गई तब हम रात का खाना खा रहे थे।"),
+    T("I was doing my homework when he called.","आइ वॉज़ डूइंग माइ होमवर्क वेन ही कॉल्ड","जब उसने फोन किया तब मैं होमवर्क कर रहा था।"),
+    T("At 8 PM yesterday, I was having dinner.","एट एट पीएम यस्टरडे, आइ वॉज़ हैविंग डिनर","कल रात 8 बजे मैं खाना खा रहा था।"),
+    T("I was not watching TV.","आइ वॉज़ नॉट वॉचिंग टीवी","मैं टीवी नहीं देख रहा था।"),
+    T("She was not talking to anyone.","शी वॉज़ नॉट टॉकिंग टू एनीवन","वह किसी से बात नहीं कर रही थी।"),
+    T("Was he watching TV?","वॉज़ ही वॉचिंग टीवी","क्या वह टीवी देख रहा था?"),
+    T("What were you doing at 8 PM?","व्हॉट वर यू डूइंग एट एट पीएम","रात 8 बजे तुम क्या कर रहे थे?"),
+    T("Was it raining when you left?","वॉज़ इट रेनिंग वेन यू लेफ्ट","जब तुम निकले तब क्या बारिश हो रही थी?")
+  ],
+  vocabTitle: "Common Verbs (Part 1)",
+  words: [
+    T("Go","गो","जाना"), T("Come","कम","आना"), T("Eat","ईट","खाना"),
+    T("Sleep","स्लीप","सोना"), T("Play","प्ले","खेलना"), T("Read","रीड","पढ़ना"),
+    T("Write","राइट","लिखना"), T("Work","वर्क","काम करना"), T("Walk","वॉक","चलना"),
+    T("Listen","लिसन","सुनना")
+  ],
+  quiz: [
+    {
+      q: "I ___ TV when he came.",
+      options: ["watch","watched","was watching","am watching"],
+      correctIndex: 2
+    },
+    {
+      q: "Past Continuous most often pairs with which word?",
+      options: ["Yesterday","When","Tomorrow","Always"],
+      correctIndex: 1
+    },
+    {
+      q: "'जब फोन बजा तब वह खाना बना रही थी' — pick the match.",
+      options: ["She cooked when the phone rang.","She was cooking when the phone rang.","She has cooked when the phone rang.","She cooks when the phone rings."],
+      correctIndex: 1
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 7 — Past Perfect
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 7,
+  focusEn: "Past Perfect",
+  focusHi: "पूर्ण भूत काल",
+  devTag: "Past · Perfect",
+  rule: "Do past kaamon mein se jo pehle hua, uske liye. Hindi: 'चुका था / चुकी थी'। ('Train chal chuki thi jab main pahuncha')",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + had + V3", ex:"The train had left before I reached."},
+    neg: {label:"Negative", f:"S + had not + V3", ex:"The train had not left."},
+    q:   {label:"Question", f:"Had + S + V3?", ex:"Had the train left?"}
+  },
+  sentences: [
+    T("The train had left before I reached the station.","द ट्रेन हैड लेफ्ट बिफोर आइ रीच्ड द स्टेशन","मेरे स्टेशन पहुँचने से पहले ट्रेन जा चुकी थी।"),
+    T("I had finished my homework before he called.","आइ हैड फिनिश्ड माइ होमवर्क बिफोर ही कॉल्ड","उसके फोन करने से पहले मैं होमवर्क खत्म कर चुका था।"),
+    T("She had already eaten when we arrived.","शी हैड ऑलरेडी ईटन वेन वी अराइव्ड","हमारे पहुँचने तक वह पहले ही खा चुकी थी।"),
+    T("They had completed the project before the deadline.","दे हैड कम्प्लीटेड द प्रोजेक्ट बिफोर द डेडलाइन","डेडलाइन से पहले उन्होंने प्रोजेक्ट पूरा कर लिया था।"),
+    T("I had never seen snow before that trip.","आइ हैड नेवर सीन स्नो बिफोर दैट ट्रिप","उस यात्रा से पहले मैंने कभी बर्फ नहीं देखी थी।"),
+    T("I was tired because I had worked all day.","आइ वॉज़ टायर्ड बिकॉज़ आइ हैड वर्क्ड ऑल डे","मैं थका हुआ था क्योंकि मैंने पूरे दिन काम किया था।"),
+    T("She was happy because she had passed the exam.","शी वॉज़ हैप्पी बिकॉज़ शी हैड पास्ड द एग्ज़ाम","वह खुश थी क्योंकि वह परीक्षा पास कर चुकी थी।"),
+    T("The train had not left when I reached.","द ट्रेन हैड नॉट लेफ्ट वेन आइ रीच्ड","जब मैं पहुँचा तब ट्रेन नहीं गई थी।"),
+    T("I had not finished my homework.","आइ हैड नॉट फिनिश्ड माइ होमवर्क","मैंने अपना होमवर्क खत्म नहीं किया था।"),
+    T("Had the train left before you reached?","हैड द ट्रेन लेफ्ट बिफोर यू रीच्ड","क्या तुम्हारे पहुँचने से पहले ट्रेन जा चुकी थी?"),
+    T("What had you done before that?","व्हॉट हैड यू डन बिफोर दैट","उससे पहले तुमने क्या किया था?"),
+    T("Had you ever visited this place before?","हैड यू एवर विज़िटेड दिस प्लेस बिफोर","क्या तुम पहले कभी यहाँ आए थे?")
+  ],
+  vocabTitle: "Common Verbs (Part 2)",
+  words: [
+    T("Give","गिव","देना"), T("Take","टेक","लेना"), T("Make","मेक","बनाना"),
+    T("Start","स्टार्ट","शुरू करना"), T("Finish","फिनिश","खत्म करना"), T("Open","ओपन","खोलना"),
+    T("Understand","अंडरस्टैंड","समझना"), T("Help","हेल्प","मदद करना"), T("Learn","लर्न","सीखना"),
+    T("Remember","रिमेम्बर","याद रखना")
+  ],
+  quiz: [
+    {
+      q: "The train ___ before I reached the station.",
+      options: ["left","has left","had left","was leaving"],
+      correctIndex: 2
+    },
+    {
+      q: "Past Perfect shows which of two past actions happened...",
+      options: ["at the same time","first (earlier)","later","in the future"],
+      correctIndex: 1
+    },
+    {
+      q: "'मैंने अपना होमवर्क खत्म नहीं किया था' — pick the match.",
+      options: ["I did not finish my homework.","I have not finished my homework.","I had not finished my homework.","I am not finishing my homework."],
+      correctIndex: 2
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 8 — Past Perfect Continuous
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 8,
+  focusEn: "Past Perfect Continuous",
+  focusHi: "पूर्ण निरंतर भूत काल",
+  devTag: "Past · Perfect Cont.",
+  rule: "Past mein ek kaam chal raha tha jab tak dusra kaam nahi hua. Duration + interruption dono batata hai.",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + had been + V1-ing", ex:"I had been waiting for an hour when he arrived."},
+    neg: {label:"Negative", f:"S + had not been + V1-ing", ex:"I had not been waiting long."},
+    q:   {label:"Question", f:"Had + S + been + V1-ing?", ex:"Had you been waiting long?"}
+  },
+  sentences: [
+    T("I had been waiting for an hour when he arrived.","आइ हैड बीन वेटिंग फॉर एन आवर वेन ही अराइव्ड","जब वह पहुँचा तब मैं एक घंटे से इंतज़ार कर रहा था।"),
+    T("She had been working here for five years before she resigned.","शी हैड बीन वर्किंग हियर फॉर फाइव ईयर्स बिफोर शी रिज़ाइंड","इस्तीफा देने से पहले वह यहाँ पाँच साल से काम कर रही थी।"),
+    T("They had been playing for two hours when it started to rain.","दे हैड बीन प्लेइंग फॉर टू आवर्स वेन इट स्टार्टेड टू रेन","जब बारिश शुरू हुई तब वे दो घंटे से खेल रहे थे।"),
+    T("He had been driving for six hours before he stopped to rest.","ही हैड बीन ड्राइविंग फॉर सिक्स आवर्स बिफोर ही स्टॉप्ड टू रेस्ट","आराम करने से पहले वह छह घंटे से गाड़ी चला रहा था।"),
+    T("She had been cooking since morning when the guests arrived.","शी हैड बीन कुकिंग सिंस मॉर्निंग वेन द गेस्ट्स अराइव्ड","जब मेहमान आए तब वह सुबह से खाना बना रही थी।"),
+    T("My father had been working there for twenty years before he retired.","माइ फादर हैड बीन वर्किंग देयर फॉर ट्वेंटी ईयर्स बिफोर ही रिटायर्ड","रिटायर होने से पहले मेरे पिताजी वहाँ बीस साल से काम कर रहे थे।"),
+    T("We had been waiting since 6 AM when the bus finally came.","वी हैड बीन वेटिंग सिंस सिक्स ए.एम. वेन द बस फाइनली केम","जब आखिरकार बस आई तब हम सुबह 6 बजे से इंतज़ार कर रहे थे।"),
+    T("I had not been waiting long when he arrived.","आइ हैड नॉट बीन वेटिंग लॉन्ग वेन ही अराइव्ड","जब वह पहुँचा तब मैं ज्यादा देर से इंतज़ार नहीं कर रहा था।"),
+    T("She had not been feeling well for the past few days.","शी हैड नॉट बीन फीलिंग वेल फॉर द पास्ट फ्यू डेज़","वह पिछले कुछ दिनों से ठीक महसूस नहीं कर रही थी।"),
+    T("Had you been waiting long?","हैड यू बीन वेटिंग लॉन्ग","क्या तुम काफी देर से इंतज़ार कर रहे थे?"),
+    T("How long had you been studying English?","हाउ लॉन्ग हैड यू बीन स्टडीइंग इंग्लिश","तुम कब से अंग्रेज़ी पढ़ रहे थे?"),
+    T("Had it been raining before you left?","हैड इट बीन रेनिंग बिफोर यू लेफ्ट","तुम्हारे निकलने से पहले क्या बारिश हो रही थी?")
+  ],
+  vocabTitle: "Office & Work Vocabulary",
+  words: [
+    T("Job","जॉब","नौकरी"), T("Boss","बॉस","मालिक/बॉस"), T("Office","ऑफिस","दफ्तर"),
+    T("Manager","मैनेजर","प्रबंधक"), T("Meeting","मीटिंग","बैठक"), T("Deadline","डेडलाइन","समय सीमा"),
+    T("Report","रिपोर्ट","रिपोर्ट"), T("Project","प्रोजेक्ट","परियोजना"), T("Salary","सैलरी","वेतन"),
+    T("Client","क्लाइंट","ग्राहक")
+  ],
+  quiz: [
+    {
+      q: "I ___ for an hour when he arrived.",
+      options: ["waited","was waiting","had been waiting","have been waiting"],
+      correctIndex: 2
+    },
+    {
+      q: "Past Perfect Continuous highlights which two things together?",
+      options: ["Place + time","Duration + interruption","Cause + effect","Question + answer"],
+      correctIndex: 1
+    },
+    {
+      q: "'तुम कब से अंग्रेज़ी पढ़ रहे थे?' — pick the match.",
+      options: ["How long were you studying English?","How long had you been studying English?","How long have you studied English?","How long did you study English?"],
+      correctIndex: 1
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 9 — Future Simple
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 9,
+  focusEn: "Future Simple",
+  focusHi: "सामान्य भविष्य काल",
+  devTag: "Future · Simple",
+  rule: "Aane wale samay mein hone wala kaam. Hindi: 'ऊँगा / ऊँगी / एंगे'।",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + will/shall + V1", ex:"I will go to school tomorrow."},
+    neg: {label:"Negative", f:"S + will not + V1", ex:"I will not go to school."},
+    q:   {label:"Question", f:"Will + S + V1?", ex:"Will you go to school?"}
+  },
+  sentences: [
+    T("I will go to school tomorrow.","आइ विल गो टू स्कूल टुमॉरो","मैं कल स्कूल जाऊँगा।"),
+    T("He will call you tonight.","ही विल कॉल यू टुनाइट","वह आज रात तुम्हें फोन करेगा।"),
+    T("She will visit her parents next week.","शी विल विज़िट हर पेरेंट्स नेक्स्ट वीक","वह अगले हफ्ते अपने माता-पिता से मिलने जाएगी।"),
+    T("It will rain tomorrow.","इट विल रेन टुमॉरो","कल बारिश होगी।"),
+    T("I will help you with your homework.","आइ विल हेल्प यू विद योर होमवर्क","मैं तुम्हारे होमवर्क में मदद करूँगा।"),
+    T("We will win this match.","वी विल विन दिस मैच","हम यह मैच जीतेंगे।"),
+    T("I will marry you.","आइ विल मैरी यू","मैं तुमसे शादी करूँगा।"),
+    T("I will not go to school tomorrow.","आइ विल नॉट गो टू स्कूल टुमॉरो","मैं कल स्कूल नहीं जाऊँगा।"),
+    T("She will not come to the party.","शी विल नॉट कम टू द पार्टी","वह पार्टी में नहीं आएगी।"),
+    T("Will you go to school tomorrow?","विल यू गो टू स्कूल टुमॉरो","क्या तुम कल स्कूल जाओगे?"),
+    T("What will you do next?","व्हॉट विल यू डू नेक्स्ट","तुम आगे क्या करोगे?"),
+    T("Will it rain tomorrow?","विल इट रेन टुमॉरो","क्या कल बारिश होगी?")
+  ],
+  vocabTitle: "Time & Weather",
+  words: [
+    T("Hour","आवर","घंटा"), T("Minute","मिनिट","मिनट"), T("Now","नाउ","अभी"),
+    T("Later","लेटर","बाद में"), T("Rain","रेन","बारिश"), T("Sun","सन","सूरज"),
+    T("Hot","हॉट","गर्म"), T("Weather","वेदर","मौसम"), T("Winter","विंटर","सर्दी"),
+    T("Summer","समर","गर्मी")
+  ],
+  quiz: [
+    {
+      q: "I ___ you tomorrow.",
+      options: ["call","calls","will call","called"],
+      correctIndex: 2
+    },
+    {
+      q: "Pick the correct negative Future Simple sentence.",
+      options: ["I not will go.","I will not go.","I don't will go.","I won't going."],
+      correctIndex: 1
+    },
+    {
+      q: "'क्या कल बारिश होगी?' — pick the match.",
+      options: ["Does it rain tomorrow?","Is it raining tomorrow?","Will it rain tomorrow?","Did it rain tomorrow?"],
+      correctIndex: 2
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 10 — Future Continuous
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 10,
+  focusEn: "Future Continuous",
+  focusHi: "भविष्य अपूर्ण काल",
+  devTag: "Future · Continuous",
+  rule: "Future mein kisi specific time par chal raha kaam. Hindi: 'रहा हूँगा / रही हूँगी'।",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + will be + V1-ing", ex:"I will be studying at 8 PM."},
+    neg: {label:"Negative", f:"S + will not be + V1-ing", ex:"I will not be studying at 8 PM."},
+    q:   {label:"Question", f:"Will + S + be + V1-ing?", ex:"Will you be studying at 8 PM?"}
+  },
+  sentences: [
+    T("I will be studying at 8 PM tonight.","आइ विल बी स्टडीइंग एट एट पीएम टुनाइट","मैं आज रात 8 बजे पढ़ रहा हूँगा।"),
+    T("He will be working when you call.","ही विल बी वर्किंग वेन यू कॉल","जब तुम फोन करोगे तब वह काम कर रहा होगा।"),
+    T("She will be travelling this time tomorrow.","शी विल बी ट्रैवलिंग दिस टाइम टुमॉरो","कल इस समय वह यात्रा कर रही होगी।"),
+    T("We will be having dinner at 9 PM.","वी विल बी हैविंग डिनर एट नाइन पीएम","हम रात 9 बजे खाना खा रहे होंगे।"),
+    T("They will be waiting for us at the gate.","दे विल बी वेटिंग फॉर अस एट द गेट","वे गेट पर हमारा इंतज़ार कर रहे होंगे।"),
+    T("This time next year, I will be living in London.","दिस टाइम नेक्स्ट ईयर, आइ विल बी लिविंग इन लंदन","अगले साल इस समय मैं लंदन में रह रहा हूँगा।"),
+    T("Tonight, they will be watching the cricket match.","टुनाइट, दे विल बी वॉचिंग द क्रिकेट मैच","आज रात वे क्रिकेट मैच देख रहे होंगे।"),
+    T("I will not be studying at 8 PM.","आइ विल नॉट बी स्टडीइंग एट एट पीएम","मैं रात 8 बजे पढ़ नहीं रहा हूँगा।"),
+    T("She will not be travelling this weekend.","शी विल नॉट बी ट्रैवलिंग दिस वीकएंड","वह इस सप्ताहांत यात्रा नहीं कर रही होगी।"),
+    T("Will you be studying at 8 PM?","विल यू बी स्टडीइंग एट एट पीएम","क्या तुम रात 8 बजे पढ़ रहे होगे?"),
+    T("What will you be doing this time tomorrow?","व्हॉट विल यू बी डूइंग दिस टाइम टुमॉरो","कल इस समय तुम क्या कर रहे होगे?"),
+    T("What time will you be reaching home?","व्हॉट टाइम विल यू बी रीचिंग होम","तुम घर कितने बजे पहुँच रहे होगे?")
+  ],
+  vocabTitle: "Emotions & Feelings",
+  words: [
+    T("Happy","हैप्पी","खुश"), T("Sad","सैड","उदास"), T("Angry","एंग्री","गुस्सा"),
+    T("Tired","टायर्ड","थका हुआ"), T("Excited","एक्साइटेड","उत्साहित"), T("Nervous","नर्वस","घबराया हुआ"),
+    T("Confident","कॉन्फिडेंट","आत्मविश्वासी"), T("Proud","प्राउड","गर्वित"), T("Grateful","ग्रेटफुल","आभारी"),
+    T("Calm","काम","शांत")
+  ],
+  quiz: [
+    {
+      q: "I ___ at 8 PM tonight.",
+      options: ["study","will study","will be studying","was studying"],
+      correctIndex: 2
+    },
+    {
+      q: "Future Continuous is used for an action happening at a...",
+      options: ["random past moment","specific future moment","habitual moment","completed moment"],
+      correctIndex: 1
+    },
+    {
+      q: "'कल इस समय तुम क्या कर रहे होगे?' — pick the match.",
+      options: ["What are you doing this time tomorrow?","What will you do this time tomorrow?","What will you be doing this time tomorrow?","What were you doing this time tomorrow?"],
+      correctIndex: 2
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 11 — Future Perfect
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 11,
+  focusEn: "Future Perfect",
+  focusHi: "पूर्ण भविष्य काल",
+  devTag: "Future · Perfect",
+  rule: "Future mein kisi specific time tak koi kaam khatam ho chuka hoga. Hindi: 'चुका हूँगा / चुकी हूँगी'।",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + will have + V3", ex:"I will have finished my homework by 6 PM."},
+    neg: {label:"Negative", f:"S + will not have + V3", ex:"I will not have finished by 6 PM."},
+    q:   {label:"Question", f:"Will + S + have + V3?", ex:"Will you have finished by 6 PM?"}
+  },
+  sentences: [
+    T("I will have finished my homework by 6 PM.","आइ विल हैव फिनिश्ड माइ होमवर्क बाइ सिक्स पीएम","मैं शाम 6 बजे तक अपना होमवर्क खत्म कर चुका हूँगा।"),
+    T("He will have left by the time you arrive.","ही विल हैव लेफ्ट बाइ द टाइम यू अराइव","तुम्हारे पहुँचने तक वह जा चुका होगा।"),
+    T("We will have reached Delhi by tomorrow morning.","वी विल हैव रीच्ड देल्ही बाइ टुमॉरो मॉर्निंग","हम कल सुबह तक दिल्ली पहुँच चुके होंगे।"),
+    T("They will have submitted the report by Friday.","दे विल हैव सबमिटेड द रिपोर्ट बाइ फ्राइडे","वे शुक्रवार तक रिपोर्ट जमा कर चुके होंगे।"),
+    T("My father will have retired by next year.","माइ फादर विल हैव रिटायर्ड बाइ नेक्स्ट ईयर","मेरे पिताजी अगले साल तक रिटायर हो चुके होंगे।"),
+    T("By the end of this year, I will have visited five countries.","बाइ द एंड ऑफ दिस ईयर, आइ विल हैव विज़िटेड फाइव कंट्रीज़","इस साल के अंत तक मैं पाँच देश घूम चुका हूँगा।"),
+    T("By next week, she will have learnt to drive.","बाइ नेक्स्ट वीक, शी विल हैव लर्न्ट टू ड्राइव","अगले हफ्ते तक वह गाड़ी चलाना सीख चुकी होगी।"),
+    T("I will not have finished by 6 PM.","आइ विल नॉट हैव फिनिश्ड बाइ सिक्स पीएम","मैं शाम 6 बजे तक खत्म नहीं कर पाऊँगा।"),
+    T("She will not have graduated by June.","शी विल नॉट हैव ग्रेजुएटेड बाइ जून","वह जून तक ग्रेजुएट नहीं हुई होगी।"),
+    T("Will you have finished by 6 PM?","विल यू हैव फिनिश्ड बाइ सिक्स पीएम","क्या तुम शाम 6 बजे तक खत्म कर चुके होगे?"),
+    T("How much will you have saved by December?","हाउ मच विल यू हैव सेव्ड बाइ दिसंबर","तुम दिसंबर तक कितना बचा चुके होगे?"),
+    T("Will they have submitted the report by Friday?","विल दे हैव सबमिटेड द रिपोर्ट बाइ फ्राइडे","क्या वे शुक्रवार तक रिपोर्ट जमा कर चुके होंगे?")
+  ],
+  vocabTitle: "Places in the City",
+  words: [
+    T("School","स्कूल","स्कूल"), T("Hospital","हॉस्पिटल","अस्पताल"), T("Market","मार्केट","बाज़ार"),
+    T("Station","स्टेशन","स्टेशन"), T("Airport","एयरपोर्ट","हवाई अड्डा"), T("Bank","बैंक","बैंक"),
+    T("Park","पार्क","पार्क"), T("Temple","टेम्पल","मंदिर"), T("Library","लाइब्रेरी","पुस्तकालय"),
+    T("City","सिटी","शहर")
+  ],
+  quiz: [
+    {
+      q: "I ___ my homework by 6 PM.",
+      options: ["finish","will finish","will have finished","have finished"],
+      correctIndex: 2
+    },
+    {
+      q: "Future Perfect is used with which kind of phrase?",
+      options: ["'yesterday'","'right now'","'by + a future time'","'every day'"],
+      correctIndex: 2
+    },
+    {
+      q: "'वे शुक्रवार तक रिपोर्ट जमा कर चुके होंगे' — pick the match.",
+      options: ["They submit the report by Friday.","They will submit the report by Friday.","They will have submitted the report by Friday.","They have submitted the report by Friday."],
+      correctIndex: 2
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 12 — Future Perfect Continuous
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 12,
+  focusEn: "Future Perfect Continuous",
+  focusHi: "पूर्ण निरंतर भविष्य काल",
+  devTag: "Future · Perfect Cont.",
+  rule: "Future mein ek specific time tak koi kaam chal raha hoga (duration ke saath).",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + will have been + V1-ing", ex:"I will have been working here for 5 years by June."},
+    neg: {label:"Negative", f:"S + will not have been + V1-ing", ex:"I will not have been working here long."},
+    q:   {label:"Question", f:"Will + S + have been + V1-ing?", ex:"Will you have been working here for 5 years?"}
+  },
+  sentences: [
+    T("I will have been working here for 5 years by June.","आइ विल हैव बीन वर्किंग हियर फॉर फाइव ईयर्स बाइ जून","जून तक मैं यहाँ 5 साल से काम कर रहा हूँगा।"),
+    T("You will have been studying English for a year by December.","यू विल हैव बीन स्टडीइंग इंग्लिश फॉर अ ईयर बाइ दिसंबर","दिसंबर तक तुम एक साल से अंग्रेज़ी पढ़ रहे होगे।"),
+    T("He will have been living in this city for a decade by 2030.","ही विल हैव बीन लिविंग इन दिस सिटी फॉर अ डिकेड बाइ ट्वेंटी थर्टी","2030 तक वह इस शहर में दस साल से रह रहा होगा।"),
+    T("By next month, she will have been working on this project for a year.","बाइ नेक्स्ट मंथ, शी विल हैव बीन वर्किंग ऑन दिस प्रोजेक्ट फॉर अ ईयर","अगले महीने तक वह इस प्रोजेक्ट पर एक साल से काम कर रही होगी।"),
+    T("By evening, we will have been travelling for ten hours.","बाइ ईवनिंग, वी विल हैव बीन ट्रैवलिंग फॉर टेन आवर्स","शाम तक हम दस घंटे से यात्रा कर रहे होंगे।"),
+    T("By the time he retires, he will have been teaching for 30 years.","बाइ द टाइम ही रिटायर्स, ही विल हैव बीन टीचिंग फॉर थर्टी ईयर्स","रिटायर होने तक वह 30 साल से पढ़ा रहा होगा।"),
+    T("I will not have been working here long by then.","आइ विल नॉट हैव बीन वर्किंग हियर लॉन्ग बाइ देन","तब तक मैं यहाँ ज्यादा समय से काम नहीं कर रहा होऊँगा।"),
+    T("She will not have been living here for long by next year.","शी विल नॉट हैव बीन लिविंग हियर फॉर लॉन्ग बाइ नेक्स्ट ईयर","अगले साल तक वह यहाँ ज्यादा समय से नहीं रह रही होगी।"),
+    T("Will you have been working here for 5 years by June?","विल यू हैव बीन वर्किंग हियर फॉर फाइव ईयर्स बाइ जून","क्या जून तक तुम यहाँ 5 साल से काम कर रहे होगे?"),
+    T("How long will you have been studying by then?","हाउ लॉन्ग विल यू हैव बीन स्टडीइंग बाइ देन","तब तक तुम कब से पढ़ रहे होगे?"),
+    T("Will she have been teaching for 10 years by next month?","विल शी हैव बीन टीचिंग फॉर टेन ईयर्स बाइ नेक्स्ट मंथ","क्या अगले महीने तक वह 10 साल से पढ़ा रही होगी?"),
+    T("By 2030, how long will he have been working there?","बाइ ट्वेंटी थर्टी, हाउ लॉन्ग विल ही हैव बीन वर्किंग देयर","2030 तक वह वहाँ कब से काम कर रहा होगा?")
+  ],
+  vocabTitle: "Travel & Transport",
+  words: [
+    T("Car","कार","कार"), T("Bus","बस","बस"), T("Train","ट्रेन","ट्रेन"),
+    T("Flight","फ्लाइट","उड़ान"), T("Ticket","टिकट","टिकट"), T("Journey","जर्नी","यात्रा"),
+    T("Luggage","लगेज","सामान"), T("Driver","ड्राइवर","ड्राइवर"), T("Traffic","ट्रैफिक","यातायात"),
+    T("Platform","प्लेटफॉर्म","प्लेटफॉर्म")
+  ],
+  quiz: [
+    {
+      q: "By June, I ___ here for 5 years.",
+      options: ["work","will work","will have been working","have worked"],
+      correctIndex: 2
+    },
+    {
+      q: "Future Perfect Continuous emphasizes what, up to a future point?",
+      options: ["A single instant","The duration of an ongoing action","A completed fact only","A habitual routine"],
+      correctIndex: 1
+    },
+    {
+      q: "'तब तक तुम कब से पढ़ रहे होगे?' — pick the match.",
+      options: ["How long do you study by then?","How long will you study by then?","How long will you have been studying by then?","How long have you studied by then?"],
+      correctIndex: 2
+    }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 13 — Modals: Can / Could / May / Might
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 13,
+  focusEn: "Modals — Can / Could / May / Might",
+  focusHi: "मोडल्स — क्षमता, अनुमति, संभावना",
+  devTag: "Modals · Ability & Permission",
+  rule: "Can = ability/permission (informal), Could = past ability/polite request, May = formal permission/possibility, Might = weaker possibility. In sabke baad hamesha V1 (base verb) aata hai.",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + can/could/may/might + V1", ex:"I can speak three languages."},
+    neg: {label:"Negative", f:"S + can/could/may/might + not + V1", ex:"He can't swim, so he avoids the pool."},
+    q:   {label:"Question", f:"Can/Could/May/Might + S + V1?", ex:"Could you please open the window?"}
+  },
+  sentences: [
+    T("I can speak three languages.","आइ कैन स्पीक थ्री लैंग्वेजेज़","मैं तीन भाषाएं बोल सकता हूँ।"),
+    T("Can you pass me the salt?","कैन यू पास मी द सॉल्ट","क्या तुम मुझे नमक दे सकते हो?"),
+    T("Birds can fly, but they can't talk.","बर्ड्स कैन फ्लाइ, बट दे कान्ट टॉक","पक्षी उड़ सकते हैं, पर बात नहीं कर सकते।"),
+    T("When I was young, I could run very fast.","वेन आइ वॉज़ यंग, आइ कुड रन वेरी फास्ट","जब मैं जवान था, मैं बहुत तेज़ दौड़ सकता था।"),
+    T("Could you please open the window?","कुड यू प्लीज़ ओपन द विंडो","क्या आप खिड़की खोल सकते हैं, प्लीज़?"),
+    T("It could rain this evening, so take an umbrella.","इट कुड रेन दिस ईवनिंग, सो टेक एन अम्ब्रेला","शाम को बारिश हो सकती है, इसलिए छाता ले जाओ।"),
+    T("May I come in, sir?","मे आइ कम इन, सर","क्या मैं अंदर आ सकता हूँ, सर?"),
+    T("It may take two hours to reach there.","इट मे टेक टू आवर्स टू रीच देयर","वहां पहुंचने में दो घंटे लग सकते हैं।"),
+    T("It might snow tonight in the mountains.","इट माइट स्नो टुनाइट इन द माउंटेन्स","आज रात पहाड़ों में बर्फ पड़ सकती है।"),
+    T("He might come to the party, I am not sure.","ही माइट कम टू द पार्टी, आइ एम नॉट शुअर","हो सकता है वह पार्टी में आए, मुझे पक्का नहीं पता।"),
+    T("She might be at home right now.","शी माइट बी एट होम राइट नाउ","हो सकता है वह अभी घर पर हो।"),
+    T("He can't swim, so he avoids the pool.","ही कान्ट स्विम, सो ही अवॉइड्स द पूल","वह तैर नहीं सकता, इसलिए पूल से बचता है।")
+  ],
+  vocabTitle: "Shopping & Money",
+  words: [
+    T("Money","मनी","पैसा"), T("Price","प्राइस","कीमत"), T("Discount","डिस्काउंट","छूट"),
+    T("Bill","बिल","बिल"), T("Cash","कैश","नकद"), T("Card","कार्ड","कार्ड"),
+    T("Shop","शॉप","दुकान"), T("Customer","कस्टमर","ग्राहक"), T("Cheap","चीप","सस्ता"),
+    T("Expensive","एक्सपेंसिव","महंगा")
+  ],
+  quiz: [
+    { q: "___ you pass me the salt? (informal request)", options: ["May","Can","Should","Must"], correctIndex: 1 },
+    { q: "Choose the sentence for a weaker possibility.", options: ["He can come.","He must come.","He might come.","He should come."], correctIndex: 2 },
+    { q: "'क्या मैं अंदर आ सकता हूँ, सर?' — pick the formal match.", options: ["Can I come in, sir?","May I come in, sir?","Could I coming in, sir?","Might I comes in, sir?"], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 14 — Modals: Should / Must / Have to
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 14,
+  focusEn: "Modals — Should / Must / Have to",
+  focusHi: "मोडल्स — सलाह और आवश्यकता",
+  devTag: "Modals · Advice & Obligation",
+  rule: "Should = advice/suggestion, Must = strong obligation/logical certainty (speaker ki apni feeling), Have to/Has to = necessity jo bahar se (rule/circumstance) aati hai.",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + should/must/have to + V1", ex:"You should drink more water every day."},
+    neg: {label:"Negative", f:"S + should not/must not/do not have to + V1", ex:"You must not tell a lie."},
+    q:   {label:"Question", f:"Should + S + V1? / Do/Does + S + have to + V1?", ex:"Do we have to pay in advance?"}
+  },
+  sentences: [
+    T("You should drink more water every day.","यू शुड ड्रिंक मोर वॉटर एवरी डे","तुम्हें रोज़ ज़्यादा पानी पीना चाहिए।"),
+    T("You should not waste your time on useless things.","यू शुड नॉट वेस्ट योर टाइम ऑन यूज़लेस थिंग्स","तुम्हें बेकार चीज़ों में समय बर्बाद नहीं करना चाहिए।"),
+    T("You should see a doctor if the pain continues.","यू शुड सी अ डॉक्टर इफ द पेन कंटिन्यूज़","अगर दर्द जारी रहे तो डॉक्टर को दिखाना चाहिए।"),
+    T("You must wear a seatbelt while driving.","यू मस्ट वेयर अ सीटबेल्ट वाइल ड्राइविंग","ड्राइविंग करते वक्त सीटबेल्ट पहनना ज़रूरी है।"),
+    T("You must not tell a lie.","यू मस्ट नॉट टेल अ लाइ","तुम्हें झूठ नहीं बोलना चाहिए — बिल्कुल मना है।"),
+    T("He must be very tired after working all day.","ही मस्ट बी वेरी टायर्ड आफ्टर वर्किंग ऑल डे","पूरा दिन काम करने के बाद वह ज़रूर थका होगा।"),
+    T("I have to wake up early tomorrow for work.","आइ हैव टू वेक अप अर्ली टुमॉरो फॉर वर्क","मुझे कल काम के लिए जल्दी उठना है।"),
+    T("Do we have to pay in advance?","डू वी हैव टू पे इन एडवांस","क्या हमें एडवांस में पेमेंट करनी पड़ेगी?"),
+    T("He doesn't have to come if he is busy.","ही डज़न्ट हैव टू कम इफ ही इज़ बिज़ी","अगर वह बिज़ी है तो उसे आना ज़रूरी नहीं है।"),
+    T("We had to wait for two hours at the airport.","वी हैड टू वेट फॉर टू आवर्स एट द एयरपोर्ट","हमें एयरपोर्ट पर दो घंटे वेट करना पड़ा।"),
+    T("Students must reach school before 8 AM.","स्टूडेंट्स मस्ट रीच स्कूल बिफोर एट एएम","छात्रों को 8 बजे से पहले स्कूल पहुंचना ज़रूरी है।"),
+    T("We will have to leave early to catch the train.","वी विल हैव टू लीव अर्ली टू कैच द ट्रेन","ट्रेन पकड़ने के लिए हमें जल्दी निकलना होगा।")
+  ],
+  vocabTitle: "School & Education",
+  words: [
+    T("Teacher","टीचर","शिक्षक"), T("Student","स्टूडेंट","छात्र"), T("Class","क्लास","कक्षा"),
+    T("Book","बुक","किताब"), T("Homework","होमवर्क","गृहकार्य"), T("Exam","एग्ज़ाम","परीक्षा"),
+    T("Result","रिज़ल्ट","परिणाम"), T("Subject","सब्जेक्ट","विषय"), T("Answer","आंसर","उत्तर"),
+    T("Knowledge","नॉलिज","ज्ञान")
+  ],
+  quiz: [
+    { q: "You ___ wear a seatbelt while driving. (strong obligation)", options: ["should","must","might","could"], correctIndex: 1 },
+    { q: "Choose the correct necessity (external rule) sentence.", options: ["I must to wake up early.","I have to wake up early.","I should to wake up early.","I having to wake up early."], correctIndex: 1 },
+    { q: "'अगर दर्द जारी रहे तो डॉक्टर को दिखाना चाहिए' — pick the match.", options: ["You must see a doctor if the pain continues.","You should see a doctor if the pain continues.","You can see a doctor if the pain continues.","You seeing a doctor if the pain continues."], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 15 — Modals: Will / Would (+ Modal Review)
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 15,
+  focusEn: "Modals — Will / Would (Review)",
+  focusHi: "मोडल्स — भविष्य, विनम्र अनुरोध + रिव्यू",
+  devTag: "Modals · Future & Polite Requests",
+  rule: "Will = future action/willingness/promise, Would = polite request/offer/imaginary situation (unreal conditional). Aaj hum sabhi modals (Can/Could/May/Might/Should/Must/Have to/Will/Would) ka review bhi karenge.",
+  formulas: {
+    aff: {label:"Affirmative", f:"S + will/would + V1", ex:"I will call you as soon as I reach home."},
+    neg: {label:"Negative", f:"S + will not/would not + V1", ex:"I would not accept that offer."},
+    q:   {label:"Question", f:"Will/Would + S + V1?", ex:"Would you like some coffee?"}
+  },
+  sentences: [
+    T("I will call you as soon as I reach home.","आइ विल कॉल यू ऐज़ सून ऐज़ आइ रीच होम","घर पहुंचते ही मैं तुम्हें कॉल करूंगा।"),
+    T("Will you marry me?","विल यू मैरी मी","क्या तुम मुझसे शादी करोगी?"),
+    T("She will finish the project by Friday.","शी विल फिनिश द प्रोजेक्ट बाइ फ्राइडे","वह प्रोजेक्ट शुक्रवार तक पूरा कर देगी।"),
+    T("Would you like some coffee?","वुड यू लाइक सम कॉफी","क्या आप कॉफी लेना चाहेंगे?"),
+    T("I would love to visit Paris someday.","आइ वुड लव टू विज़िट पेरिस समडे","मैं कभी न कभी पेरिस जाना चाहूंगा।"),
+    T("Would you mind closing the door?","वुड यू माइंड क्लोज़िंग द डोर","क्या आपको दरवाज़ा बंद करने में आपत्ति होगी?"),
+    T("We would appreciate your feedback.","वी वुड अप्रीशिएट योर फीडबैक","हमें आपकी फीडबैक की कद्र होगी।"),
+    T("If I were you, I would accept the offer.","इफ आइ वर यू, आइ वुड एक्सेप्ट द ऑफर","अगर मैं तुम होता, तो यह ऑफर एक्सेप्ट कर लेता।"),
+    T("It will rain tomorrow, according to the forecast.","इट विल रेन टुमॉरो, अकॉर्डिंग टू द फोरकास्ट","फोरकास्ट के हिसाब से कल बारिश होगी।"),
+    T("He will help you with your homework.","ही विल हेल्प यू विद योर होमवर्क","वह तुम्हारी होमवर्क में मदद करेगा।"),
+    T("Could you please open the window? (review: Could)","कुड यू प्लीज़ ओपन द विंडो","क्या आप खिड़की खोल सकते हैं, प्लीज़? (रिव्यू)"),
+    T("You must not tell a lie. (review: Must)","यू मस्ट नॉट टेल अ लाइ","तुम्हें झूठ नहीं बोलना चाहिए। (रिव्यू)")
+  ],
+  vocabTitle: "Home & Furniture",
+  words: [
+    T("House","हाउस","घर"), T("Room","रूम","कमरा"), T("Bed","बेड","बिस्तर"),
+    T("Chair","चेयर","कुर्सी"), T("Table","टेबल","मेज़"), T("Kitchen","किचन","रसोई"),
+    T("Door","डोर","दरवाज़ा"), T("Window","विंडो","खिड़की"), T("Key","की","चाबी"),
+    T("Clean","क्लीन","साफ")
+  ],
+  quiz: [
+    { q: "Would you ___ some coffee? (polite offer)", options: ["like","liking","liked","likes"], correctIndex: 0 },
+    { q: "Which modal shows an imaginary/unreal situation?", options: ["Will","Can","Would (in 'If I were you...')","Must"], correctIndex: 2 },
+    { q: "Review: pick the modal for strong obligation.", options: ["Might","Could","Must","Would"], correctIndex: 2 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 16 — Active-Passive Voice: Present Tenses
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 16,
+  focusEn: "Active–Passive Voice — Present Tenses",
+  focusHi: "एक्टिव-पैसिव वॉइस — वर्तमान काल",
+  devTag: "Voice · Present",
+  rule: "Active voice mein subject kaam karta hai (Teachers teach students). Passive voice mein object subject ban jaata hai aur 'is/am/are + V3' use hota hai (Students are taught by teachers).",
+  formulas: {
+    aff: {label:"Present Simple", f:"Object + is/am/are + V3 (+ by Subject)", ex:"Students are taught by teachers."},
+    neg: {label:"Present Continuous", f:"Object + is/am/are + being + V3", ex:"Dinner is being cooked by the chef."},
+    q:   {label:"Present Perfect", f:"Object + has/have + been + V3", ex:"The window has been broken (by someone)."}
+  },
+  sentences: [
+    T("Teachers teach students. -> Students are taught by teachers.","स्टूडेंट्स आर टॉट बाइ टीचर्स","छात्र शिक्षकों द्वारा पढ़ाए जाते हैं।"),
+    T("The chef is cooking dinner. -> Dinner is being cooked by the chef.","डिनर इज़ बीइंग कुक्ड बाइ द शेफ","डिनर शेफ द्वारा बनाया जा रहा है।"),
+    T("Someone has broken the window. -> The window has been broken.","द विंडो हैज़ बीन ब्रोकन","खिड़की तोड़ी गई है।"),
+    T("Doctors advise patients to rest. -> Patients are advised to rest by doctors.","पेशेंट्स आर एडवाइज़्ड टू रेस्ट बाइ डॉक्टर्स","मरीज़ों को डॉक्टरों द्वारा आराम की सलाह दी जाती है।"),
+    T("The postman delivers letters every morning. -> Letters are delivered by the postman every morning.","लेटर्स आर डिलीवर्ड बाइ द पोस्टमैन एवरी मॉर्निंग","चिट्ठियां हर सुबह डाकिया द्वारा पहुंचाई जाती हैं।"),
+    T("She is writing a novel. -> A novel is being written by her.","अ नॉवेल इज़ बीइंग रिटन बाइ हर","एक उपन्यास उसके द्वारा लिखा जा रहा है।"),
+    T("They have cancelled the flight. -> The flight has been cancelled.","द फ्लाइट हैज़ बीन कैंसल्ड","फ्लाइट कैंसल कर दी गई है।"),
+    T("The students are solving the problem. -> The problem is being solved by the students.","द प्रॉब्लम इज़ बीइंग सॉल्व्ड बाइ द स्टूडेंट्स","समस्या छात्रों द्वारा हल की जा रही है।"),
+    T("Someone has stolen my wallet. -> My wallet has been stolen.","माइ वॉलेट हैज़ बीन स्टोलन","मेरा वॉलेट चुराया गया है।"),
+    T("People speak English all over the world. -> English is spoken all over the world.","इंग्लिश इज़ स्पोकन ऑल ओवर द वर्ल्ड","अंग्रेज़ी पूरी दुनिया में बोली जाती है।"),
+    T("My mother cooks food every day. -> Food is cooked by my mother every day.","फूड इज़ कुक्ड बाइ माइ मदर एवरी डे","खाना मेरी मां द्वारा हर दिन बनाया जाता है।"),
+    T("The artist is painting a beautiful portrait. -> A beautiful portrait is being painted by the artist.","अ ब्यूटीफुल पोर्ट्रेट इज़ बीइंग पेंटेड बाइ द आर्टिस्ट","एक सुंदर चित्र कलाकार द्वारा बनाया जा रहा है।")
+  ],
+  vocabTitle: "Adjectives (Describing Words)",
+  words: [
+    T("Big","बिग","बड़ा"), T("Small","स्मॉल","छोटा"), T("Good","गुड","अच्छा"),
+    T("Bad","बैड","बुरा"), T("Beautiful","ब्यूटीफुल","सुंदर"), T("Strong","स्ट्रॉन्ग","मजबूत"),
+    T("Easy","ईज़ी","आसान"), T("Difficult","डिफिकल्ट","मुश्किल"), T("Fast","फास्ट","तेज़"),
+    T("Clean","क्लीन","साफ")
+  ],
+  quiz: [
+    { q: "Passive of 'Teachers teach students':", options: ["Students teach teachers.","Students are taught by teachers.","Students taught teachers.","Students is taught by teachers."], correctIndex: 1 },
+    { q: "Present Continuous passive uses which structure?", options: ["is/am/are + V3","is/am/are + being + V3","has/have + been + V3","was/were + V3"], correctIndex: 1 },
+    { q: "Passive of 'The chef is cooking dinner':", options: ["Dinner is cooked by the chef.","Dinner is being cooked by the chef.","Dinner was being cooked by the chef.","Dinner has been cooked by the chef."], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 17 — Active-Passive Voice: Past/Future Tenses
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 17,
+  focusEn: "Active–Passive Voice — Past / Future Tenses",
+  focusHi: "एक्टिव-पैसिव वॉइस — भूत और भविष्य काल",
+  devTag: "Voice · Past & Future",
+  rule: "Past Simple passive = was/were + V3. Future Simple passive = will be + V3. Past Perfect passive = had been + V3. Modal passive = modal + be + V3.",
+  formulas: {
+    aff: {label:"Past Simple", f:"Object + was/were + V3 (+ by Subject)", ex:"Rice was grown by the farmer last year."},
+    neg: {label:"Future Simple", f:"Object + will be + V3", ex:"The leave will be approved by the manager."},
+    q:   {label:"Modal Passive", f:"Object + modal + be + V3", ex:"This task must be completed today."}
+  },
+  sentences: [
+    T("The farmer grew rice last year. -> Rice was grown by the farmer last year.","राइस वॉज़ ग्रोन बाइ द फार्मर लास्ट ईयर","चावल किसान द्वारा पिछले साल उगाया गया।"),
+    T("The police caught the thief. -> The thief was caught by the police.","द थीफ वॉज़ कॉट बाइ द पुलिस","चोर पुलिस द्वारा पकड़ा गया।"),
+    T("The workers were building the bridge. -> The bridge was being built by the workers.","द ब्रिज वॉज़ बीइंग बिल्ट बाइ द वर्कर्स","पुल मज़दूरों द्वारा बनाया जा रहा था।"),
+    T("My father had repaired the car before I woke up. -> The car had been repaired by my father before I woke up.","द कार हैड बीन रिपेयर्ड बाइ माइ फादर बिफोर आइ वोक अप","कार मेरे उठने से पहले पिताजी द्वारा ठीक की गई थी।"),
+    T("The manager will approve the leave. -> The leave will be approved by the manager.","द लीव विल बी अप्रूव्ड बाइ द मैनेजर","छुट्टी मैनेजर द्वारा मंज़ूर की जाएगी।"),
+    T("The company will have completed the project by June. -> The project will have been completed by the company by June.","द प्रोजेक्ट विल हैव बीन कम्प्लीटेड बाइ द कंपनी बाइ जून","प्रोजेक्ट जून तक कंपनी द्वारा पूरा कर लिया गया होगा।"),
+    T("The committee will announce the results tomorrow. -> The results will be announced by the committee tomorrow.","द रिज़ल्ट्स विल बी अनाउंस्ड बाइ द कमिटी टुमॉरो","परिणाम कल कमिटी द्वारा घोषित किए जाएंगे।"),
+    T("We must complete this task today. -> This task must be completed today.","दिस टास्क मस्ट बी कम्प्लीटेड टुडे","यह काम आज पूरा किया जाना चाहिए।"),
+    T("You should return the books on time. -> The books should be returned on time.","द बुक्स शुड बी रिटर्न्ड ऑन टाइम","किताबें समय पर लौटाई जानी चाहिए।"),
+    T("The engineer had designed the building before construction started. -> The building had been designed by the engineer before construction started.","द बिल्डिंग हैड बीन डिज़ाइन्ड बाइ द इंजीनियर बिफोर कंस्ट्रक्शन स्टार्टेड","इमारत निर्माण शुरू होने से पहले इंजीनियर द्वारा डिज़ाइन की गई थी।"),
+    T("The teacher will explain the lesson tomorrow. -> The lesson will be explained by the teacher tomorrow.","द लेसन विल बी एक्सप्लेन्ड बाइ द टीचर टुमॉरो","पाठ कल शिक्षक द्वारा समझाया जाएगा।"),
+    T("Ramesh painted this picture. -> This picture was painted by Ramesh.","दिस पिक्चर वॉज़ पेंटेड बाइ रमेश","यह तस्वीर रमेश द्वारा बनाई गई।")
+  ],
+  vocabTitle: "Technology & Communication",
+  words: [
+    T("Phone","फोन","फोन"), T("Computer","कंप्यूटर","कंप्यूटर"), T("Internet","इंटरनेट","इंटरनेट"),
+    T("Laptop","लैपटॉप","लैपटॉप"), T("Email","ईमेल","ईमेल"), T("Password","पासवर्ड","पासवर्ड"),
+    T("Message","मेसेज","संदेश"), T("Camera","कैमरा","कैमरा"), T("Battery","बैटरी","बैटरी"),
+    T("Network","नेटवर्क","नेटवर्क")
+  ],
+  quiz: [
+    { q: "Passive of 'The farmer grew rice last year':", options: ["Rice grew by the farmer last year.","Rice was grown by the farmer last year.","Rice is grown by the farmer last year.","Rice has grown by the farmer last year."], correctIndex: 1 },
+    { q: "Future Simple passive structure:", options: ["will + V3","will be + V3","will have + V3","is being + V3"], correctIndex: 1 },
+    { q: "Passive of 'We must complete this task today':", options: ["This task must complete today.","This task must be completed today.","This task must been completed today.","This task must completing today."], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 18 — Direct-Indirect Narration: Statements
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 18,
+  focusEn: "Direct–Indirect Narration — Statements",
+  focusHi: "प्रत्यक्ष-अप्रत्यक्ष कथन — वाक्य",
+  devTag: "Narration · Statements",
+  rule: "Direct speech mein exact words quote hote hain (\"...\"). Indirect speech mein 'that' se report karte hain aur tense ek step peeche chala jaata hai (Present->Past, Past->Past Perfect). Pronouns bhi according badalte hain.",
+  formulas: {
+    aff: {label:"Present -> Past", f:"S + said (that) + S + V2...", ex:"He said that he was going to Delhi."},
+    neg: {label:"Present Perfect -> Past Perfect", f:"S + said (that) + S + had + V3...", ex:"She said that she had finished her work."},
+    q:   {label:"Will -> Would", f:"S + said (that) + S + would + V1...", ex:"They said that they would help us."}
+  },
+  sentences: [
+    T("He said, \"I am going to Delhi.\" -> He said that he was going to Delhi.","ही सेड दैट ही वॉज़ गोइंग टू देल्ही","उसने कहा कि वह दिल्ली जा रहा था।"),
+    T("She said, \"I have finished my work.\" -> She said that she had finished her work.","शी सेड दैट शी हैड फिनिश्ड हर वर्क","उसने कहा कि उसने अपना काम खत्म कर लिया था।"),
+    T("They said, \"We will help you.\" -> They said that they would help us.","दे सेड दैट दे वुड हेल्प अस","उन्होंने कहा कि वे हमारी मदद करेंगे।"),
+    T("Ram said, \"I can swim.\" -> Ram said that he could swim.","राम सेड दैट ही कुड स्विम","राम ने कहा कि वह तैर सकता था।"),
+    T("She said, \"I am watching a movie.\" -> She said that she was watching a movie.","शी सेड दैट शी वॉज़ वॉचिंग अ मूवी","उसने कहा कि वह मूवी देख रही थी।"),
+    T("The teacher said, \"The earth is round.\" -> The teacher said that the earth is round. (universal truth)","द टीचर सेड दैट द अर्थ इज़ राउंड","शिक्षक ने कहा कि पृथ्वी गोल है। (सार्वभौमिक सत्य)"),
+    T("She said, \"I must finish this today.\" -> She said that she had to finish that day.","शी सेड दैट शी हैड टू फिनिश दैट डे","उसने कहा कि उसे उस दिन खत्म करना था।"),
+    T("He said, \"I may come tomorrow.\" -> He said that he might come the next day.","ही सेड दैट ही माइट कम द नेक्स्ट डे","उसने कहा कि वह अगले दिन आ सकता था।"),
+    T("My friend said, \"I like reading books.\" -> My friend said that he liked reading books.","माइ फ्रेंड सेड दैट ही लाइक्ड रीडिंग बुक्स","मेरे दोस्त ने कहा कि उसे किताबें पढ़ना पसंद है।"),
+    T("She said, \"I will call you tonight.\" -> She said that she would call me that night.","शी सेड दैट शी वुड कॉल मी दैट नाइट","उसने कहा कि वह उस रात मुझे कॉल करेगी।"),
+    T("He said, \"I bought a new car.\" -> He said that he had bought a new car.","ही सेड दैट ही हैड बॉट अ न्यू कार","उसने कहा कि उसने नई कार खरीदी थी।"),
+    T("He said, \"I shall come with you.\" -> He said that he would come with me.","ही सेड दैट ही वुड कम विद मी","उसने कहा कि वह मेरे साथ आएगा।")
+  ],
+  vocabTitle: "Nature & Animals",
+  words: [
+    T("Tree","ट्री","पेड़"), T("Flower","फ्लावर","फूल"), T("River","रिवर","नदी"),
+    T("Mountain","माउंटन","पहाड़"), T("Sky","स्काई","आकाश"), T("Forest","फॉरेस्ट","जंगल"),
+    T("Bird","बर्ड","पक्षी"), T("Cow","काउ","गाय"), T("Dog","डॉग","कुत्ता"),
+    T("Elephant","एलिफेंट","हाथी")
+  ],
+  quiz: [
+    { q: "Indirect of 'He said, \"I am going to Delhi.\"':", options: ["He said that he is going to Delhi.","He said that he was going to Delhi.","He said that he go to Delhi.","He said that he will going to Delhi."], correctIndex: 1 },
+    { q: "Present Perfect in direct speech becomes ___ in indirect speech.", options: ["Present Perfect","Past Perfect","Past Simple","Future Perfect"], correctIndex: 1 },
+    { q: "A universal truth (e.g. 'The earth is round') in indirect speech:", options: ["Changes to past tense","Stays in present tense","Changes to future tense","Becomes a question"], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 19 — Direct-Indirect Narration: Questions & Commands
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 19,
+  focusEn: "Direct–Indirect Narration — Questions & Commands",
+  focusHi: "प्रत्यक्ष-अप्रत्यक्ष कथन — प्रश्न और आदेश",
+  devTag: "Narration · Questions & Commands",
+  rule: "Wh-questions mein 'said/asked' -> 'asked' + wh-word (that/if nahi lagta). Yes/No questions mein 'if/whether' use hota hai. Commands mein 'told/ordered/requested' + to + V1 use hota hai.",
+  formulas: {
+    aff: {label:"Wh-Question", f:"S + asked + wh-word + S + V(past)", ex:"He asked what my name was."},
+    neg: {label:"Yes/No Question", f:"S + asked + if/whether + S + V(past)", ex:"She asked if I liked coffee."},
+    q:   {label:"Command / Request", f:"S + told/requested/ordered + O + to + V1", ex:"The coach told the players to run faster."}
+  },
+  sentences: [
+    T("He asked, \"What is your name?\" -> He asked what my name was.","ही आस्क्ड वॉट माइ नेम वॉज़","उसने पूछा कि मेरा नाम क्या था।"),
+    T("She asked, \"Where do you live?\" -> She asked where I lived.","शी आस्क्ड वेयर आइ लिव्ड","उसने पूछा कि मैं कहां रहता हूँ।"),
+    T("He asked, \"Are you coming to the party?\" -> He asked if I was coming to the party.","ही आस्क्ड इफ आइ वॉज़ कमिंग टू द पार्टी","उसने पूछा कि क्या मैं पार्टी में आ रहा था।"),
+    T("She asked, \"Do you like coffee?\" -> She asked if I liked coffee.","शी आस्क्ड इफ आइ लाइक्ड कॉफी","उसने पूछा कि क्या मुझे कॉफी पसंद है।"),
+    T("He asked, \"Why are you crying?\" -> He asked why I was crying.","ही आस्क्ड वाइ आइ वॉज़ क्राइंग","उसने पूछा कि मैं क्यों रो रहा था।"),
+    T("She asked, \"Can you help me?\" -> She asked if I could help her.","शी आस्क्ड इफ आइ कुड हेल्प हर","उसने पूछा कि क्या मैं उसकी मदद कर सकता था।"),
+    T("The manager said, \"Submit the report by Friday.\" -> The manager told us to submit the report by Friday.","द मैनेजर टोल्ड अस टू सबमिट द रिपोर्ट बाइ फ्राइडे","मैनेजर ने हमें रिपोर्ट शुक्रवार तक जमा करने को कहा।"),
+    T("The mother said, \"Drink your milk.\" -> The mother told her child to drink his milk.","द मदर टोल्ड हर चाइल्ड टू ड्रिंक हिज़ मिल्क","मां ने अपने बच्चे को दूध पीने को कहा।"),
+    T("He said, \"Please lend me some money.\" -> He requested me to lend him some money.","ही रिक्वेस्टेड मी टू लेंड हिम सम मनी","उसने मुझसे पैसे उधार देने का अनुरोध किया।"),
+    T("The doctor said, \"Do not eat oily food.\" -> The doctor advised me not to eat oily food.","द डॉक्टर एडवाइज़्ड मी नॉट टू ईट ऑइली फूड","डॉक्टर ने मुझे तेलीय खाना न खाने की सलाह दी।"),
+    T("The captain said, \"Attack now!\" -> The captain ordered the soldiers to attack immediately.","द कैप्टन ऑर्डर्ड द सोल्जर्स टू अटैक इमीडिएटली","कप्तान ने सैनिकों को तुरंत हमला करने का आदेश दिया।"),
+    T("The coach said, \"Run faster.\" -> The coach told the players to run faster.","द कोच टोल्ड द प्लेयर्स टू रन फास्टर","कोच ने खिलाड़ियों को तेज़ दौड़ने को कहा।")
+  ],
+  vocabTitle: "Sports & Hobbies",
+  words: [
+    T("Cricket","क्रिकेट","क्रिकेट"), T("Football","फुटबॉल","फुटबॉल"), T("Team","टीम","टीम"),
+    T("Player","प्लेयर","खिलाड़ी"), T("Match","मैच","मैच"), T("Win","विन","जीतना"),
+    T("Practice","प्रैक्टिस","अभ्यास"), T("Music","म्यूज़िक","संगीत"), T("Swimming","स्विमिंग","तैराकी"),
+    T("Reading","रीडिंग","पढ़ना")
+  ],
+  quiz: [
+    { q: "Indirect of 'He asked, \"What is your name?\"':", options: ["He asked that what my name was.","He asked what my name was.","He asked what is my name.","He asked what my name is."], correctIndex: 1 },
+    { q: "Yes/No questions use ___ in indirect speech.", options: ["that","if/whether","to","said"], correctIndex: 1 },
+    { q: "Indirect of 'The coach said, \"Run faster.\"':", options: ["The coach said to run faster.","The coach told the players to run faster.","The coach asked if run faster.","The coach said that run faster."], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 20 — Parts of Speech: Noun & Pronoun
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 20,
+  focusEn: "Parts of Speech — Noun & Pronoun",
+  focusHi: "शब्द भेद — संज्ञा और सर्वनाम",
+  devTag: "Grammar · Noun & Pronoun",
+  rule: "Noun woh word hai jo kisi vyakti, sthaan, cheez, ya bhaav ka naam bataye (Ram, Delhi, Book, Honesty). Pronoun Noun ki jagah use hota hai taaki repeat na ho (He, She, It, They).",
+  formulas: {
+    aff: {label:"Noun", f:"Person / Place / Thing / Idea", ex:"Ram plays cricket. / Honesty is the best policy."},
+    neg: {label:"Personal Pronoun", f:"I, You, He, She, It, We, They", ex:"He is my best friend."},
+    q:   {label:"Possessive Pronoun", f:"Mine, Yours, His, Hers, Ours, Theirs", ex:"This pen is mine."}
+  },
+  sentences: [
+    T("Ram plays cricket.","राम प्लेज़ क्रिकेट","राम क्रिकेट खेलता है।"),
+    T("My family lives in Delhi.","माय फैमिली लिव्स इन डेल्ही","मेरा परिवार दिल्ली में रहता है।"),
+    T("Honesty is the best policy.","ऑनेस्टी इज़ द बेस्ट पॉलिसी","ईमानदारी सबसे अच्छी नीति है।"),
+    T("The Taj Mahal is in Agra.","द ताज महल इज़ इन आगरा","ताजमहल आगरा में है।"),
+    T("I am going to school.","आइ एम गोइंग टू स्कूल","मैं स्कूल जा रहा हूँ।"),
+    T("He is my best friend.","ही इज़ माय बेस्ट फ्रेंड","वह मेरा सबसे अच्छा दोस्त है।"),
+    T("She sings very well.","शी सिंग्स वेरी वेल","वह बहुत अच्छा गाती है।"),
+    T("This pen is mine.","दिस पेन इज़ माइन","यह कलम मेरी है।"),
+    T("Is this bag yours?","इज़ दिस बैग योर्स","क्या यह बैग तुम्हारा है?"),
+    T("I hurt myself while playing.","आइ हर्ट माइसेल्फ वाइल प्लेइंग","खेलते समय मुझे चोट लग गई।"),
+    T("Someone left this bag here.","समवन लेफ्ट दिस बैग हियर","किसी ने यह बैग यहाँ छोड़ दिया।"),
+    T("Everyone enjoyed the movie.","एवरीवन एन्जॉय्ड द मूवी","सबने फिल्म का आनंद लिया।")
+  ],
+  vocabTitle: "Society & Common Situations",
+  words: [
+    T("Problem","प्रॉब्लम","समस्या"), T("Solution","सोल्यूशन","समाधान"), T("Idea","आइडिया","विचार"),
+    T("Decision","डिसिज़न","फैसला"), T("Opinion","ओपिनियन","राय"), T("Chance","चांस","मौका"),
+    T("Success","सक्सेस","सफलता"), T("Society","सोसाइटी","समाज"), T("Culture","कल्चर","संस्कृति"),
+    T("Festival","फेस्टिवल","त्योहार")
+  ],
+  quiz: [
+    { q: "Which word is a Noun in 'Honesty is the best policy'?", options: ["is","the","Honesty","best"], correctIndex: 2 },
+    { q: "Which is a Pronoun?", options: ["Delhi","He","Book","Play"], correctIndex: 1 },
+    { q: "'This pen is mine' — 'mine' is a:", options: ["Personal Pronoun","Possessive Pronoun","Reflexive Pronoun","Noun"], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 21 — Parts of Speech: Verb & Adjective
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 21,
+  focusEn: "Parts of Speech — Verb & Adjective",
+  focusHi: "शब्द भेद — क्रिया और विशेषण",
+  devTag: "Grammar · Verb & Adjective",
+  rule: "Verb batata hai ki koi kaam ho raha hai ya koi state hai — har sentence mein kam se kam ek verb zaroor hota hai. Adjective Noun ke baare mein extra jaankari deta hai — kaisa, kitna, kaunsa.",
+  formulas: {
+    aff: {label:"Action Verb", f:"S + V(action) + O", ex:"She sings a song every morning."},
+    neg: {label:"State/Being Verb", f:"S + is/am/are/was/were + Adjective/Noun", ex:"He seems happy today."},
+    q:   {label:"Adjective + Noun", f:"Adjective + Noun", ex:"This is a difficult question."}
+  },
+  sentences: [
+    T("She sings a song every morning.","शी सिंग्स अ सॉन्ग एवरी मॉर्निंग","वह हर सुबह एक गाना गाती है।"),
+    T("They are playing football.","दे आर प्लेइंग फुटबॉल","वे फुटबॉल खेल रहे हैं।"),
+    T("He seems happy today.","ही सीम्स हैप्पी टुडे","वह आज खुश लग रहा है।"),
+    T("She has already eaten her lunch.","शी हैज़ ऑलरेडी ईटन हर लंच","उसने पहले ही अपना लंच खा लिया है।"),
+    T("My father runs a small shop.","माइ फादर रन्स अ स्मॉल शॉप","मेरे पिताजी एक छोटी दुकान चलाते हैं।"),
+    T("She is a kind woman.","शी इज़ अ काइंड वुमन","वह एक दयालु महिला है।"),
+    T("This is a difficult question.","दिस इज़ अ डिफिकल्ट क्वेश्चन","यह एक कठिन प्रश्न है।"),
+    T("He bought a new car.","ही बॉट अ न्यू कार","उसने एक नई कार खरीदी।"),
+    T("The soup is too hot.","द सूप इज़ टू हॉट","सूप बहुत गर्म है।"),
+    T("He is the tallest boy in class.","ही इज़ द टॉलेस्ट बॉय इन क्लास","वह कक्षा में सबसे लंबा लड़का है।"),
+    T("This is the best restaurant in town.","दिस इज़ द बेस्ट रेस्टोरेंट इन टाउन","यह शहर का सबसे अच्छा रेस्टोरेंट है।"),
+    T("She is a talented singer.","शी इज़ अ टैलेंटेड सिंगर","वह एक प्रतिभाशाली गायिका है।")
+  ],
+  vocabTitle: "Personality Traits",
+  words: [
+    T("Honest","ऑनेस्ट","ईमानदार"), T("Kind","काइंड","दयालु"), T("Brave","ब्रेव","बहादुर"),
+    T("Hardworking","हार्डवर्किंग","मेहनती"), T("Generous","जेनरस","उदार"), T("Friendly","फ्रेंडली","मिलनसार"),
+    T("Loyal","लॉयल","वफादार"), T("Polite","पोलाइट","विनम्र"), T("Patient","पेशेंट","धैर्यवान"),
+    T("Wise","वाइज़","समझदार")
+  ],
+  quiz: [
+    { q: "Which word is the Verb in 'She sings a song'?", options: ["She","sings","a","song"], correctIndex: 1 },
+    { q: "Which word is an Adjective in 'This is a difficult question'?", options: ["This","is","difficult","question"], correctIndex: 2 },
+    { q: "'He seems happy today' — 'seems' is a:", options: ["Action verb","State/Being verb","Adjective","Adverb"], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 22 — Parts of Speech: Adverb, Preposition & Conjunction
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 22,
+  focusEn: "Parts of Speech — Adverb, Preposition & Conjunction",
+  focusHi: "शब्द भेद — क्रिया विशेषण, संबंध सूचक, समुच्चयबोधक",
+  devTag: "Grammar · Adverb, Preposition, Conjunction",
+  rule: "Adverb batata hai kaam kaise/kab/kahan/kitna hua (Verb/Adjective ki jaankari badhata hai). Preposition batata hai position/relation (jagah, samay). Conjunction words ya sentences ko jodta hai (and, but, because).",
+  formulas: {
+    aff: {label:"Adverb", f:"Verb + Adverb (-ly)", ex:"She sings beautifully."},
+    neg: {label:"Preposition", f:"Noun/Pronoun + Preposition + Noun", ex:"The keys are in the drawer."},
+    q:   {label:"Conjunction", f:"Clause + Conjunction + Clause", ex:"I am tired but happy."}
+  },
+  sentences: [
+    T("She sings beautifully.","शी सिंग्स ब्यूटीफुली","वह सुंदर तरीके से गाती है।"),
+    T("He always comes late.","ही ऑलवेज़ कम्स लेट","वह हमेशा देर से आता है।"),
+    T("She speaks English fluently.","शी स्पीक्स इंग्लिश फ्लुएंटली","वह अंग्रेज़ी धाराप्रवाह बोलती है।"),
+    T("They finished the work quickly.","दे फिनिश्ड द वर्क क्विकली","उन्होंने काम जल्दी खत्म किया।"),
+    T("The keys are in the drawer.","द कीज़ आर इन द ड्रॉअर","चाबियां दराज में हैं।"),
+    T("We met at the station.","वी मेट एट द स्टेशन","हम स्टेशन पर मिले।"),
+    T("The picture is on the wall.","द पिक्चर इज़ ऑन द वॉल","तस्वीर दीवार पर है।"),
+    T("He sat between two friends.","ही सैट बिटवीन टू फ्रेंड्स","वह दो दोस्तों के बीच बैठा।"),
+    T("Ram and Shyam are friends.","राम एंड श्याम आर फ्रेंड्स","राम और श्याम दोस्त हैं।"),
+    T("I am tired but happy.","आइ एम टायर्ड बट हैप्पी","मैं थका हुआ हूँ लेकिन खुश हूँ।"),
+    T("It rained, so we stayed home.","इट रेन्ड, सो वी स्टेड होम","बारिश हुई, इसलिए हम घर पर रुके।"),
+    T("Although he is rich, he is humble.","ऑलदो ही इज़ रिच, ही इज़ हम्बल","यद्यपि वह अमीर है, वह विनम्र है।")
+  ],
+  vocabTitle: "Business & Money Vocabulary",
+  words: [
+    T("Business","बिज़नेस","व्यापार"), T("Company","कंपनी","कंपनी"), T("Profit","प्रॉफिट","लाभ"),
+    T("Customer","कस्टमर","ग्राहक"), T("Market","मार्केट","बाज़ार"), T("Investment","इन्वेस्टमेंट","निवेश"),
+    T("Budget","बजट","बजट"), T("Income","इनकम","आय"), T("Savings","सेविंग्स","बचत"),
+    T("Payment","पेमेंट","भुगतान")
+  ],
+  quiz: [
+    { q: "Which word is an Adverb in 'She sings beautifully'?", options: ["She","sings","beautifully","-"], correctIndex: 2 },
+    { q: "Which word is a Preposition in 'The keys are in the drawer'?", options: ["keys","are","in","drawer"], correctIndex: 2 },
+    { q: "Which word is a Conjunction in 'I am tired but happy'?", options: ["I","tired","but","happy"], correctIndex: 2 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 23 — Daily Conversation: Greetings & Restaurant
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 23,
+  focusEn: "Daily Conversation — Greetings & Restaurant",
+  focusHi: "रोज़मर्रा की बातचीत — अभिवादन और रेस्टोरेंट",
+  devTag: "Conversation · Greetings & Restaurant",
+  rule: "Aaj hum roz-marra ki Greetings aur Restaurant English seekhenge — pehli mulakat mein kya bolein, aur restaurant mein order karte waqt kaunse phrases use karein.",
+  formulas: {
+    aff: {label:"Greeting Pattern", f:"How are you? / Nice to meet you.", ex:"Nice to meet you."},
+    neg: {label:"Restaurant Order", f:"I would like to order...", ex:"I would like to order a pizza."},
+    q:   {label:"Restaurant Request", f:"Can/Could I/we + V1...?", ex:"Could we get the bill, please?"}
+  },
+  sentences: [
+    T("How are you?","हाउ आर यू","आप कैसे हैं?"),
+    T("I am fine, thank you. And you?","आइ एम फाइन, थैंक यू। एंड यू","मैं ठीक हूं, धन्यवाद। और आप?"),
+    T("Nice to meet you.","नाइस टू मीट यू","आपसे मिलकर अच्छा लगा।"),
+    T("Where are you from?","वेयर आर यू फ्रॉम","आप कहाँ से हैं?"),
+    T("What have you been up to?","वॉट हैव यू बीन अप टू","आजकल क्या कर रहे हो?"),
+    T("Can I see the menu, please?","कैन आइ सी द मेन्यू, प्लीज़","क्या मुझे मेनू मिल सकता है?"),
+    T("I would like to order...","आइ वुड लाइक टू ऑर्डर...","मुझे ऑर्डर करना है..."),
+    T("Is this dish spicy?","इज़ दिस डिश स्पाइसी","क्या ये डिश तीखी है?"),
+    T("Do you have any vegetarian options?","डू यू हैव एनी वेजिटेरियन ऑप्शन्स","क्या आपके पास कोई वेजिटेरियन ऑप्शन है?"),
+    T("Could you recommend something popular here?","कुड यू रिकमेंड समथिंग पॉपुलर हियर","क्या आप कुछ पॉपुलर डिश सजेस्ट कर सकते हैं?"),
+    T("Could we get the bill, please?","कुड वी गेट द बिल, प्लीज़","क्या हमें बिल मिल सकता है?"),
+    T("The food was delicious, thank you.","द फूड वॉज़ डिलीशियस, थैंक यू","खाना बहुत स्वादिष्ट था, धन्यवाद।")
+  ],
+  vocabTitle: "Expressing Opinions",
+  words: [
+    T("I think that...","आइ थिंक दैट...","मुझे लगता है कि..."),
+    T("In my opinion...","इन माय ओपिनियन...","मेरी राय में..."),
+    T("I believe that...","आइ बिलीव दैट...","मेरा मानना है कि..."),
+    T("I agree with you.","आइ अग्री विद यू","मैं आपसे सहमत हूं।"),
+    T("I disagree with you.","आइ डिसअग्री विद यू","मैं आपसे असहमत हूं।"),
+    T("That makes sense.","दैट मेक्स सेंस","ये बात समझ में आती है।"),
+    T("To be honest...","टू बी ऑनेस्ट...","सच कहूँ तो..."),
+    T("I am not sure.","आइ एम नॉट शुअर","मुझे यकीन नहीं है।"),
+    T("I don't know.","आइ डोंट नो","मुझे नहीं पता।"),
+    T("Let me think about it.","लेट मी थिंक अबाउट इट","मुझे इसके बारे में सोचने दो।")
+  ],
+  quiz: [
+    { q: "Best response to 'Nice to meet you'?", options: ["Nice to meet you too.","Yes please.","I don't know.","Never mind."], correctIndex: 0 },
+    { q: "In a restaurant, to ask for the bill politely:", options: ["Give me bill.","Could we get the bill, please?","Bill now.","I want bill fast."], correctIndex: 1 },
+    { q: "'क्या ये डिश तीखी है?' — pick the match.", options: ["Is this dish spicy?","This dish spicy?","Is dish this spicy?","Does this dish spicy?"], correctIndex: 0 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 24 — Daily Conversation: Interview/Office & Shopping
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 24,
+  focusEn: "Daily Conversation — Interview/Office & Shopping",
+  focusHi: "रोज़मर्रा की बातचीत — इंटरव्यू, ऑफिस और शॉपिंग",
+  devTag: "Conversation · Interview & Shopping",
+  rule: "Aaj hum office/interview mein professional tarike se baat karna aur shopping karte waqt useful phrases seekhenge.",
+  formulas: {
+    aff: {label:"Interview Answer", f:"I have experience in... / I am a...", ex:"I am a quick learner and a team player."},
+    neg: {label:"Office Phrase", f:"Let's / We are on track to...", ex:"We are on track to meet the deadline."},
+    q:   {label:"Shopping Question", f:"Do you have...? / Can I...?", ex:"Do you have this in another size/color?"}
+  },
+  sentences: [
+    T("Tell me about yourself.","टेल मी अबाउट योरसेल्फ","अपने बारे में बताइए।"),
+    T("What are your strengths and weaknesses?","वॉट आर योर स्ट्रेंथ्स एंड वीकनेसेस","आपकी strengths और weaknesses क्या हैं?"),
+    T("I have experience in...","आइ हैव एक्सपीरियंस इन...","मुझे... में experience है"),
+    T("Why do you want to work here?","वाइ डू यू वॉन्ट टू वर्क हियर","आप यहां क्यों काम करना चाहते हैं?"),
+    T("I am a quick learner and a team player.","आइ एम अ क्विक लर्नर एंड अ टीम प्लेयर","मैं जल्दी सीखता हूँ और टीम में अच्छा काम करता हूँ।"),
+    T("We are on track to meet the deadline.","वी आर ऑन ट्रैक टू मीट द डेडलाइन","हम डेडलाइन पूरी करने के ट्रैक पर हैं।"),
+    T("How much does this cost?","हाउ मच डज़ दिस कॉस्ट","इसकी कीमत क्या है?"),
+    T("Do you have this in another size/color?","डू यू हैव दिस इन अनदर साइज़/कलर","क्या ये किसी और साइज़/कलर में है?"),
+    T("Can I get a discount?","कैन आइ गेट अ डिस्काउंट","क्या मुझे डिस्काउंट मिल सकता है?"),
+    T("Can I try this on?","कैन आइ ट्राइ दिस ऑन","क्या मैं इसे ट्राई कर सकता हूँ?"),
+    T("Do you accept returns or exchanges?","डू यू एक्सेप्ट रिटर्न्स ऑर एक्सचेंजेज़","क्या आप रिटर्न या एक्सचेंज लेते हैं?"),
+    T("I'll take this one.","आइल टेक दिस वन","मैं ये ले लूंगा/लूंगी।")
+  ],
+  vocabTitle: "Giving Advice & Suggestions",
+  words: [
+    T("You should...","यू शुड...","आपको चाहिए..."),
+    T("I suggest that...","आइ सजेस्ट दैट...","मैं सुझाव देता हूं कि..."),
+    T("Why don't you...?","व्हाय डोंट यू...?","आप क्यों नहीं...?"),
+    T("It would be better if...","इट वुड बी बेटर इफ...","बेहतर होगा अगर..."),
+    T("I recommend...","आइ रेकमेंड...","मैं सिफारिश करता हूं..."),
+    T("If I were you...","इफ आइ वर यू...","अगर मैं आपकी जगह होता..."),
+    T("It's up to you.","इट्स अप टू यू","यह आप पर निर्भर है।"),
+    T("Take your time.","टेक योर टाइम","आराम से कीजिए, जल्दी नहीं है।"),
+    T("Let's touch base next week.","लेट्स टच बेस नेक्स्ट वीक","अगले हफ्ते फिर बात करते हैं।"),
+    T("As soon as possible.","ऐज़ सून ऐज़ पॉसिबल","जितनी जल्दी हो सके।")
+  ],
+  quiz: [
+    { q: "Good interview self-intro phrase:", options: ["Myself is good.","Tell me about yourself.","I am a quick learner and a team player.","Why you want job?"], correctIndex: 2 },
+    { q: "Polite shopping question for a discount:", options: ["Give discount.","Can I get a discount?","Discount now.","I want less price."], correctIndex: 1 },
+    { q: "'क्या ये किसी और साइज़/कलर में है?' — pick the match.", options: ["Do you have this in another size/color?","You have another size?","This is another size?","Do this another size have?"], correctIndex: 0 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 25 — Daily Conversation: Phone Conversation
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 25,
+  focusEn: "Daily Conversation — On the Phone",
+  focusHi: "रोज़मर्रा की बातचीत — फोन पर",
+  devTag: "Conversation · Phone",
+  rule: "Aaj hum seekhenge ki phone par formal aur informal tarike se kaise baat karein — call receive karna, message lena, aur galat number jaisi situations handle karna.",
+  formulas: {
+    aff: {label:"Answering", f:"This is [Name] speaking.", ex:"This is Rahul speaking."},
+    neg: {label:"Polite Request", f:"Could you please + V1...?", ex:"Could you please call me back later?"},
+    q:   {label:"Asking Caller", f:"May I speak to...? / Who's calling?", ex:"May I speak to Mr. Sharma, please?"}
+  },
+  sentences: [
+    T("Hello, may I speak to Mr. Sharma, please?","हेलो, मे आइ स्पीक टू मिस्टर शर्मा, प्लीज़","हेलो, क्या मैं मिस्टर शर्मा से बात कर सकता हूँ?"),
+    T("Who's calling, please?","हूज़ कॉलिंग, प्लीज़","कौन बोल रहा है?"),
+    T("This is Rahul speaking.","दिस इज़ राहुल स्पीकिंग","मैं राहुल बोल रहा हूँ।"),
+    T("Please hold, I'll transfer your call.","प्लीज़ होल्ड, आइल ट्रांसफर योर कॉल","प्लीज़ होल्ड कीजिए, मैं आपकी कॉल ट्रांसफर करता हूँ।"),
+    T("He's not available right now. Can I take a message?","हीज़ नॉट अवेलेबल राइट नाउ। कैन आइ टेक अ मैसेज","वो अभी अवेलेबल नहीं हैं। क्या मैं मैसेज ले लूं?"),
+    T("Could you please call me back later?","कुड यू प्लीज़ कॉल मी बैक लेटर","क्या आप मुझे बाद में कॉल कर सकते हैं?"),
+    T("I can't hear you clearly, the line is bad.","आइ कान्ट हियर यू क्लियरली, द लाइन इज़ बैड","मुझे साफ सुनाई नहीं दे रहा, लाइन खराब है।"),
+    T("Sorry, I have the wrong number.","सॉरी, आइ हैव द रॉन्ग नंबर","माफ कीजिए, मुझसे गलत नंबर लगा।"),
+    T("Can you speak a bit louder, please?","कैन यू स्पीक अ बिट लाउडर, प्लीज़","क्या आप थोड़ा ज़ोर से बोल सकते हैं?"),
+    T("I'll call you back in five minutes.","आइल कॉल यू बैक इन फाइव मिनट्स","मैं आपको पांच मिनट में कॉल करता हूँ।"),
+    T("Could you please send me the meeting agenda?","कुड यू प्लीज़ सेंड मी द मीटिंग अजेंडा","क्या आप मुझे मीटिंग का अजेंडा भेज सकते हैं?"),
+    T("I have a question.","आइ हैव अ क्वेश्चन","मेरा एक सवाल है।")
+  ],
+  vocabTitle: "Complaints & Problems",
+  words: [
+    T("I have a complaint.","आइ हैव अ कंप्लेंट","मेरी एक शिकायत है।"),
+    T("This is not working.","दिस इज़ नॉट वर्किंग","यह काम नहीं कर रहा है।"),
+    T("I am not satisfied.","आइ एम नॉट सैटिस्फाइड","मैं संतुष्ट नहीं हूं।"),
+    T("Can you fix this?","कैन यू फिक्स दिस","क्या आप इसे ठीक कर सकते हैं?"),
+    T("I want a refund.","आइ वांट अ रिफंड","मुझे पैसे वापस चाहिए।"),
+    T("Something is wrong.","समथिंग इज़ रॉन्ग","कुछ गलत है।"),
+    T("What's the matter?","वॉट्स द मैटर","क्या बात है?"),
+    T("I don't understand.","आइ डोंट अंडरस्टैंड","मुझे समझ नहीं आया।"),
+    T("Never mind.","नेवर माइंड","कोई बात नहीं / छोड़ो।"),
+    T("Could you repeat that, please?","कुड यू रिपीट दैट, प्लीज़","क्या आप इसे दोबारा बोल सकते हैं?")
+  ],
+  quiz: [
+    { q: "How to answer confirming your identity on a call?", options: ["I am here.","This is Rahul speaking.","Yes hello.","Talking now."], correctIndex: 1 },
+    { q: "If you dialed the wrong number, you say:", options: ["Sorry, I have the wrong number.","Bad number sorry.","Number is wrong for me.","I called incorrect."], correctIndex: 0 },
+    { q: "'क्या आप मुझे बाद में कॉल कर सकते हैं?' — pick the match.", options: ["Could you please call me back later?","You call me later can?","Call back you later please?","Later call me you could?"], correctIndex: 0 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 26 — Common Mistakes (Batch 1)
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 26,
+  focusEn: "Common Mistakes — Batch 1",
+  focusHi: "आम गलतियाँ — भाग 1",
+  devTag: "Common Mistakes · Batch 1",
+  rule: "Hindi speakers jo common galtiyan karte hain unhe pehchano aur sahi form seekho. Neeche har galat (galat) sentence ke saamne sahi (correct) sentence diya gaya hai — bolne se pehle sahi form yaad rakho.",
+  formulas: {
+    aff: {label:"Galat", f:"What is your good name?", ex:"(Direct Hindi-to-English translation mistake)"},
+    neg: {label:"Sahi", f:"What is your name?", ex:"'Good name' is not used in English."},
+    q:   {label:"Pattern", f:"Galat -> Sahi", ex:"I am having a car. -> I have a car."}
+  },
+  sentences: [
+    T("Sahi: What is your name? (Galat: What is your good name?)","वॉट इज़ योर नेम","आपका नाम क्या है? — 'good name' galat hai।"),
+    T("Sahi: I have a car. (Galat: I am having a car.)","आइ हैव अ कार","मेरे पास एक कार है — possession ke liye simple present।"),
+    T("Sahi: I am Ram. / My name is Ram. (Galat: Myself Ram.)","आइ एम राम / माइ नेम इज़ राम","मैं राम हूँ — 'Myself X' galat hai।"),
+    T("Sahi: He knows the answer. (Galat: He is knowing the answer.)","ही नोज़ द आन्सर","उसे जवाब पता है — 'know' stative verb hai, continuous nahi।"),
+    T("Sahi: I agree with you. (Galat: I am agree with you.)","आइ अग्री विद यू","मैं आपसे सहमत हूं — 'agree' khud hi verb hai, 'am' ki zaroorat nahi।"),
+    T("Sahi: Please reply. (Galat: Please revert back.)","प्लीज़ रिप्लाई","कृपया जवाब दें — 'revert back' redundant hai।"),
+    T("Sahi: Turn on the light. (Galat: Open the light.)","टर्न ऑन द लाइट","बत्ती जलाओ — lights 'turn on/off' hoti hain, 'open/close' nahi।"),
+    T("Sahi: I don't understand it. (Galat: I am not getting it.)","आइ डोंट अंडरस्टैंड इट","मुझे समझ नहीं आ रहा — formal/correct form।"),
+    T("Sahi: I have a question. (Galat: I have a doubt.)","आइ हैव अ क्वेश्चन","मेरा एक सवाल है — English mein 'question' zyada common hai।"),
+    T("Sahi: He is my cousin. (Galat: He is my cousin brother.)","ही इज़ माइ कज़िन","वह मेरा चचेरा भाई है — 'cousin' already gender-neutral hai।"),
+    T("Sahi: I live in Delhi. (Galat: I stay in Delhi.)","आइ लिव इन देल्ही","मैं दिल्ली में रहता हूं — permanent residence ke liye 'live' sahi hai।"),
+    T("Sahi: He goes to school. (Galat: He go to school.)","ही गोज़ टू स्कूल","वह स्कूल जाता है — He/She/It ke saath -s/-es lagta hai।")
+  ],
+  vocabTitle: "Making Requests & Asking for Help",
+  words: [
+    T("Could you please...?","कुड यू प्लीज़...?","क्या आप कृपया...?"),
+    T("Would you mind...?","वुड यू माइंड...?","क्या आपको बुरा लगेगा...?"),
+    T("Is it possible to...?","इज़ इट पॉसिबल टू...?","क्या ये मुमकिन है...?"),
+    T("I need your help with...","आइ नीड योर हेल्प विद...","मुझे...में आपकी मदद चाहिए।"),
+    T("Sure, no problem.","शुअर, नो प्रॉब्लम","ज़रूर, कोई बात नहीं।"),
+    T("Can you help me, please?","कैन यू हेल्प मी, प्लीज़","क्या आप मेरी मदद कर सकते हैं?"),
+    T("Just a moment, please.","जस्ट अ मोमेंट, प्लीज़","एक मिनट रुकिए।"),
+    T("Can you speak slowly, please?","कैन यू स्पीक स्लोली, प्लीज़","क्या आप धीरे बोल सकते हैं?"),
+    T("Can I have a window seat, please?","कैन आइ हैव अ विंडो सीट, प्लीज़","क्या मुझे विंडो सीट मिल सकती है?"),
+    T("I have a question.","आइ हैव अ क्वेश्चन","मेरा एक सवाल है।")
+  ],
+  quiz: [
+    { q: "Correct the mistake: 'Myself Ram.'", options: ["I am Ram.","Myself is Ram.","Me Ram.","Ram myself."], correctIndex: 0 },
+    { q: "Correct the mistake: 'He is knowing the answer.'", options: ["He knows the answer.","He is know the answer.","He knowing the answer.","He know the answer."], correctIndex: 0 },
+    { q: "Correct the mistake: 'Open the light.'", options: ["Turn on the light.","Light open.","Open on light.","Light the open."], correctIndex: 0 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 27 — Common Mistakes (Batch 2)
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 27,
+  focusEn: "Common Mistakes — Batch 2",
+  focusHi: "आम गलतियाँ — भाग 2",
+  devTag: "Common Mistakes · Batch 2",
+  rule: "Aaj hum kuch aur common mistakes seekhenge — khaaskar prepositions (married to, angry with, afraid of) aur grammar structure ki galtiyan.",
+  formulas: {
+    aff: {label:"Galat", f:"He is married with a doctor.", ex:"(Wrong preposition)"},
+    neg: {label:"Sahi", f:"He is married to a doctor.", ex:"'Married' ke baad 'to' aata hai, 'with' nahi।"},
+    q:   {label:"Pattern", f:"Galat -> Sahi", ex:"She is senior than me. -> She is senior to me."}
+  },
+  sentences: [
+    T("Sahi: I didn't go there. (Galat: I didn't went there.)","आइ डिडन्ट गो देयर","मैं वहां नहीं गया — 'didn't' ke baad V1 aata hai।"),
+    T("Sahi: She is taller than me. (Galat: She is more taller than me.)","शी इज़ टॉलर दैन मी","वह मुझसे लंबी है — -er aur 'more' dono ek saath nahi।"),
+    T("Sahi: Discuss this topic. (Galat: Discuss about this topic.)","डिस्कस दिस टॉपिक","इस विषय पर चर्चा करो — 'discuss' ke baad 'about' nahi लगता।"),
+    T("Sahi: I understand this. (Galat: I am understanding this.)","आइ अंडरस्टैंड दिस","मुझे यह समझ आता है — 'understand' stative verb hai।"),
+    T("Sahi: He doesn't like tea. (Galat: He don't like tea.)","ही डज़न्ट लाइक टी","उसे चाय पसंद नहीं है — He/She/It ke saath 'doesn't'।"),
+    T("Sahi: Fewer people came. (Galat: Less people came.)","फ्यूअर पीपल केम","कम लोग आए — countable nouns ke saath 'fewer' aata hai।"),
+    T("Sahi: He explained the topic to me. (Galat: He explained me the topic.)","ही एक्सप्लेन्ड द टॉपिक टू मी","उसने मुझे विषय समझाया — 'explain' ke baad seedha object nahi aata।"),
+    T("Sahi: Everyone is happy. (Galat: Everyone are happy.)","एवरीवन इज़ हैप्पी","सब खुश हैं — 'everyone' singular hai।"),
+    T("Sahi: He is married to a doctor. (Galat: He is married with a doctor.)","ही इज़ मैरिड टू अ डॉक्टर","उसकी शादी एक डॉक्टर से हुई है — 'married to' sahi hai।"),
+    T("Sahi: I am good at maths. (Galat: I am good in maths.)","आइ एम गुड एट मैथ्स","मैं गणित में अच्छा हूं — 'good at' sahi preposition hai।"),
+    T("Sahi: She is senior to me. (Galat: She is senior than me.)","शी इज़ सीनियर टू मी","वह मुझसे सीनियर है — 'senior to' sahi hai, 'than' nahi।"),
+    T("Sahi: All my friends are coming. (Galat: My all friends are coming.)","ऑल माइ फ्रेंड्स आर कमिंग","मेरे सभी दोस्त आ रहे हैं — 'all' pehle aata hai।")
+  ],
+  vocabTitle: "Describing Your Day/Routine",
+  words: [
+    T("Routine","रूटीन","दिनचर्या"), T("Wake up","वेक अप","जागना"), T("Breakfast","ब्रेकफास्ट","नाश्ता"),
+    T("Lunch","लंच","दोपहर का खाना"), T("Dinner","डिनर","रात का खाना"), T("Daily","डेली","रोज़ाना"),
+    T("Leave","लीव","निकलना"), T("Relax","रिलैक्स","आराम करना"), T("Habit","हैबिट","आदत"),
+    T("Schedule","शेड्यूल","समय सारिणी")
+  ],
+  quiz: [
+    { q: "Correct the mistake: 'She is more taller than me.'", options: ["She is taller than me.","She is more tall than me.","She is tallest than me.","She is much taller then me."], correctIndex: 0 },
+    { q: "Correct the mistake: 'He is married with a teacher.'", options: ["He is married to a teacher.","He is married with the teacher.","He married with a teacher.","He is marry with a teacher."], correctIndex: 0 },
+    { q: "Correct the mistake: 'Let's discuss about this problem.'", options: ["Let's discuss this problem.","Let's discuss on this problem.","Let's discussion this problem.","Let's discuss for this problem."], correctIndex: 0 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 28 — Word Power: Advanced Vocabulary
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 28,
+  focusEn: "Word Power — Advanced Vocabulary",
+  focusHi: "शब्द शक्ति — उन्नत शब्दावली",
+  devTag: "Word Power · Advanced Vocabulary",
+  rule: "Aaj hum advanced/professional vocabulary seekhenge jo interviews, office aur formal baatcheet mein bahut kaam aati hai. In words ko apni daily English mein use karne ki koshish karo.",
+  formulas: {
+    aff: {label:"Key Pattern 1", f:"I want to + Verb (achieve/improve/develop)", ex:"I want to improve my English."},
+    neg: {label:"Key Pattern 2", f:"It is + Adjective + to + Verb", ex:"It is essential to practice daily."},
+    q:   {label:"Key Pattern 3", f:"S + is/are + Adjective", ex:"She is very confident and consistent."}
+  },
+  sentences: [
+    T("I want to achieve my goals this year.","आइ वॉन्ट टू अचीव माइ गोल्स दिस ईयर","मैं इस साल अपने लक्ष्य प्राप्त करना चाहता हूँ।"),
+    T("This is a great opportunity for growth.","दिस इज़ अ ग्रेट ऑपर्च्युनिटी फॉर ग्रोथ","यह विकास का एक शानदार अवसर है।"),
+    T("We need to determine the best approach.","वी नीड टू डिटर्मिन द बेस्ट अप्रोच","हमें सबसे अच्छा तरीका तय करना होगा।"),
+    T("Practice will improve your speaking skills.","प्रैक्टिस विल इम्प्रूव योर स्पीकिंग स्किल्स","अभ्यास से आपकी बोलने की क्षमता सुधरेगी।"),
+    T("She is very confident in interviews.","शी इज़ वेरी कॉन्फिडेंट इन इंटरव्यूज़","वह इंटरव्यू में बहुत आत्मविश्वासी है।"),
+    T("It is essential to stay consistent.","इट इज़ एसेंशियल टू स्टे कन्सिस्टेंट","लगातार बने रहना आवश्यक है।"),
+    T("His hard work will surely pay off.","हिज़ हार्ड वर्क विल शुअरली पे ऑफ","उसकी मेहनत ज़रूर रंग लाएगी।"),
+    T("An efficient worker saves a lot of time.","एन एफिशिएंट वर्कर सेव्स अ लॉट ऑफ टाइम","एक कुशल कर्मचारी बहुत समय बचाता है।"),
+    T("I appreciate your genuine effort.","आइ अप्रीशिएट योर जेन्युइन एफर्ट","मैं आपके वास्तविक प्रयास की सराहना करता हूँ।"),
+    T("We must ensure the work is completed on time.","वी मस्ट इनश्योर द वर्क इज़ कम्प्लीटेड ऑन टाइम","हमें सुनिश्चित करना होगा कि काम समय पर पूरा हो।"),
+    T("Her enthusiasm motivates the whole team.","हर इन्थ्यूज़ियाज़्म मोटिवेट्स द होल टीम","उसका उत्साह पूरी टीम को प्रेरित करता है।"),
+    T("He has the potential to become a great leader.","ही हैज़ द पोटेंशियल टू बिकम अ ग्रेट लीडर","उसमें एक महान नेता बनने की क्षमता है।")
+  ],
+  vocabTitle: "Common Adverbs & Connectors",
+  words: [
+    T("However","हाउएवर","हालांकि"), T("Therefore","देयरफोर","इसलिए"), T("Finally","फाइनली","अंततः"),
+    T("Suddenly","सडनली","अचानक"), T("Immediately","इमीडिएटली","तुरंत"), T("Frequently","फ्रीक्वेंटली","अक्सर"),
+    T("Especially","एस्पेशली","खासकर"), T("Actually","एक्चुअली","वास्तव में"), T("Probably","प्रॉबबली","शायद"),
+    T("Eventually","इवेंचुअली","अंततः")
+  ],
+  quiz: [
+    { q: "'She is very confident and consistent' — which words are advanced adjectives?", options: ["is, very","confident, consistent","She, and","very, and"], correctIndex: 1 },
+    { q: "'It is essential to practice daily' — 'essential' means:", options: ["Optional","Necessary/important","Impossible","Boring"], correctIndex: 1 },
+    { q: "Choose the sentence using advanced vocabulary correctly.", options: ["He have potential become leader.","He has the potential to become a great leader.","He potential to becoming leader.","He has potential leader become."], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 29 — Word Power: Phrasal Verbs
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 29,
+  focusEn: "Word Power — Phrasal Verbs",
+  focusHi: "शब्द शक्ति — फ्रेज़ल वर्ब्स",
+  devTag: "Word Power · Phrasal Verbs",
+  rule: "Phrasal verbs do ya teen words ka combination hote hain (verb + preposition/adverb) jinka meaning individual words se alag hota hai — jaise 'give up' ka matlab 'हार मानना' hai, 'give' ya 'up' se alag.",
+  formulas: {
+    aff: {label:"Verb + Particle", f:"Verb + up/off/on/out", ex:"Don't give up on your dreams."},
+    neg: {label:"Separable", f:"Verb + Object + Particle", ex:"Turn the lights off."},
+    q:   {label:"Inseparable", f:"Verb + Particle + Object", ex:"I am looking for my keys."}
+  },
+  sentences: [
+    T("Don't give up on your dreams.","डोंट गिव अप ऑन योर ड्रीम्स","अपने सपनों पर हार मत मानो।"),
+    T("She looks after her parents.","शी लुक्स आफ्टर हर पेरेंट्स","वह अपने माता-पिता की देखभाल करती है।"),
+    T("I will find out the truth.","आइ विल फाइंड आउट द ट्रुथ","मैं सच्चाई पता लगाऊंगा।"),
+    T("I get up at 6 AM.","आइ गेट अप एट सिक्स एएम","मैं सुबह 6 बजे उठता हूं।"),
+    T("Turn off the lights.","टर्न ऑफ द लाइट्स","लाइट बंद करो।"),
+    T("My car broke down yesterday.","माय कार ब्रोक डाउन येस्टरडे","कल मेरी गाड़ी खराब हो गई।"),
+    T("They called off the meeting.","दे कॉल्ड ऑफ द मीटिंग","उन्होंने मीटिंग रद्द कर दी।"),
+    T("I am looking for my keys.","आइ एम लुकिंग फॉर माय कीज़","मैं अपनी चाबियां ढूंढ रहा हूं।"),
+    T("I look forward to meeting you.","आइ लुक फॉरवर्ड टू मीटिंग यू","मुझे आपसे मिलने का बेसब्री से इंतजार है।"),
+    T("She is going through a hard time.","शी इज़ गोइंग थ्रू अ हार्ड टाइम","वह मुश्किल समय से गुजर रही है।"),
+    T("I will pick you up at 6.","आइ विल पिक यू अप एट सिक्स","मैं तुम्हें 6 बजे लेने आऊंगा।"),
+    T("We ran out of milk.","वी रैन आउट ऑफ मिल्क","हमारा दूध खत्म हो गया।")
+  ],
+  vocabTitle: "Formal & Professional Expressions",
+  words: [
+    T("I would like to inform you...","आइ वुड लाइक टू इनफॉर्म यू...","मैं आपको सूचित करना चाहूंगा..."),
+    T("Please find attached...","प्लीज़ फाइंड अटैच्ड...","कृपया संलग्न देखें..."),
+    T("I look forward to...","आइ लुक फॉरवर्ड टू...","मुझे इंतजार रहेगा..."),
+    T("Thank you for your time.","थैंक यू फॉर योर टाइम","आपके समय के लिए धन्यवाद।"),
+    T("I apologize for the inconvenience.","आइ अपोलोजाइज़ फॉर द इनकन्वीनियंस","असुविधा के लिए क्षमा करें।"),
+    T("As per our discussion...","एज़ पर आवर डिस्कशन...","हमारी बातचीत के अनुसार..."),
+    T("Please feel free to contact me.","प्लीज़ फील फ्री टू कॉन्टैक्ट मी","कृपया मुझसे संपर्क करने में संकोच न करें।"),
+    T("Best regards.","बेस्ट रिगार्ड्स","शुभकामनाओं सहित।"),
+    T("I really appreciate it.","आइ रियली अप्रीशिएट इट","मैं वाकई इसकी कद्र करता हूँ।"),
+    T("Congratulations on your success!","कॉन्ग्रेचुलेशन्स ऑन योर सक्सेस","आपकी सफलता पर बधाई!")
+  ],
+  quiz: [
+    { q: "'Give up' means:", options: ["To start something","To hand something over","To stop trying / surrender","To celebrate"], correctIndex: 2 },
+    { q: "Choose the correct sentence using 'look after'.", options: ["She looks after her parents.","She looks for her parents.","She looks up her parents.","She looks out her parents."], correctIndex: 0 },
+    { q: "'We ran out of milk' means:", options: ["We ran with milk","We have no milk left","We ran to buy milk","We spilled milk"], correctIndex: 1 }
+  ]
+});
+
+/* ---------------------------------------------------------------
+   DAY 30 — Word Power: Idioms + Final Review
+   --------------------------------------------------------------- */
+DAYS.push({
+  day: 30,
+  focusEn: "Word Power — Idioms + Final Review",
+  focusHi: "शब्द शक्ति — मुहावरे + अंतिम समीक्षा",
+  devTag: "Word Power · Idioms & Congratulations",
+  rule: "Badhai ho! Aaj 30 din ka English Learning Journey poora ho raha hai. Aaj hum kuch common idioms seekhenge jo native speakers roz use karte hain — aur phir apni pichhli 30 din ki mehnat ka jashn manayenge. Practice karte raho, English apni ho jaayegi!",
+  formulas: {
+    aff: {label:"Idiom Pattern", f:"Fixed phrase with figurative meaning", ex:"It's a piece of cake. (= very easy)"},
+    neg: {label:"Common Usage", f:"Use idioms naturally in conversation", ex:"Don't take it literally — understand the meaning."},
+    q:   {label:"Final Review", f:"30 Days = 12 Tenses + Modals + Voice + Narration + Grammar + Conversation + Vocabulary", ex:"You have completed the full journey!"}
+  },
+  sentences: [
+    T("Let's break the ice with a simple question.","लेट्स ब्रेक द आइस विद अ सिंपल क्वेश्चन","चलो एक साधारण सवाल से बातचीत शुरू करते हैं।"),
+    T("Don't worry, this exam is a piece of cake.","डोंट वरी, दिस एग्ज़ाम इज़ अ पीस ऑफ केक","चिंता मत करो, यह परीक्षा बहुत आसान है।"),
+    T("I'm feeling a bit under the weather today.","आइम फीलिंग अ बिट अंडर द वेदर टुडे","आज मेरी तबियत थोड़ी खराब है।"),
+    T("We only meet once in a blue moon.","वी ओनली मीट वंस इन अ ब्लू मून","हम कभी-कभार ही मिलते हैं।"),
+    T("It's time to hit the books before the exam.","इट्स टाइम टू हिट द बुक्स बिफोर द एग्ज़ाम","परीक्षा से पहले पढ़ाई शुरू करने का समय है।"),
+    T("Better late than never — you finally called.","बेटर लेट दैन नेवर — यू फाइनली कॉल्ड","देर आए दुरुस्त आए — तुमने आखिरकार फोन किया।"),
+    T("Practice makes perfect, so keep speaking English daily.","प्रैक्टिस मेक्स परफेक्ट, सो कीप स्पीकिंग इंग्लिश डेली","अभ्यास से सिद्धि मिलती है, इसलिए रोज़ अंग्रेज़ी बोलते रहो।"),
+    T("Every cloud has a silver lining — keep trying.","एवरी क्लाउड हैज़ अ सिल्वर लाइनिंग — कीप ट्राइंग","हर बुरे में कुछ अच्छा छिपा होता है — कोशिश करते रहो।"),
+    T("You really hit the nail on the head with that answer.","यू रियली हिट द नेल ऑन द हेड विद दैट आन्सर","तुमने उस जवाब से बिल्कुल सही बात कही।"),
+    T("Congratulations! You completed this 30-day journey.","कॉन्ग्रेचुलेशन्स! यू कम्प्लीटेड दिस थर्टी-डे जर्नी","बधाई हो! तुमने यह 30-दिन की यात्रा पूरी कर ली।"),
+    T("Time flies — it feels like Day 1 was yesterday.","टाइम फ्लाइज़ — इट फील्स लाइक डे वन वॉज़ यस्टरडे","समय बहुत जल्दी बीतता है — लगता है डे 1 कल की बात थी।"),
+    T("Actions speak louder than words — now go and speak English confidently!","एक्शन्स स्पीक लाउडर दैन वर्ड्स — नाउ गो एंड स्पीक इंग्लिश कॉन्फिडेंटली","काम बोलता है, बातें नहीं — अब जाओ और आत्मविश्वास से अंग्रेज़ी बोलो!")
+  ],
+  vocabTitle: "Final Revision Words (Mixed)",
+  words: [
+    T("Achieve","अचीव","प्राप्त करना"), T("Confident","कॉन्फिडेंट","आत्मविश्वासी"), T("Opportunity","ऑपर्च्युनिटी","अवसर"),
+    T("Goal","गोल","लक्ष्य"), T("Motivate","मोटिवेट","प्रेरित करना"), T("Fluent","फ्लुएंट","धाराप्रवाह"),
+    T("Vocabulary","वोकैबुलरी","शब्दावली"), T("Improve","इम्प्रूव","सुधारना"), T("Journey","जर्नी","यात्रा"),
+    T("Master","मास्टर","निपुण होना")
+  ],
+  quiz: [
+    { q: "'It's a piece of cake' means the task is:", options: ["Very difficult","Very easy","Very tasty","Very expensive"], correctIndex: 1 },
+    { q: "'Practice makes perfect' teaches us to:", options: ["Give up quickly","Keep practicing to improve","Avoid mistakes","Wait for luck"], correctIndex: 1 },
+    { q: "After finishing all 30 days, what should you do next?", options: ["Stop learning English","Keep practicing daily and speak confidently","Forget everything","Only read, never speak"], correctIndex: 1 }
+  ]
+});
+
+/* ============================================================
+   RENDER — journey map (nodes 1-30, always loops to 30)
+   ============================================================ */
+var TOTAL_DAYS = 30;
+var currentDay = 1;
+
+function renderJourneyMap(){
+  var map = document.getElementById('journeyMap');
+  map.innerHTML = '';
+  for(var i=1;i<=TOTAL_DAYS;i++){
+    var has = !!DAYS[i-1];
+    var btn = document.createElement('button');
+    btn.className = 'day-node' + (has ? ' done' : ' soon');
+    btn.textContent = i;
+    btn.setAttribute('role','tab');
+    btn.setAttribute('data-day', i);
+    btn.setAttribute('aria-selected', i === currentDay ? 'true' : 'false');
+    if(!has){ btn.disabled = true; btn.setAttribute('aria-disabled','true'); btn.title = 'Coming soon'; }
+    else{
+      btn.title = 'Day ' + i + (DAYS[i-1] ? ' — ' + DAYS[i-1].focusEn : '');
+      btn.addEventListener('click', function(){ goToDay(parseInt(this.getAttribute('data-day'),10)); });
+    }
+    map.appendChild(btn);
+  }
+  highlightActiveNode();
+}
+
+function highlightActiveNode(){
+  var nodes = document.querySelectorAll('.day-node');
+  nodes.forEach(function(n){
+    var d = parseInt(n.getAttribute('data-day'),10);
+    n.classList.toggle('active', d === currentDay);
+    n.setAttribute('aria-selected', d === currentDay ? 'true' : 'false');
+  });
+}
+
+/* ============================================================
+   RENDER — day content
+   ============================================================ */
+function buildFlipCard(front, backLine1, backLine2, cssClass){
+  var wrap = document.createElement('div');
+  wrap.className = 'flip-card';
+  wrap.tabIndex = 0;
+  wrap.setAttribute('role','button');
+  wrap.setAttribute('aria-pressed','false');
+  wrap.innerHTML =
+    '<div class="flip-card-inner">' +
+      '<div class="flip-face front"><div class="eng">' + escapeHtml(front) + '</div><div class="hint">Tap to flip</div></div>' +
+      '<div class="flip-face back"><div class="pron">' + escapeHtml(backLine1) + '</div><div class="meaning">' + escapeHtml(backLine2) + '</div></div>' +
+    '</div>';
+  function toggle(){
+    var flipped = wrap.classList.toggle('flipped');
+    wrap.setAttribute('aria-pressed', flipped ? 'true' : 'false');
+  }
+  wrap.addEventListener('click', toggle);
+  wrap.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); toggle(); }
+  });
+  return wrap;
+}
+
+function escapeHtml(s){
+  var d = document.createElement('div');
+  d.textContent = s == null ? '' : s;
+  return d.innerHTML;
+}
+
+function renderQuiz(container, quizItems){
+  quizItems.forEach(function(item, qi){
+    var card = document.createElement('div');
+    card.className = 'quiz-card';
+    var qEl = document.createElement('div');
+    qEl.className = 'quiz-q';
+    qEl.innerHTML = '<span class="qn">Q' + (qi+1) + '.</span> ' + escapeHtml(item.q);
+    card.appendChild(qEl);
+    var opts = document.createElement('div');
+    opts.className = 'quiz-opts';
+    var feedback = document.createElement('div');
+    feedback.className = 'quiz-feedback';
+    item.options.forEach(function(optText, oi){
+      var ob = document.createElement('button');
+      ob.type = 'button';
+      ob.className = 'quiz-opt';
+      ob.textContent = optText;
+      ob.addEventListener('click', function(){
+        var allOpts = opts.querySelectorAll('.quiz-opt');
+        allOpts.forEach(function(o){ o.disabled = true; });
+        if(oi === item.correctIndex){
+          ob.classList.add('correct');
+          feedback.textContent = 'सही जवाब! Correct.';
+          feedback.className = 'quiz-feedback correct';
+        }else{
+          ob.classList.add('incorrect');
+          allOpts[item.correctIndex].classList.add('correct');
+          feedback.textContent = 'गलत — सही जवाब हाइलाइट किया गया है।';
+          feedback.className = 'quiz-feedback incorrect';
+        }
+      });
+      opts.appendChild(ob);
+    });
+    card.appendChild(opts);
+    card.appendChild(feedback);
+    container.appendChild(card);
+  });
+}
+
+function renderDay(dayNum){
+  var content = document.getElementById('dayContent');
+  var d = DAYS[dayNum - 1];
+
+  if(!d){
+    content.innerHTML =
+      '<div class="coming-soon">' +
+        '<div class="big hi">जल्द आ रहा है</div>' +
+        '<h2>Day ' + dayNum + ' — Coming soon</h2>' +
+        '<p>Yeh din abhi taiyaar ho raha hai. Pehle 12 din abhi explore karo, baaki jald hi jud jaayenge.</p>' +
+      '</div>';
+    return;
+  }
+
+  content.innerHTML = '';
+
+  // Banner
+  var banner = document.createElement('div');
+  banner.className = 'day-banner';
+  banner.innerHTML =
+    '<div class="day-num">' + d.day + '</div>' +
+    '<div class="day-info">' +
+      '<h2>' + escapeHtml(d.focusEn) + '</h2>' +
+      '<div class="dev-name hi">' + escapeHtml(d.focusHi) + '</div>' +
+    '</div>' +
+    '<div class="day-stats">' +
+      '<div class="day-stat"><span class="num">1</span><span class="lbl">Tense</span></div>' +
+      '<div class="day-stat"><span class="num">' + d.sentences.length + '</span><span class="lbl">Sentences</span></div>' +
+      '<div class="day-stat"><span class="num">' + d.words.length + '</span><span class="lbl">Words</span></div>' +
+    '</div>';
+  content.appendChild(banner);
+
+  // Section 1: Grammar focus
+  var s1 = document.createElement('section');
+  s1.className = 'day-section';
+  s1.innerHTML =
+    '<div class="day-section-head"><span class="section-num">1</span><h3>Today\'s Grammar Focus</h3><span class="hi-tag">आज का व्याकरण</span></div>' +
+    '<div class="tense-rule">' + escapeHtml(d.rule) + '</div>' +
+    '<div class="formula-grid">' +
+      '<div class="formula-card affirmative"><div class="flabel">Affirmative</div><code>' + escapeHtml(d.formulas.aff.f) + '</code><div class="fex">' + escapeHtml(d.formulas.aff.ex) + '</div></div>' +
+      '<div class="formula-card negative"><div class="flabel">Negative</div><code>' + escapeHtml(d.formulas.neg.f) + '</code><div class="fex">' + escapeHtml(d.formulas.neg.ex) + '</div></div>' +
+      '<div class="formula-card question"><div class="flabel">Question</div><code>' + escapeHtml(d.formulas.q.f) + '</code><div class="fex">' + escapeHtml(d.formulas.q.ex) + '</div></div>' +
+    '</div>';
+  content.appendChild(s1);
+
+  // Section 2: Sentences to practice speaking (flip cards)
+  var s2 = document.createElement('section');
+  s2.className = 'day-section';
+  var s2head = document.createElement('div');
+  s2head.className = 'day-section-head';
+  s2head.innerHTML = '<span class="section-num">2</span><h3>Sentences to Practice Speaking</h3><span class="hi-tag">बोलने का अभ्यास</span>';
+  s2.appendChild(s2head);
+  var grid2 = document.createElement('div');
+  grid2.className = 'flip-grid';
+  d.sentences.forEach(function(ex){
+    grid2.appendChild(buildFlipCard(ex.en, ex.pron, ex.hi));
+  });
+  s2.appendChild(grid2);
+  var note = document.createElement('div');
+  note.className = 'more-note';
+  note.innerHTML = 'Aur bhi examples chahiye? <a href="english_learning_site.html#tenses">Main site ke Tenses section</a> mein is tense ke 50+ examples milenge.';
+  s2.appendChild(note);
+  content.appendChild(s2);
+
+  // Section 3: Words to memorize today
+  var s3 = document.createElement('section');
+  s3.className = 'day-section word-flip';
+  var s3head = document.createElement('div');
+  s3head.className = 'day-section-head';
+  s3head.innerHTML = '<span class="section-num">3</span><h3>Words to Memorize Today</h3><span class="hi-tag">' + escapeHtml(d.vocabTitle) + '</span>';
+  s3.appendChild(s3head);
+  var grid3 = document.createElement('div');
+  grid3.className = 'flip-grid';
+  d.words.forEach(function(w){
+    grid3.appendChild(buildFlipCard(w.en, w.pron, w.hi));
+  });
+  s3.appendChild(grid3);
+  content.appendChild(s3);
+
+  // Section 4: Practice check
+  var s4 = document.createElement('section');
+  s4.className = 'day-section';
+  var s4head = document.createElement('div');
+  s4head.className = 'day-section-head';
+  s4head.innerHTML = '<span class="section-num">4</span><h3>Tiny Practice Check</h3><span class="hi-tag">छोटा सा टेस्ट</span>';
+  s4.appendChild(s4head);
+  renderQuiz(s4, d.quiz);
+  content.appendChild(s4);
+
+  // Footer nav
+  var footNav = document.createElement('div');
+  footNav.className = 'day-footer-nav';
+  var prevBtn = document.createElement('button');
+  prevBtn.innerHTML = '&larr; Previous Day';
+  prevBtn.disabled = dayNum <= 1;
+  prevBtn.addEventListener('click', function(){ goToDay(dayNum - 1); });
+  var nextBtn = document.createElement('button');
+  nextBtn.innerHTML = 'Next Day &rarr;';
+  nextBtn.disabled = dayNum >= TOTAL_DAYS;
+  nextBtn.addEventListener('click', function(){ goToDay(dayNum + 1); });
+  footNav.appendChild(prevBtn);
+  footNav.appendChild(nextBtn);
+  content.appendChild(footNav);
+}
+
+var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+function goToDay(dayNum){
+  if(dayNum < 1 || dayNum > TOTAL_DAYS) return;
+  currentDay = dayNum;
+  highlightActiveNode();
+  var content = document.getElementById('dayContent');
+  if(reduceMotion){
+    renderDay(dayNum);
+    window.scrollTo({top:0, behavior:'auto'});
+    return;
+  }
+  content.classList.add('transitioning');
+  window.setTimeout(function(){
+    renderDay(dayNum);
+    content.classList.remove('transitioning');
+    var mapWrap = document.querySelector('.journey-map-wrap');
+    var y = mapWrap.getBoundingClientRect().bottom + window.scrollY - 70;
+    window.scrollTo({top: Math.max(0,y), behavior:'smooth'});
+  }, 220);
+}
+
+/* ============================================================
+   INIT
+   ============================================================ */
+function initJourney(){
+  renderJourneyMap();
+  renderDay(currentDay);
+}
+initJourney();
+</script>
+</body>
+</html>
