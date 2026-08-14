@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>30-Din Mix Plan — सीखो</title>
-<meta name="description" content="Har din thoda-thoda — foundations, parts of speech, tense/modal, active-passive/narration, conversation, aur mistakes — ek saath, lock ke saath step-by-step.">
+<title>60-Din Mix Plan — सीखो</title>
+<meta name="description" content="Har din thoda-thoda — Din 1-30 mein foundations, parts of speech, tense/modal, active-passive/narration, conversation aur mistakes; Din 31-60 mein advanced grammar aur writing practice — sab lock ke saath step-by-step.">
 <style>
 :root{
   --ink:#2a2416;
@@ -97,6 +97,14 @@ header.site-nav{ position:sticky; top:0; z-index:190; background:color-mix(in sr
 .day-node.locked{ opacity:.45; cursor:default; }
 .day-node.locked:hover{ border-color:var(--line-strong); color:var(--muted); transform:none; }
 .day-node .lock-badge{ font-size:.85rem; }
+.map-divider{ flex-shrink:0; display:flex; align-items:center; gap:.5rem; padding:0 .3rem; }
+.map-divider::before{ content:""; width:1px; height:34px; background:var(--line-strong); }
+.map-divider span{ font-family:var(--font-display); font-weight:700; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; color:var(--coral); white-space:nowrap; }
+
+/* progress info note */
+.progress-note{ display:flex; align-items:flex-start; gap:.6rem; max-width:1200px; margin:-.6rem auto 1.5rem; padding:.75rem 1.1rem; background:var(--sage-soft); border:1px solid var(--sage); border-radius:12px; color:var(--ink); font-size:.85rem; line-height:1.5; }
+.progress-note .icon{ flex-shrink:0; font-size:1rem; }
+.progress-note b{ color:var(--sage); }
 
 /* toast */
 .toast{ position:fixed; left:50%; bottom:1.6rem; transform:translate(-50%,20px); background:var(--ink); color:var(--paper); padding:.7rem 1.2rem; border-radius:10px; font-size:.88rem; font-weight:600; box-shadow:0 10px 30px -8px hsl(var(--shadow)/.6); opacity:0; pointer-events:none; transition:opacity .22s, transform .22s; z-index:300; }
@@ -121,37 +129,46 @@ header.site-nav{ position:sticky; top:0; z-index:190; background:color-mix(in sr
 .part-head h3{ font-size:1.35rem; margin:0; }
 .part-head .hi-tag{ font-family:var(--font-dev); color:var(--muted); font-size:.95rem; }
 
-/* 3D flip cards */
 .card-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:1rem; }
-.flip-card{ perspective:1200px; height:150px; }
-.flip-inner{ position:relative; width:100%; height:100%; transition:transform .5s; transform-style:preserve-3d; cursor:pointer; }
-.flip-card.open .flip-inner{ transform:rotateY(180deg); }
-.flip-face{ position:absolute; inset:0; backface-visibility:hidden; border-radius:10px; border:1px solid var(--line); padding:1rem 1.1rem; display:flex; flex-direction:column; justify-content:center; }
-.flip-front{ background:var(--paper-raised); }
-.flip-front .word{ font-weight:700; font-size:1.15rem; margin-bottom:.4rem; }
-.flip-front .hint{ font-size:.72rem; color:var(--muted-2); text-transform:uppercase; letter-spacing:.06em; }
-.flip-back{ background:var(--sage-soft); transform:rotateY(180deg); }
-.flip-back .pron{ font-family:var(--font-dev); color:var(--coral); font-weight:600; margin-bottom:.3rem; }
-.flip-back .mean{ font-family:var(--font-dev); color:var(--ink); font-weight:600; }
-.flip-back .ctx{ font-size:.78rem; color:var(--muted); margin-top:.4rem; }
 
-/* vocab card variant (word+2 sentences) */
+/* vocab card variant (word+2 sentences) — used for both foundations and POS examples */
 .vocab-card{ background:var(--paper-raised); border:1px solid var(--line); border-radius:10px; padding:1rem 1.1rem; transition:border-color .18s, transform .18s; }
 .vocab-card:hover{ border-color:var(--accent); transform:translateY(-2px); }
-.vocab-card .vw{ font-weight:700; font-size:1.1rem; }
+.vocab-card .vw{ font-weight:700; font-size:1.1rem; display:flex; align-items:center; gap:.4rem; }
 .vocab-card .vpron{ font-family:var(--font-dev); color:var(--coral); font-size:.9rem; }
 .vocab-card .vmean{ font-family:var(--font-dev); color:var(--sage); font-weight:600; margin:.3rem 0; }
-.vocab-card .vex{ font-size:.85rem; color:var(--muted); border-top:1px dashed var(--line); padding-top:.4rem; margin-top:.4rem; }
+.vocab-card .vex{ font-size:.85rem; color:var(--muted); border-top:1px dashed var(--line); padding-top:.4rem; margin-top:.4rem; display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
+
+/* speak button — 🔊 text-to-speech trigger */
+.speak-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:1.7rem; height:1.7rem; flex:0 0 auto;
+  background:var(--paper-raised); border:1px solid var(--line);
+  border-radius:999px; cursor:pointer; padding:0; line-height:1;
+  font-size:.9rem; color:var(--accent);
+  transition:background-color .15s, border-color .15s, transform .1s;
+  position:relative;
+}
+.speak-btn:hover{ border-color:var(--accent); background:var(--sage-soft); }
+.speak-btn:active{ transform:scale(.92); }
+/* enlarge the invisible tap target on touch devices without changing the visible icon size */
+@media (pointer: coarse){
+  .speak-btn::after{
+    content:""; position:absolute; top:50%; left:50%;
+    width:max(40px, 100%); height:max(40px, 100%);
+    transform:translate(-50%,-50%);
+  }
+}
 
 /* grammar breakdown */
 .grammar-box{ background:var(--sage-soft); border-left:4px solid var(--sage); border-radius:8px; padding:1.1rem 1.3rem; margin-bottom:1.2rem; }
-.grammar-box .eng{ font-weight:700; font-size:1.1rem; }
+.grammar-box .eng{ font-weight:700; font-size:1.1rem; display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
 .grammar-box .hi-line{ font-family:var(--font-dev); color:var(--ink); margin-top:.2rem; }
 .breakdown{ display:flex; gap:.6rem; flex-wrap:wrap; margin:1rem 0; }
-.chip{ background:var(--paper-raised); border:1px solid var(--line-strong); border-radius:8px; padding:.5rem .8rem; font-size:.85rem; }
+.chip{ background:var(--paper-raised); border:1px solid var(--line-strong); border-radius:8px; padding:.5rem .8rem; font-size:.85rem; display:inline-flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
 .chip b{ color:var(--accent); }
 .situation-list{ list-style:none; padding:0; margin:.8rem 0 0; display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:.5rem; }
-.situation-list li{ background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:.7rem .9rem; font-weight:600; }
+.situation-list li{ background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:.7rem .9rem; font-weight:600; display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
 
 /* active/passive & narration pair */
 .pair-box{ display:grid; grid-template-columns:repeat(auto-fill,minmax(300px,1fr)); gap:.7rem; align-items:start; }
@@ -159,14 +176,14 @@ header.site-nav{ position:sticky; top:0; z-index:190; background:color-mix(in sr
 .pair-row{ background:var(--paper-raised); border:1px solid var(--line); border-radius:10px; padding:.9rem 1.1rem; }
 .pair-row .tag{ font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; font-weight:700; color:var(--accent); margin-bottom:.3rem; }
 .pair-row.sage .tag{ color:var(--sage); }
-.pair-row .txt{ font-weight:600; }
+.pair-row .txt{ font-weight:600; display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
 .pair-row .hi-line{ font-family:var(--font-dev); color:var(--muted); font-size:.9rem; margin-top:.2rem; }
 
 /* conversation */
 .convo{ background:var(--paper-raised); border:1px solid var(--line); border-radius:12px; padding:1.2rem 1.4rem; display:flex; flex-direction:column; gap:.8rem; }
 .convo-line{ display:flex; gap:.8rem; align-items:flex-start; }
 .convo-line .who{ font-weight:700; font-size:.8rem; text-transform:uppercase; letter-spacing:.05em; padding:.25rem .6rem; border-radius:6px; flex-shrink:0; margin-top:.1rem; background:var(--accent-soft); color:var(--accent); }
-.convo-line .say{ font-weight:600; }
+.convo-line .say{ font-weight:600; display:inline-flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
 .convo-line .say .hi{ display:block; color:var(--muted); font-weight:400; font-size:.88rem; margin-top:.1rem; }
 
 /* mistakes */
@@ -175,19 +192,36 @@ header.site-nav{ position:sticky; top:0; z-index:190; background:color-mix(in sr
 .mistake-row > div{ padding:.8rem 1rem; }
 .mistake-row .galat{ background:var(--coral-soft); border-right:1px solid var(--line); }
 .mistake-row .galat .tag{ color:var(--coral); font-weight:700; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; }
-.mistake-row .galat .txt{ text-decoration:line-through; text-decoration-color:var(--coral); opacity:.85; }
+.mistake-row .galat .txt{ text-decoration:line-through; text-decoration-color:var(--coral); opacity:.85; display:inline-flex; align-items:center; gap:.4rem; }
 .mistake-row .sahi{ background:var(--sage-soft); }
 .mistake-row .sahi .tag{ color:var(--sage); font-weight:700; font-size:.68rem; text-transform:uppercase; letter-spacing:.06em; }
-.mistake-row .sahi .txt{ font-weight:600; }
+.mistake-row .sahi .txt{ font-weight:600; display:inline-flex; align-items:center; gap:.4rem; }
 @media (max-width:600px){ .mistake-row{ grid-template-columns:1fr; } .mistake-row .galat{ border-right:none; border-bottom:1px solid var(--line); } }
 
 /* word power */
 .wp-card{ background:linear-gradient(135deg, var(--coral-soft), transparent); border:1px solid var(--coral); border-radius:12px; padding:1.1rem 1.4rem; }
 .wp-card .lvl{ font-size:.72rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--coral); }
-.wp-card .headword{ font-family:var(--font-display); font-size:1.3rem; margin:.3rem 0; }
+.wp-card .headword{ font-family:var(--font-display); font-size:1.3rem; margin:.3rem 0; display:flex; align-items:center; gap:.4rem; }
 .wp-card .pron{ font-family:var(--font-dev); color:var(--muted); }
 .wp-card .mean{ font-family:var(--font-dev); color:var(--sage); font-weight:600; margin-top:.2rem; }
-.wp-card .ex{ font-size:.9rem; color:var(--muted); border-top:1px dashed var(--line); padding-top:.5rem; margin-top:.6rem; }
+.wp-card .ex{ font-size:.9rem; color:var(--muted); border-top:1px dashed var(--line); padding-top:.5rem; margin-top:.6rem; display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
+
+/* advanced tier */
+.adv-hero{ background:linear-gradient(135deg, var(--coral-soft), transparent); border-color:var(--coral); }
+.adv-hero .num{ color:var(--coral); }
+.adv-grammar-box{ background:var(--paper-sunk); border-left-color:var(--coral); }
+.adv-formula{ font-family:var(--font-mono); font-size:.85rem; color:var(--ink); background:var(--paper-raised); border:1px solid var(--line); border-radius:8px; padding:.7rem .9rem; margin-top:.8rem; line-height:1.7; }
+
+.writing-prompt{ background:var(--paper-raised); border:1px solid var(--line); border-radius:14px; padding:1.2rem 1.4rem; }
+.wp-label{ font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--coral); margin-bottom:.35rem; }
+.wp-text{ font-weight:600; white-space:pre-line; display:flex; align-items:flex-start; gap:.4rem; flex-wrap:wrap; }
+.wp-text-hi{ font-weight:400; color:var(--muted); margin-top:.3rem; font-size:.92rem; }
+.wp-prompt{ margin-bottom:1rem; }
+.wp-structure{ background:var(--sage-soft); border-radius:10px; padding:.9rem 1.1rem; margin-bottom:1rem; }
+.wp-structure-list{ list-style:none; margin:.3rem 0 0; padding:0; display:flex; flex-direction:column; gap:.4rem; }
+.wp-structure-list li{ font-size:.88rem; color:var(--ink); }
+.wp-structure-list b{ color:var(--sage); }
+.wp-model{ display:block; margin-top:1rem; padding-top:1rem; border-top:1px dashed var(--line); }
 
 /* locked placeholder */
 .locked-card{ text-align:center; padding:4rem 1.5rem; background:var(--paper-raised); border:1px dashed var(--line-strong); border-radius:16px; }
@@ -204,15 +238,28 @@ header.site-nav{ position:sticky; top:0; z-index:190; background:color-mix(in sr
 
 .fade-wrap{ transition:opacity .25s ease, transform .25s ease; }
 .fade-wrap.fading{ opacity:0; transform:translateY(8px); }
-@media (prefers-reduced-motion: reduce){ .fade-wrap{ transition:none !important; } .flip-inner{ transition:none !important; } }
+@media (prefers-reduced-motion: reduce){ .fade-wrap{ transition:none !important; } }
 
 footer.site-footer{ padding:3rem 0 2.5rem; text-align:center; background:var(--ink); color:var(--paper); margin-top:2rem; }
 footer.site-footer .hi{ font-size:1.1rem; margin-bottom:.4rem; }
 footer.site-footer .en{ color:color-mix(in srgb, var(--paper) 65%, transparent); font-style:italic; font-size:.85rem; }
 
 @media (max-width:640px){
-  .day-hero{ flex-direction:column; align-items:flex-start; }
+  .day-hero{ flex-direction:column; align-items:flex-start; padding:1.3rem 1.4rem; }
   .day-stats{ width:100%; justify-content:space-between; }
+  .day-hero h2{ font-size:1.4rem; }
+  .day-hero .num{ font-size:1.9rem; }
+  .nav-inner{ padding:.6rem .8rem; gap:.6rem; }
+  .brand{ font-size:1.1rem; }
+  .back-link{ padding:.35rem .65rem; font-size:.75rem; }
+  .theme-toggle{ padding:.35rem .65rem; font-size:.75rem; }
+  .journey-map{ padding:1rem 1rem; gap:.4rem; }
+  .day-node{ width:44px; height:44px; font-size:.92rem; }
+  .pair-box{ grid-template-columns:1fr; }
+  .complete-btn{ width:100%; }
+}
+@media (max-width:400px){
+  .day-node{ width:40px; height:40px; font-size:.85rem; }
 }
 </style>
 </head>
@@ -236,13 +283,15 @@ footer.site-footer .en{ color:color-mix(in srgb, var(--paper) 65%, transparent);
 
 <div class="hero">
   <div class="container">
-    <div class="eyebrow">30-Din Mix Plan</div>
+    <div class="eyebrow">60-Din Mix Plan</div>
     <h1>Har din thoda-thoda — sab topics ek saath</h1>
-    <div class="sub hi">Ek deep topic ki jagah, roz ek chhota mix milega — foundations, parts of speech, tense/modal, active-passive/narration, conversation aur mistakes. Agla din tabhi khulega jab aaj ka din complete karoge.</div>
+    <div class="sub hi">Ek deep topic ki jagah, roz ek chhota mix milega. Din 1-30 = Foundations Mix — foundations, parts of speech, tense/modal, active-passive/narration, conversation aur mistakes. Din 31-60 = Advanced + Writing — mixed conditionals, reported speech, inversion jaise advanced grammar, formal-email/essay jaisi writing practice, aur professional vocabulary. Agla din tabhi khulega jab aaj ka din complete karoge.</div>
   </div>
 </div>
 
-<nav class="journey-map" id="journeyMap" aria-label="30 din ka route"></nav>
+<nav class="journey-map" id="journeyMap" aria-label="60 din ka route"></nav>
+
+<div class="progress-note"><span class="icon">⚠️</span><span><b>Progress save kahan hota hai:</b> Aapka progress is browser aur is exact address (URL) mein save hota hai. Agar aap kabhi file seedha kholte ho aur kabhi doosre tareeke se, ya browser badalte ho, to progress reset ho sakta hai — hamesha ek hi tarike se site kholiye.</span></div>
 
 <main class="container" id="dayContent"></main>
 
@@ -4168,6 +4217,786 @@ var TENSES = [
 ];
 
 /* ============================================================
+   ADVANCED TIER SOURCE DATA (Day 31-60) — genuinely denser,
+   register/formal-level content, distinct from the beginner pools.
+   ============================================================ */
+
+// ADV_GRAMMAR — 10 advanced topics, revisited across 3 rounds with different example sets.
+// Each item: {name, dev, rule (Hinglish explanation), formula (English formula string), examples: [{en,pron,hi}] (6 per round pulled via freshSlice-like indexing)}
+var ADV_GRAMMAR = [
+{
+  key:"mixed-cond", name:"Mixed Conditionals", devTag:"Mixed Conditionals",
+  rule:"Jab past ka ek kaam present result de raha ho, ya present ki condition ka past par asar dikhana ho, tab hum do alag conditional halves mix karte hain — ek half type 2 (unreal present) se, doosra type 3 (unreal past) se.",
+  formula:"Type 1 (past→present): If + Past Perfect, ... would + V1  |  Type 2 (present→past): If + Past Simple, ... would have + V3",
+  examples:[
+    {en:"If I had studied medicine, I would be a doctor now.", pron:"इफ आइ हैड स्टडीड मेडिसिन, आइ वुड बी अ डॉक्टर नाउ", hi:"अगर मैंने मेडिसिन पढ़ी होती, तो अब मैं डॉक्टर होता। (past decision → present result)"},
+    {en:"If she weren't so shy, she would have spoken up in the meeting.", pron:"इफ शी वेरेंट सो शाय, शी वुड हैव स्पोकन अप इन द मीटिंग", hi:"अगर वह इतनी शर्मीली न होती, तो मीटिंग में बोलती। (present trait → past result)"},
+    {en:"If he weren't so careless, he wouldn't have lost his passport.", pron:"इफ ही वेरेंट सो केयरलेस, ही वुडंट हैव लॉस्ट हिज़ पासपोर्ट", hi:"अगर वह इतना लापरवाह न होता, तो पासपोर्ट न खोता।"},
+    {en:"If we had left earlier, we wouldn't be stuck in this traffic.", pron:"इफ वी हैड लेफ्ट अर्लियर, वी वुडंट बी स्टक इन दिस ट्रैफिक", hi:"अगर हम जल्दी निकलते, तो अभी इस ट्रैफिक में फंसे न होते।"},
+    {en:"If you weren't afraid of heights, you would have enjoyed the trek.", pron:"इफ यू वेरेंट अफ्रेड ऑफ हाइट्स, यू वुड हैव इंजॉयड द ट्रेक", hi:"अगर तुम्हें ऊंचाई से डर न लगता, तो तुम ट्रेक एंजॉय करते।"},
+    {en:"If I hadn't taken that job, I wouldn't be living in Mumbai today.", pron:"इफ आइ हैडंट टेकन दैट जॉब, आइ वुडंट बी लिविंग इन मुंबई टुडे", hi:"अगर मैंने वो नौकरी न ली होती, तो आज मुंबई में न रहता होता।"}
+  ],
+  examples2:[
+    {en:"If he had saved money earlier, he wouldn't be struggling now.", pron:"इफ ही हैड सेव्ड मनी अर्लियर, ही वुडंट बी स्ट्रगलिंग नाउ", hi:"अगर उसने पहले पैसे बचाए होते, तो अब परेशान न होता।"},
+    {en:"If I weren't so busy this week, I would have helped you move.", pron:"इफ आइ वेरेंट सो बिज़ी दिस वीक, आइ वुड हैव हेल्प्ड यू मूव", hi:"अगर मैं इस हफ्ते इतना व्यस्त न होता, तो शिफ्टिंग में मदद करता।"},
+    {en:"If she had learned to drive, she wouldn't depend on others now.", pron:"इफ शी हैड लर्न्ड टू ड्राइव, शी वुडंट डिपेंड ऑन अदर्स नाउ", hi:"अगर उसने गाड़ी चलाना सीखा होता, तो अब दूसरों पर निर्भर न होती।"},
+    {en:"If they weren't so stubborn, they would have accepted the offer.", pron:"इफ दे वेरेंट सो स्टबर्न, दे वुड हैव एक्सेप्टेड द ऑफर", hi:"अगर वे इतने ज़िद्दी न होते, तो ऑफर स्वीकार कर लेते।"},
+    {en:"If I hadn't missed the flight, I would be at the conference right now.", pron:"इफ आइ हैडंट मिस्ड द फ्लाइट, आइ वुड बी एट द कॉन्फ्रेंस राइट नाउ", hi:"अगर मेरी फ्लाइट न छूटी होती, तो मैं अभी कॉन्फ्रेंस में होता।"},
+    {en:"If you weren't so generous, you wouldn't have given away your savings.", pron:"इफ यू वेरेंट सो जेनरस, यू वुडंट हैव गिवन अवे योर सेविंग्स", hi:"अगर तुम इतने उदार न होते, तो अपनी बचत न दे देते।"}
+  ],
+  examples3:[
+    {en:"If the company hadn't cut costs, it wouldn't be profitable today.", pron:"इफ द कंपनी हैडंट कट कॉस्ट्स, इट वुडंट बी प्रॉफिटेबल टुडे", hi:"अगर कंपनी ने खर्चे न घटाए होते, तो आज मुनाफे में न होती।"},
+    {en:"If I weren't allergic to nuts, I would have tried that dessert.", pron:"इफ आइ वेरेंट एलर्जिक टू नट्स, आइ वुड हैव ट्राइड दैट डेज़र्ट", hi:"अगर मुझे नट्स से एलर्जी न होती, तो वो डेज़र्ट ट्राई करता।"},
+    {en:"If he hadn't apologized, we wouldn't be on speaking terms now.", pron:"इफ ही हैडंट अपोलोजाइज्ड, वी वुडंट बी ऑन स्पीकिंग टर्म्स नाउ", hi:"अगर उसने माफी न मांगी होती, तो अब हमारी बातचीत बंद होती।"},
+    {en:"If she weren't so organized, the event wouldn't have gone so smoothly.", pron:"इफ शी वेरेंट सो ऑर्गेनाइज्ड, द इवेंट वुडंट हैव गॉन सो स्मूथली", hi:"अगर वह इतनी व्यवस्थित न होती, तो इवेंट इतना अच्छा न होता।"},
+    {en:"If we hadn't invested then, we wouldn't have this much savings now.", pron:"इफ वी हैडंट इन्वेस्टेड देन, वी वुडंट हैव दिस मच सेविंग्स नाउ", hi:"अगर हमने तब निवेश न किया होता, तो अभी इतनी बचत न होती।"},
+    {en:"If he weren't colour-blind, he could have become a pilot.", pron:"इफ ही वेरेंट कलर-ब्लाइंड, ही कुड हैव बिकम अ पायलट", hi:"अगर वह कलर-ब्लाइंड न होता, तो पायलट बन सकता था।"}
+  ]
+},
+{
+  key:"reported-edge", name:"Reported Speech — Edge Cases", devTag:"Reported Speech",
+  rule:"Simple 'said that' sabko pata hai, lekin commands, requests, exclamations, aur questions ko report karne ka tareeka alag hota hai — 'told/asked/ordered + to + V1' ya 'wh-word/if/whether + S + V' use hota hai, aur reporting verb badalta hai (ask, suggest, warn, advise, exclaim).",
+  formula:"Commands: told/ordered + O + (not) to + V1  |  Requests: asked/requested + O + to + V1  |  Wh-Q: asked + wh-word + S + V  |  Yes/No-Q: asked + if/whether + S + V  |  Suggestions: suggested + V-ing / that + S + V1",
+  examples:[
+    {en:"\"Close the door,\" she said. → She told him to close the door.", pron:"शी टोल्ड हिम टू क्लोज़ द डोर", hi:"\"दरवाज़ा बंद करो,\" उसने कहा → उसने उसे दरवाज़ा बंद करने को कहा।"},
+    {en:"\"Please don't shout,\" he said. → He asked her not to shout.", pron:"ही आस्क्ड हर नॉट टू शाउट", hi:"\"कृपया चिल्लाओ मत,\" उसने कहा → उसने उससे न चिल्लाने को कहा।"},
+    {en:"\"Where do you live?\" she asked. → She asked where I lived.", pron:"शी आस्क्ड वेयर आइ लिव्ड", hi:"\"तुम कहाँ रहते हो?\" उसने पूछा → उसने पूछा कि मैं कहाँ रहता था।"},
+    {en:"\"Did you finish the report?\" he asked. → He asked if I had finished the report.", pron:"ही आस्क्ड इफ आइ हैड फिनिश्ड द रिपोर्ट", hi:"\"क्या तुमने रिपोर्ट पूरी की?\" उसने पूछा → उसने पूछा कि क्या मैंने रिपोर्ट पूरी की थी।"},
+    {en:"\"Why don't we take a break?\" she said. → She suggested taking a break.", pron:"शी सजेस्टेड टेकिंग अ ब्रेक", hi:"\"क्यों न हम ब्रेक लें?\" उसने कहा → उसने ब्रेक लेने का सुझाव दिया।"},
+    {en:"\"What a beautiful view!\" she exclaimed. → She exclaimed that it was a beautiful view.", pron:"शी एक्सक्लेम्ड दैट इट वॉज़ अ ब्यूटीफुल व्यू", hi:"\"कितना सुंदर नज़ारा है!\" उसने कहा → उसने कहा कि वह बहुत सुंदर नज़ारा था।"}
+  ],
+  examples2:[
+    {en:"\"Don't touch that wire,\" he warned. → He warned me not to touch that wire.", pron:"ही वॉर्न्ड मी नॉट टू टच दैट वायर", hi:"\"वो तार मत छूना,\" उसने चेताया → उसने मुझे वो तार न छूने की चेतावनी दी।"},
+    {en:"\"You should see a doctor,\" she said. → She advised me to see a doctor.", pron:"शी एडवाइज़्ड मी टू सी अ डॉक्टर", hi:"\"तुम्हें डॉक्टर को दिखाना चाहिए,\" उसने कहा → उसने मुझे डॉक्टर को दिखाने की सलाह दी।"},
+    {en:"\"How long have you worked here?\" he asked. → He asked how long I had worked there.", pron:"ही आस्क्ड हाउ लॉन्ग आइ हैड वर्क्ड देयर", hi:"\"तुम यहाँ कितने समय से काम कर रहे हो?\" उसने पूछा → उसने पूछा कि मैं वहाँ कितने समय से काम कर रहा था।"},
+    {en:"\"Is the meeting still on?\" she asked. → She asked whether the meeting was still on.", pron:"शी आस्क्ड वेदर द मीटिंग वॉज़ स्टिल ऑन", hi:"\"क्या मीटिंग अभी भी है?\" उसने पूछा → उसने पूछा कि क्या मीटिंग अभी भी थी।"},
+    {en:"\"Let's not argue about this,\" he said. → He suggested not arguing about that.", pron:"ही सजेस्टेड नॉट आर्ग्युइंग अबाउट दैट", hi:"\"चलो इस पर बहस न करें,\" उसने कहा → उसने इस पर बहस न करने का सुझाव दिया।"},
+    {en:"\"Please forgive me,\" he begged. → He begged her to forgive him.", pron:"ही बेग्ड हर टू फॉरगिव हिम", hi:"\"मुझे माफ कर दो,\" उसने विनती की → उसने उससे माफ करने की विनती की।"}
+  ],
+  examples3:[
+    {en:"\"Submit the form by Friday,\" the officer ordered. → The officer ordered us to submit the form by Friday.", pron:"द ऑफिसर ऑर्डर्ड अस टू सबमिट द फॉर्म बाइ फ्राइडे", hi:"\"शुक्रवार तक फॉर्म जमा करो,\" अफसर ने आदेश दिया → अफसर ने हमें शुक्रवार तक फॉर्म जमा करने का आदेश दिया।"},
+    {en:"\"Could you lower your voice?\" she requested. → She requested him to lower his voice.", pron:"शी रिक्वेस्टेड हिम टू लोअर हिज़ वॉइस", hi:"\"क्या आप आवाज़ धीमी करेंगे?\" उसने अनुरोध किया → उसने उससे आवाज़ धीमी करने का अनुरोध किया।"},
+    {en:"\"Which route did you take?\" he asked. → He asked which route I had taken.", pron:"ही आस्क्ड विच राउट आइ हैड टेकन", hi:"\"तुमने कौन सा रास्ता लिया?\" उसने पूछा → उसने पूछा कि मैंने कौन सा रास्ता लिया था।"},
+    {en:"\"Has the package arrived yet?\" she asked. → She asked if the package had arrived yet.", pron:"शी आस्क्ड इफ द पैकेज हैड अराइव्ड येट", hi:"\"क्या पैकेज पहुंच गया?\" उसने पूछा → उसने पूछा कि क्या पैकेज पहुंच गया था।"},
+    {en:"\"I propose we postpone the launch,\" the manager said. → The manager proposed postponing the launch.", pron:"द मैनेजर प्रोपोज़्ड पोस्टपोनिंग द लॉन्च", hi:"\"मेरा सुझाव है लॉन्च टालें,\" मैनेजर ने कहा → मैनेजर ने लॉन्च टालने का प्रस्ताव रखा।"},
+    {en:"\"What a mess this is!\" he exclaimed. → He exclaimed that it was a huge mess.", pron:"ही एक्सक्लेम्ड दैट इट वॉज़ अ ह्यूज मेस", hi:"\"कितनी गड़बड़ है!\" उसने कहा → उसने कहा कि यह बहुत बड़ी गड़बड़ थी।"}
+  ]
+},
+{
+  key:"complex-passive", name:"Complex Passive Constructions", devTag:"Advanced Passive",
+  rule:"Modal verbs, causatives (get/have something done), aur 'it is said/believed that' jaise reporting-passive formal English mein bahut use hote hain — attention action par jaata hai, karne wale par nahi.",
+  formula:"Modal passive: S + modal + be + V3  |  Causative: S + get/have + O + V3  |  Belief passive: It is said/believed/reported + that + clause OR S + is said/believed + to + V1",
+  examples:[
+    {en:"The report must be submitted before noon.", pron:"द रिपोर्ट मस्ट बी सबमिटेड बिफोर नून", hi:"रिपोर्ट दोपहर से पहले जमा की जानी चाहिए।"},
+    {en:"I need to get my laptop repaired this week.", pron:"आइ नीड टू गेट माय लैपटॉप रिपेयर्ड दिस वीक", hi:"मुझे इस हफ्ते अपना लैपटॉप ठीक करवाना है।"},
+    {en:"She had her hair cut before the interview.", pron:"शी हैड हर हेयर कट बिफोर द इंटरव्यू", hi:"इंटरव्यू से पहले उसने अपने बाल कटवाए।"},
+    {en:"It is believed that the ancient city was destroyed by an earthquake.", pron:"इट इज़ बिलीव्ड दैट द एंशियंट सिटी वॉज़ डिस्ट्रॉयड बाइ एन अर्थक्वेक", hi:"माना जाता है कि प्राचीन शहर भूकंप से नष्ट हुआ था।"},
+    {en:"The bridge is said to have been built in the 1800s.", pron:"द ब्रिज इज़ सेड टू हैव बीन बिल्ट इन द एटीन हंड्रेड्स", hi:"कहा जाता है कि यह पुल 1800 के दशक में बनाया गया था।"},
+    {en:"The decision should have been announced earlier.", pron:"द डिसीज़न शुड हैव बीन अनाउंस्ड अर्लियर", hi:"फैसले की घोषणा पहले हो जानी चाहिए थी।"}
+  ],
+  examples2:[
+    {en:"All applications will be reviewed by the committee.", pron:"ऑल एप्लिकेशन्स विल बी रिव्यूड बाइ द कमिटी", hi:"सभी आवेदनों की समीक्षा समिति द्वारा की जाएगी।"},
+    {en:"We had the whole house painted last month.", pron:"वी हैड द होल हाउस पेंटेड लास्ट मंथ", hi:"हमने पिछले महीने पूरा घर रंगवाया।"},
+    {en:"He got his passport renewed just in time.", pron:"ही गॉट हिज़ पासपोर्ट रिन्यूड जस्ट इन टाइम", hi:"उसने अपना पासपोर्ट सही समय पर रिन्यू करवा लिया।"},
+    {en:"It is reported that the new policy will take effect next month.", pron:"इट इज़ रिपोर्टेड दैट द न्यू पॉलिसी विल टेक इफेक्ट नेक्स्ट मंथ", hi:"रिपोर्ट है कि नई नीति अगले महीने से लागू होगी।"},
+    {en:"The candidate is thought to be the strongest contender.", pron:"द कैंडिडेट इज़ थॉट टू बी द स्ट्रॉन्गेस्ट कंटेंडर", hi:"माना जाता है कि यह उम्मीदवार सबसे मज़बूत दावेदार है।"},
+    {en:"This issue could have been avoided with better planning.", pron:"दिस इश्यू कुड हैव बीन अवॉइडेड विद बेटर प्लानिंग", hi:"बेहतर योजना से यह समस्या टाली जा सकती थी।"}
+  ],
+  examples3:[
+    {en:"Visitors must be accompanied by a staff member at all times.", pron:"विज़िटर्स मस्ट बी अकम्पनीड बाइ अ स्टाफ मेंबर एट ऑल टाइम्स", hi:"आगंतुकों के साथ हर समय एक स्टाफ सदस्य होना चाहिए।"},
+    {en:"They are getting their kitchen renovated this summer.", pron:"दे आर गेटिंग देयर किचन रेनोवेटेड दिस समर", hi:"वे इस गर्मी में अपनी रसोई का नवीनीकरण करवा रहे हैं।"},
+    {en:"I'll have the documents translated by tomorrow.", pron:"आइल हैव द डॉक्युमेंट्स ट्रांसलेटेड बाइ टुमॉरो", hi:"मैं कल तक दस्तावेज़ों का अनुवाद करवा लूंगा।"},
+    {en:"It is widely believed that the merger will be finalized soon.", pron:"इट इज़ वाइडली बिलीव्ड दैट द मर्जर विल बी फाइनलाइज़्ड सून", hi:"व्यापक रूप से माना जाता है कि विलय जल्द ही अंतिम रूप लेगा।"},
+    {en:"The suspect is believed to have fled the country.", pron:"द सस्पेक्ट इज़ बिलीव्ड टू हैव फ्लेड द कंट्री", hi:"माना जाता है कि संदिग्ध देश छोड़कर भाग गया है।"},
+    {en:"The delay might have been caused by a technical fault.", pron:"द डिले माइट हैव बीन कॉज़्ड बाइ अ टेक्निकल फॉल्ट", hi:"देरी शायद किसी तकनीकी खराबी की वजह से हुई हो।"}
+  ]
+},
+{
+  key:"participle", name:"Participle Clauses", devTag:"Participle Clauses",
+  rule:"Do sentences ko jodne ke liye jinme same subject ho, hum ek verb ko -ing (present participle) ya V3 (past participle) mein badal kar comma se joड़ते hain — formal writing mein yeh sentence ko chhota aur smooth banata hai.",
+  formula:"-ing (active, same time or cause): V-ing + ..., S + V  |  Having + V3 (completed before): Having + V3 + ..., S + V  |  V3 (passive meaning): V3 + ..., S + V",
+  examples:[
+    {en:"Feeling tired after the long flight, she went straight to bed.", pron:"फीलिंग टायर्ड आफ्टर द लॉन्ग फ्लाइट, शी वेंट स्ट्रेट टू बेड", hi:"लंबी फ्लाइट के बाद थकान महसूस करते हुए, वह सीधे सो गई।"},
+    {en:"Having finished his homework, he went out to play.", pron:"हैविंग फिनिश्ड हिज़ होमवर्क, ही वेंट आउट टू प्ले", hi:"अपना होमवर्क खत्म करने के बाद, वह खेलने चला गया।"},
+    {en:"Written in simple language, the book is easy to understand.", pron:"रिटन इन सिंपल लैंग्वेज, द बुक इज़ ईज़ी टू अंडरस्टैंड", hi:"सरल भाषा में लिखी होने के कारण, यह किताब समझने में आसान है।"},
+    {en:"Walking down the street, I noticed a new cafe.", pron:"वॉकिंग डाउन द स्ट्रीट, आइ नोटिस्ड अ न्यू कैफे", hi:"सड़क पर चलते हुए, मुझे एक नया कैफे दिखा।"},
+    {en:"Not knowing what to say, she just smiled.", pron:"नॉट नोइंग वॉट टू से, शी जस्ट स्माइल्ड", hi:"क्या कहें न जानते हुए, उसने बस मुस्कुरा दिया।"},
+    {en:"Shocked by the news, he sat down quietly.", pron:"शॉक्ड बाइ द न्यूज़, ही सैट डाउन क्वाइटली", hi:"खबर सुनकर हैरान होकर, वह चुपचाप बैठ गया।"}
+  ],
+  examples2:[
+    {en:"Having lived in Japan for years, she speaks Japanese fluently.", pron:"हैविंग लिव्ड इन जापान फॉर ईयर्स, शी स्पीक्स जैपनीज़ फ्लुएंटली", hi:"जापान में सालों रहने के कारण, वह जापानी धाराप्रवाह बोलती है।"},
+    {en:"Exhausted from the trek, they rested at the base camp.", pron:"एग्ज़ॉस्टेड फ्रॉम द ट्रेक, दे रेस्टेड एट द बेस कैंप", hi:"ट्रेक से थककर, उन्होंने बेस कैंप पर आराम किया।"},
+    {en:"Built in the seventeenth century, the fort still stands strong.", pron:"बिल्ट इन द सेवेंटीन्थ सेंचुरी, द फोर्ट स्टिल स्टैंड्स स्ट्रॉन्ग", hi:"सत्रहवीं सदी में बना यह किला अभी भी मज़बूत खड़ा है।"},
+    {en:"Realizing his mistake, he apologized immediately.", pron:"रियलाइज़िंग हिज़ मिस्टेक, ही अपोलोजाइज़्ड इमीडिएटली", hi:"अपनी गलती समझते ही, उसने तुरंत माफी मांगी।"},
+    {en:"Having missed the bus, we decided to take a cab.", pron:"हैविंग मिस्ड द बस, वी डिसाइडेड टू टेक अ कैब", hi:"बस छूट जाने पर, हमने कैब लेने का फैसला किया।"},
+    {en:"Surrounded by mountains, the village looked peaceful.", pron:"सराउंडेड बाइ माउंटेन्स, द विलेज लुक्ड पीसफुल", hi:"पहाड़ों से घिरा हुआ, गाँव शांत दिख रहा था।"}
+  ],
+  examples3:[
+    {en:"Having double-checked every detail, she submitted the report with confidence.", pron:"हैविंग डबल-चेक्ड एवरी डिटेल, शी सबमिटेड द रिपोर्ट विद कॉन्फिडेंस", hi:"हर बात दोबारा जांचने के बाद, उसने आत्मविश्वास से रिपोर्ट जमा की।"},
+    {en:"Delayed by heavy traffic, the delivery arrived two hours late.", pron:"डिलेड बाइ हेवी ट्रैफिक, द डिलीवरी अराइव्ड टू आवर्स लेट", hi:"भारी ट्रैफिक से देरी होने के कारण, डिलीवरी दो घंटे देर से पहुंची।"},
+    {en:"Encouraged by his teacher, he decided to enter the competition.", pron:"इनकरेज्ड बाइ हिज़ टीचर, ही डिसाइडेड टू एंटर द कॉम्पिटिशन", hi:"अपने शिक्षक से प्रोत्साहित होकर, उसने प्रतियोगिता में भाग लेने का फैसला किया।"},
+    {en:"Not having received any reply, she called the office directly.", pron:"नॉट हैविंग रिसीव्ड एनी रिप्लाई, शी कॉल्ड द ऑफिस डायरेक्टली", hi:"कोई जवाब न मिलने पर, उसने सीधे ऑफिस को कॉल किया।"},
+    {en:"Located near the station, the hotel is very convenient for travellers.", pron:"लोकेटेड नियर द स्टेशन, द होटल इज़ वेरी कन्वीनियंट फॉर ट्रैवलर्स", hi:"स्टेशन के पास स्थित, यह होटल यात्रियों के लिए बहुत सुविधाजनक है।"},
+    {en:"Having weighed all the options, the board approved the new plan.", pron:"हैविंग वेड ऑल द ऑप्शन्स, द बोर्ड अप्रूव्ड द न्यू प्लान", hi:"सभी विकल्पों को तौलने के बाद, बोर्ड ने नई योजना मंज़ूर की।"}
+  ]
+},
+{
+  key:"relative", name:"Relative Clauses — Defining vs Non-defining", devTag:"Relative Clauses",
+  rule:"Defining clause (bina comma) sentence ka zaroori hissa hai — batata hai KAUN sa. Non-defining clause (comma ke saath) sirf extra info deta hai, hata do to bhi sentence ka meaning theek rehta hai. 'That' sirf defining mein chalta hai, non-defining mein nahi.",
+  formula:"Defining: S + [who/which/that + clause, NO comma] + V  |  Non-defining: S, [who/which + clause, comma dono taraf], + V",
+  examples:[
+    {en:"The man who called you yesterday is my uncle.", pron:"द मैन हू कॉल्ड यू येस्टरडे इज़ माय अंकल", hi:"वह आदमी जिसने तुम्हें कल फोन किया, वह मेरा चाचा है। (defining — batata hai KAUN sa aadmi)"},
+    {en:"My brother, who lives in Canada, is visiting us next month.", pron:"माय ब्रदर, हू लिव्स इन कनाडा, इज़ विज़िटिंग अस नेक्स्ट मंथ", hi:"मेरा भाई, जो कनाडा में रहता है, अगले महीने हमसे मिलने आ रहा है। (non-defining — extra info)"},
+    {en:"This is the book that changed my perspective on life.", pron:"दिस इज़ द बुक दैट चेंज्ड माय पर्स्पेक्टिव ऑन लाइफ", hi:"यह वह किताब है जिसने मेरी ज़िंदगी की सोच बदल दी।"},
+    {en:"The Taj Mahal, which was built by Shah Jahan, attracts millions of tourists.", pron:"द ताज महल, विच वॉज़ बिल्ट बाइ शाह जहां, अट्रैक्ट्स मिलियंस ऑफ टूरिस्ट्स", hi:"ताजमहल, जिसे शाहजहां ने बनवाया था, लाखों पर्यटकों को आकर्षित करता है।"},
+    {en:"People who exercise regularly tend to live longer.", pron:"पीपल हू एक्सरसाइज़ रेगुलरली टेंड टू लिव लॉन्गर", hi:"जो लोग नियमित व्यायाम करते हैं, वे आमतौर पर लंबा जीते हैं।"},
+    {en:"Our office, which was renovated last year, now looks very modern.", pron:"आवर ऑफिस, विच वॉज़ रेनोवेटेड लास्ट ईयर, नाउ लुक्स वेरी मॉडर्न", hi:"हमारा ऑफिस, जिसका पिछले साल नवीनीकरण हुआ था, अब बहुत आधुनिक दिखता है।"}
+  ],
+  examples2:[
+    {en:"The restaurant where we had dinner last night has closed down.", pron:"द रेस्टोरेंट वेयर वी हैड डिनर लास्ट नाइट हैज़ क्लोज़्ड डाउन", hi:"जिस रेस्तराँ में हमने कल रात खाना खाया था, वह बंद हो गया है।"},
+    {en:"Delhi, where I was born, has changed a lot in twenty years.", pron:"देल्ही, वेयर आइ वॉज़ बॉर्न, हैज़ चेंज्ड अ लॉट इन ट्वेंटी ईयर्स", hi:"दिल्ली, जहां मैं पैदा हुआ, बीस सालों में बहुत बदल गई है।"},
+    {en:"The employee whose idea won the award got a promotion.", pron:"द एम्प्लॉई हूज़ आइडिया वन द अवॉर्ड गॉट अ प्रमोशन", hi:"जिस कर्मचारी के विचार ने पुरस्कार जीता, उसे पदोन्नति मिली।"},
+    {en:"My grandmother, whose cooking is famous in the family, turned eighty last week.", pron:"माय ग्रैंडमदर, हूज़ कुकिंग इज़ फेमस इन द फैमिली, टर्न्ड एटी लास्ट वीक", hi:"मेरी दादी, जिनकी रसोई परिवार में मशहूर है, पिछले हफ्ते अस्सी की हुईं।"},
+    {en:"The reason why he resigned is still unclear.", pron:"द रीज़न वाइ ही रिज़ाइन्ड इज़ स्टिल अनक्लियर", hi:"वह कारण जिसकी वजह से उसने इस्तीफा दिया, अभी भी स्पष्ट नहीं है।"},
+    {en:"The client, who has worked with us for ten years, trusts our judgment.", pron:"द क्लाइंट, हू हैज़ वर्क्ड विद अस फॉर टेन ईयर्स, ट्रस्ट्स आवर जजमेंट", hi:"वह क्लाइंट, जो दस साल से हमारे साथ काम कर रहा है, हमारे फैसले पर भरोसा करता है।"}
+  ],
+  examples3:[
+    {en:"The candidates who passed the first round will be called for an interview.", pron:"द कैंडिडेट्स हू पास्ड द फर्स्ट राउंड विल बी कॉल्ड फॉर एन इंटरव्यू", hi:"जो उम्मीदवार पहले राउंड में पास हुए, उन्हें इंटरव्यू के लिए बुलाया जाएगा।"},
+    {en:"This laptop, which I bought two years ago, still works perfectly.", pron:"दिस लैपटॉप, विच आइ बॉट टू ईयर्स अगो, स्टिल वर्क्स परफेक्टली", hi:"यह लैपटॉप, जिसे मैंने दो साल पहले खरीदा था, अभी भी बिल्कुल ठीक चलता है।"},
+    {en:"The project, whose deadline was extended, is finally complete.", pron:"द प्रोजेक्ट, हूज़ डेडलाइन वॉज़ एक्सटेंडेड, इज़ फाइनली कम्प्लीट", hi:"वह प्रोजेक्ट, जिसकी समय-सीमा बढ़ाई गई थी, आखिरकार पूरा हो गया है।"},
+    {en:"The village where my father grew up now has an airport nearby.", pron:"द विलेज वेयर माय फादर ग्रू अप नाउ हैज़ एन एयरपोर्ट नियरबाय", hi:"वह गाँव जहां मेरे पिता बड़े हुए, अब वहाँ पास में एक हवाई अड्डा है।"},
+    {en:"Our teacher, whose patience is legendary, never raises her voice.", pron:"आवर टीचर, हूज़ पेशेंस इज़ लेजेंडरी, नेवर रेज़ेज़ हर वॉइस", hi:"हमारी शिक्षिका, जिनका धैर्य मशहूर है, कभी आवाज़ ऊंची नहीं करतीं।"},
+    {en:"The app, which was launched only last month, already has a million users.", pron:"द ऐप, विच वॉज़ लॉन्च्ड ओनली लास्ट मंथ, ऑलरेडी हैज़ अ मिलियन यूज़र्स", hi:"वह ऐप, जो सिर्फ पिछले महीने लॉन्च हुई थी, पहले से ही एक मिलियन यूज़र्स रखती है।"}
+  ]
+},
+{
+  key:"inversion", name:"Inversion for Emphasis", devTag:"Inversion",
+  rule:"Formal ya literary English mein, jab sentence ki shuruaat negative/limiting words (never, rarely, not only, hardly, no sooner) se hoti hai, to subject-verb order palat jaata hai (jaise question mein hota hai) — isse zor (emphasis) aata hai.",
+  formula:"Never/Rarely/Seldom + auxiliary + S + V  |  Not only + auxiliary + S + V, ... but also + S + V  |  Hardly + auxiliary + S + V3 + when + S + V  |  No sooner + auxiliary + S + V3 + than + S + V",
+  examples:[
+    {en:"Never have I seen such a beautiful sunset.", pron:"नेवर हैव आइ सीन सच अ ब्यूटीफुल सनसेट", hi:"मैंने कभी ऐसा सुंदर सूर्यास्त नहीं देखा।"},
+    {en:"Not only did she finish the project early, but she also impressed the client.", pron:"नॉट ओनली डिड शी फिनिश द प्रोजेक्ट अर्ली, बट शी ऑल्सो इम्प्रेस्ड द क्लाइंट", hi:"उसने न केवल प्रोजेक्ट जल्दी खत्म किया, बल्कि क्लाइंट को भी प्रभावित किया।"},
+    {en:"Hardly had we sat down when the phone rang.", pron:"हार्डली हैड वी सैट डाउन वेन द फोन रैंग", hi:"हम अभी बैठे ही थे कि फोन बज उठा।"},
+    {en:"No sooner had he arrived than it started raining.", pron:"नो सूनर हैड ही अराइव्ड दैन इट स्टार्टेड रेनिंग", hi:"वह पहुंचा ही था कि बारिश शुरू हो गई।"},
+    {en:"Rarely does she complain about her workload.", pron:"रेयरली डज़ शी कॉम्प्लेन अबाउट हर वर्कलोड", hi:"वह अपने काम के बोझ के बारे में शायद ही कभी शिकायत करती है।"},
+    {en:"Under no circumstances should you share your password.", pron:"अंडर नो सर्कमस्टांसेज़ शुड यू शेयर योर पासवर्ड", hi:"किसी भी हालत में तुम्हें अपना पासवर्ड नहीं बताना चाहिए।"}
+  ],
+  examples2:[
+    {en:"Seldom have I met someone so dedicated to their work.", pron:"सेल्डम हैव आइ मेट समवन सो डेडिकेटेड टू देयर वर्क", hi:"मैंने शायद ही कभी किसी को अपने काम के प्रति इतना समर्पित देखा है।"},
+    {en:"Not only was the food delicious, but the service was excellent too.", pron:"नॉट ओनली वॉज़ द फूड डिलीशियस, बट द सर्विस वॉज़ एक्सेलेंट टू", hi:"न केवल खाना स्वादिष्ट था, बल्कि सेवा भी बेहतरीन थी।"},
+    {en:"Hardly had the meeting started when the power went out.", pron:"हार्डली हैड द मीटिंग स्टार्टेड वेन द पावर वेंट आउट", hi:"मीटिंग शुरू ही हुई थी कि बिजली चली गई।"},
+    {en:"No sooner had she signed the contract than she started having doubts.", pron:"नो सूनर हैड शी साइन्ड द कॉन्ट्रैक्ट दैन शी स्टार्टेड हैविंग डाउट्स", hi:"उसने कॉन्ट्रैक्ट पर साइन किया ही था कि उसे शक होने लगा।"},
+    {en:"Little did he know that the offer was a scam.", pron:"लिटल डिड ही नो दैट द ऑफर वॉज़ अ स्कैम", hi:"उसे बिल्कुल भी पता नहीं था कि वह ऑफर एक धोखा था।"},
+    {en:"Only after the results came out did she relax.", pron:"ओनली आफ्टर द रिज़ल्ट्स केम आउट डिड शी रिलैक्स", hi:"नतीजे आने के बाद ही वह आराम कर सकी।"}
+  ],
+  examples3:[
+    {en:"Never before had the team faced such a difficult challenge.", pron:"नेवर बिफोर हैड द टीम फेस्ड सच अ डिफिकल्ट चैलेंज", hi:"टीम ने पहले कभी ऐसी मुश्किल चुनौती का सामना नहीं किया था।"},
+    {en:"Not only does he manage the team, but he also trains new hires.", pron:"नॉट ओनली डज़ ही मैनेज द टीम, बट ही ऑल्सो ट्रेन्स न्यू हायर्स", hi:"वह न केवल टीम संभालता है, बल्कि नए कर्मचारियों को ट्रेनिंग भी देता है।"},
+    {en:"Hardly had I opened my inbox when I saw the bad news.", pron:"हार्डली हैड आइ ओपन्ड माय इनबॉक्स वेन आइ सॉ द बैड न्यूज़", hi:"मैंने अपना इनबॉक्स खोला ही था कि बुरी खबर दिख गई।"},
+    {en:"So exhausted was she that she fell asleep on the sofa.", pron:"सो एग्ज़ॉस्टेड वॉज़ शी दैट शी फेल असलीप ऑन द सोफा", hi:"वह इतनी थकी हुई थी कि सोफे पर ही सो गई।"},
+    {en:"Nowhere else will you find such hospitality.", pron:"नोवेयर एल्स विल यू फाइंड सच हॉस्पिटैलिटी", hi:"तुम्हें ऐसी मेहमाननवाज़ी कहीं और नहीं मिलेगी।"},
+    {en:"Not until he apologized did she forgive him.", pron:"नॉट अंटिल ही अपोलोजाइज्ड डिड शी फॉरगिव हिम", hi:"जब तक उसने माफी नहीं मांगी, उसने उसे माफ नहीं किया।"}
+  ]
+},
+{
+  key:"modal-nuance", name:"Must Have / Should Have / Could Have", devTag:"Advanced Modal Nuance",
+  rule:"Teeno 'have + V3' ke saath past ke baare mein baat karte hain, lekin meaning bilkul alag hai: 'must have' = confident guess (yakeenan hua hoga), 'should have' = past mistake/regret (karna chahiye tha, par nahi kiya), 'could have' = past possibility jo hui nahi (kar sakte the, par nahi kiya).",
+  formula:"Must have + V3 (strong guess) | Should have + V3 (regret/advice about past) | Could have + V3 (unused possibility) | Shouldn't have + V3 (wrong action taken) | Couldn't have + V3 (impossibility)",
+  examples:[
+    {en:"He must have left already; his car isn't here.", pron:"ही मस्ट हैव लेफ्ट ऑलरेडी; हिज़ कार इज़्ंट हियर", hi:"वह ज़रूर जा चुका होगा; उसकी गाड़ी यहां नहीं है। (confident guess)"},
+    {en:"You should have told me about the change earlier.", pron:"यू शुड हैव टोल्ड मी अबाउट द चेंज अर्लियर", hi:"तुम्हें मुझे बदलाव के बारे में पहले बताना चाहिए था। (regret/complaint)"},
+    {en:"We could have taken the earlier train, but we chose not to.", pron:"वी कुड हैव टेकन द अर्लियर ट्रेन, बट वी चोज़ नॉट टू", hi:"हम पहली ट्रेन ले सकते थे, पर हमने नहीं ली। (unused option)"},
+    {en:"She shouldn't have spoken to him like that.", pron:"शी शुडंट हैव स्पोकन टू हिम लाइक दैट", hi:"उसे उससे ऐसे बात नहीं करनी चाहिए थी। (wrong action)"},
+    {en:"They can't have finished already — it's only been ten minutes.", pron:"दे कान्ट हैव फिनिश्ड ऑलरेडी — इट्स ओनली बीन टेन मिनट्स", hi:"वे इतनी जल्दी खत्म नहीं कर सकते — अभी दस मिनट ही हुए हैं। (impossibility)"},
+    {en:"I could have finished this by now if I hadn't been interrupted.", pron:"आइ कुड हैव फिनिश्ड दिस बाइ नाउ इफ आइ हैडंट बीन इंटरप्टेड", hi:"अगर मुझे बीच में न रोका जाता, तो मैं यह अब तक पूरा कर सकता था।"}
+  ],
+  examples2:[
+    {en:"She must have forgotten about the meeting.", pron:"शी मस्ट हैव फॉरगॉटन अबाउट द मीटिंग", hi:"वह मीटिंग के बारे में ज़रूर भूल गई होगी।"},
+    {en:"I should have double-checked the address before leaving.", pron:"आइ शुड हैव डबल-चेक्ड द एड्रेस बिफोर लीविंग", hi:"मुझे निकलने से पहले पता दोबारा जांचना चाहिए था।"},
+    {en:"He could have warned us about the traffic.", pron:"ही कुड हैव वॉर्न्ड अस अबाउट द ट्रैफिक", hi:"वह हमें ट्रैफिक के बारे में चेता सकता था।"},
+    {en:"They shouldn't have signed the contract without reading it.", pron:"दे शुडंट हैव साइन्ड द कॉन्ट्रैक्ट विदाउट रीडिंग इट", hi:"उन्हें बिना पढ़े कॉन्ट्रैक्ट पर साइन नहीं करना चाहिए था।"},
+    {en:"That couldn't have been him — he was with me all evening.", pron:"दैट कुडंट हैव बीन हिम — ही वॉज़ विद मी ऑल ईवनिंग", hi:"वह वह नहीं हो सकता था — वह पूरी शाम मेरे साथ था।"},
+    {en:"We must have taken a wrong turn somewhere.", pron:"वी मस्ट हैव टेकन अ रॉन्ग टर्न समवेयर", hi:"हमने कहीं गलत मोड़ ले लिया होगा।"}
+  ],
+  examples3:[
+    {en:"You must have worked really hard to get this result.", pron:"यू मस्ट हैव वर्क्ड रियली हार्ड टू गेट दिस रिज़ल्ट", hi:"यह नतीजा पाने के लिए तुमने ज़रूर बहुत मेहनत की होगी।"},
+    {en:"I should have saved a backup of the file.", pron:"आइ शुड हैव सेव्ड अ बैकअप ऑफ द फाइल", hi:"मुझे फाइल का बैकअप बचाकर रखना चाहिए था।"},
+    {en:"She could have accepted the other job offer instead.", pron:"शी कुड हैव एक्सेप्टेड द अदर जॉब ऑफर इंस्टेड", hi:"वह इसके बजाय दूसरी नौकरी का ऑफर स्वीकार कर सकती थी।"},
+    {en:"He shouldn't have left the stove on before going out.", pron:"ही शुडंट हैव लेफ्ट द स्टोव ऑन बिफोर गोइंग आउट", hi:"बाहर जाने से पहले उसे चूल्हा जलता नहीं छोड़ना चाहिए था।"},
+    {en:"She can't have read the whole book in one night.", pron:"शी कान्ट हैव रेड द होल बुक इन वन नाइट", hi:"वह एक ही रात में पूरी किताब नहीं पढ़ सकती थी।"},
+    {en:"We could have avoided this problem with better planning.", pron:"वी कुड हैव अवॉइडेड दिस प्रॉब्लम विद बेटर प्लानिंग", hi:"बेहतर योजना से हम यह समस्या टाल सकते थे।"}
+  ]
+},
+{
+  key:"subjunctive", name:"Subjunctive Mood", devTag:"Subjunctive Mood",
+  rule:"Formal English mein, jab hum suggestion, demand, ya zaroorat batate hain (suggest, recommend, insist, demand, essential, important), to 'that' clause ke andar base form (V1) use hota hai — chahe subject singular ho ya past tense ho.",
+  formula:"S + suggest/recommend/insist/demand + that + S + (should) + V1  |  It is essential/important/vital + that + S + (should) + V1",
+  examples:[
+    {en:"The doctor recommended that he rest for a week.", pron:"द डॉक्टर रेकमेंडेड दैट ही रेस्ट फॉर अ वीक", hi:"डॉक्टर ने सुझाव दिया कि वह एक हफ्ते आराम करे। ('rests' नहीं, base form 'rest')"},
+    {en:"It is essential that every student submit the form by Monday.", pron:"इट इज़ एसेंशियल दैट एवरी स्टूडेंट सबमिट द फॉर्म बाइ मंडे", hi:"ज़रूरी है कि हर छात्र सोमवार तक फॉर्म जमा करे।"},
+    {en:"She insisted that he apologize to the whole team.", pron:"शी इंसिस्टेड दैट ही अपोलोजाइज़ टू द होल टीम", hi:"उसने ज़ोर देकर कहा कि वह पूरी टीम से माफी मांगे।"},
+    {en:"The manager demanded that the report be ready by tomorrow.", pron:"द मैनेजर डिमांडेड दैट द रिपोर्ट बी रेडी बाइ टुमॉरो", hi:"मैनेजर ने मांग की कि रिपोर्ट कल तक तैयार हो।"},
+    {en:"I suggest that she speak to a lawyer before signing.", pron:"आइ सजेस्ट दैट शी स्पीक टू अ लॉयर बिफोर साइनिंग", hi:"मेरा सुझाव है कि वह साइन करने से पहले वकील से बात करे।"},
+    {en:"It is important that we be on time for the ceremony.", pron:"इट इज़ इम्पोर्टेंट दैट वी बी ऑन टाइम फॉर द सेरेमनी", hi:"ज़रूरी है कि हम समारोह के लिए समय पर हों।"}
+  ],
+  examples2:[
+    {en:"The board proposed that the budget be revised.", pron:"द बोर्ड प्रोपोज़्ड दैट द बजट बी रिवाइज़्ड", hi:"बोर्ड ने प्रस्ताव रखा कि बजट में संशोधन हो।"},
+    {en:"It is vital that this information remain confidential.", pron:"इट इज़ वाइटल दैट दिस इन्फर्मेशन रिमेन कॉन्फिडेंशियल", hi:"अति आवश्यक है कि यह जानकारी गोपनीय रहे।"},
+    {en:"He requested that the payment be made in advance.", pron:"ही रिक्वेस्टेड दैट द पेमेंट बी मेड इन एडवांस", hi:"उसने अनुरोध किया कि भुगतान पहले से किया जाए।"},
+    {en:"The teacher insists that students arrive on time.", pron:"द टीचर इंसिस्ट्स दैट स्टूडेंट्स अराइव ऑन टाइम", hi:"शिक्षिका ज़ोर देती हैं कि छात्र समय पर पहुंचें।"},
+    {en:"It is recommended that new employees attend the orientation.", pron:"इट इज़ रेकमेंडेड दैट न्यू एम्प्लॉईज़ अटेंड द ओरिएंटेशन", hi:"सुझाव दिया जाता है कि नए कर्मचारी ओरिएंटेशन में शामिल हों।"},
+    {en:"The committee demanded that the decision be reconsidered.", pron:"द कमिटी डिमांडेड दैट द डिसीज़न बी रीकंसिडर्ड", hi:"समिति ने मांग की कि फैसले पर फिर से विचार किया जाए।"}
+  ],
+  examples3:[
+    {en:"It is crucial that the medicine be taken exactly as prescribed.", pron:"इट इज़ क्रूशल दैट द मेडिसिन बी टेकन एग्जैक्टली एज़ प्रिस्क्राइब्ड", hi:"अत्यंत ज़रूरी है कि दवा बिल्कुल बताए अनुसार ली जाए।"},
+    {en:"She proposed that the meeting be moved to Thursday.", pron:"शी प्रोपोज़्ड दैट द मीटिंग बी मूव्ड टू थर्सडे", hi:"उसने प्रस्ताव रखा कि मीटिंग गुरुवार को की जाए।"},
+    {en:"The judge ordered that the case be reopened.", pron:"द जज ऑर्डर्ड दैट द केस बी रीओपन्ड", hi:"जज ने आदेश दिया कि केस फिर से खोला जाए।"},
+    {en:"It is necessary that everyone follow the safety rules.", pron:"इट इज़ नेसेसरी दैट एवरीवन फॉलो द सेफ्टी रूल्स", hi:"ज़रूरी है कि हर कोई सुरक्षा नियमों का पालन करे।"},
+    {en:"He recommended that she seek a second opinion.", pron:"ही रेकमेंडेड दैट शी सीक अ सेकंड ओपिनियन", hi:"उसने सुझाव दिया कि वह दूसरी राय ले।"},
+    {en:"The council insisted that the old building be preserved.", pron:"द काउंसिल इंसिस्टेड दैट द ओल्ड बिल्डिंग बी प्रिज़र्व्ड", hi:"परिषद ने ज़ोर देकर कहा कि पुरानी इमारत को संरक्षित किया जाए।"}
+  ]
+},
+{
+  key:"connectors", name:"Advanced Connectors", devTag:"Formal Connectors",
+  rule:"However, moreover, nevertheless, whereas jaise connectors formal writing/speech ki jaan hain — 'but/also/even though' ki jagah inhe use karne se aapki English zyada polished aur professional lagti hai. Punctuation dhyan se: connector ke baad comma, aur do independent sentences ke beech semicolon ya full stop.",
+  formula:"However/Nevertheless/Moreover (sentence start) + comma + clause  |  Whereas/While (contrast, mid-sentence) + clause, + clause  |  Semicolon + however/moreover + comma + clause",
+  examples:[
+    {en:"The plan looked good on paper; however, it failed in practice.", pron:"द प्लान लुक्ड गुड ऑन पेपर; हाउएवर, इट फेल्ड इन प्रैक्टिस", hi:"योजना कागज़ पर अच्छी लगी थी; हालांकि, व्यवहार में यह असफल रही।"},
+    {en:"He apologized for the delay. Moreover, he offered a discount.", pron:"ही अपोलोजाइज्ड फॉर द डिले। मोरओवर, ही ऑफर्ड अ डिस्काउंट", hi:"उसने देरी के लिए माफी मांगी। इसके अलावा, उसने छूट भी दी।"},
+    {en:"The task was extremely difficult; nevertheless, the team completed it on time.", pron:"द टास्क वॉज़ एक्सट्रीमली डिफिकल्ट; नेवरदलेस, द टीम कम्प्लीटेड इट ऑन टाइम", hi:"काम बहुत कठिन था; फिर भी, टीम ने इसे समय पर पूरा किया।"},
+    {en:"Whereas the first design was simple, the second one was overly complex.", pron:"वेयरएज़ द फर्स्ट डिज़ाइन वॉज़ सिंपल, द सेकंड वन वॉज़ ओवरली कॉम्प्लेक्स", hi:"जहां पहला डिज़ाइन सरल था, वहीं दूसरा बहुत जटिल था।"},
+    {en:"The company reported strong profits; consequently, its stock price rose.", pron:"द कंपनी रिपोर्टेड स्ट्रॉन्ग प्रॉफिट्स; कॉन्सिक्वेंटली, इट्स स्टॉक प्राइस रोज़", hi:"कंपनी ने अच्छा मुनाफा दिखाया; नतीजतन, उसका शेयर मूल्य बढ़ गया।"},
+    {en:"She had little experience; nonetheless, she performed brilliantly.", pron:"शी हैड लिटल एक्सपीरियंस; नननदलेस, शी परफॉर्म्ड ब्रिलियंटली", hi:"उसके पास कम अनुभव था; फिर भी, उसने शानदार प्रदर्शन किया।"}
+  ],
+  examples2:[
+    {en:"The product is affordable; furthermore, it comes with a two-year warranty.", pron:"द प्रोडक्ट इज़ अफोर्डेबल; फरदरमोर, इट कम्स विद अ टू-ईयर वारंटी", hi:"उत्पाद किफायती है; इसके अलावा, इसके साथ दो साल की वारंटी भी है।"},
+    {en:"He is highly qualified; however, he lacks practical experience.", pron:"ही इज़ हाइली क्वालिफाइड; हाउएवर, ही लैक्स प्रैक्टिकल एक्सपीरियंस", hi:"वह अत्यधिक योग्य है; हालांकि, उसके पास व्यावहारिक अनुभव की कमी है।"},
+    {en:"Sales dropped in the first quarter; nevertheless, the company remained profitable.", pron:"सेल्स ड्रॉप्ड इन द फर्स्ट क्वार्टर; नेवरदलेस, द कंपनी रिमेन्ड प्रॉफिटेबल", hi:"पहली तिमाही में बिक्री गिरी; फिर भी, कंपनी लाभदायक रही।"},
+    {en:"Whereas older employees prefer email, younger ones prefer instant messaging.", pron:"वेयरएज़ ओल्डर एम्प्लॉईज़ प्रिफर ईमेल, यंगर वन्स प्रिफर इंस्टेंट मैसेजिंग", hi:"जहां वरिष्ठ कर्मचारी ईमेल पसंद करते हैं, वहीं युवा तुरंत संदेश पसंद करते हैं।"},
+    {en:"The weather was terrible; as a result, the flight was delayed.", pron:"द वेदर वॉज़ टेरिबल; एज़ अ रिज़ल्ट, द फ्लाइट वॉज़ डिलेड", hi:"मौसम बहुत खराब था; इसके परिणामस्वरूप, फ्लाइट में देरी हुई।"},
+    {en:"She was nervous; even so, she gave an excellent presentation.", pron:"शी वॉज़ नर्वस; ईवन सो, शी गेव एन एक्सेलेंट प्रेजेंटेशन", hi:"वह घबराई हुई थी; फिर भी, उसने शानदार प्रस्तुति दी।"}
+  ],
+  examples3:[
+    {en:"The plan met all requirements; accordingly, it was approved without changes.", pron:"द प्लान मेट ऑल रिक्वायरमेंट्स; अकॉर्डिंगली, इट वॉज़ अप्रूव्ड विदाउट चेंजेज़", hi:"योजना ने सभी ज़रूरतें पूरी कीं; तदनुसार, इसे बिना बदलाव मंज़ूर किया गया।"},
+    {en:"He speaks four languages; in addition, he is learning a fifth.", pron:"ही स्पीक्स फोर लैंग्वेजेज़; इन एडिशन, ही इज़ लर्निंग अ फिफ्थ", hi:"वह चार भाषाएं बोलता है; इसके अतिरिक्त, वह पांचवीं सीख रहा है।"},
+    {en:"The evidence was weak; consequently, the case was dismissed.", pron:"द एविडेंस वॉज़ वीक; कॉन्सिक्वेंटली, द केस वॉज़ डिसमिस्ड", hi:"सबूत कमज़ोर थे; नतीजतन, मामला खारिज कर दिया गया।"},
+    {en:"Whereas the old system was manual, the new one is fully automated.", pron:"वेयरएज़ द ओल्ड सिस्टम वॉज़ मैनुअल, द न्यू वन इज़ फुली ऑटोमेटेड", hi:"जहां पुरानी प्रणाली हाथ से चलती थी, वहीं नई पूरी तरह स्वचालित है।"},
+    {en:"The budget was tight; nonetheless, the event was a great success.", pron:"द बजट वॉज़ टाइट; नननदलेस, द इवेंट वॉज़ अ ग्रेट सक्सेस", hi:"बजट सीमित था; फिर भी, कार्यक्रम बहुत सफल रहा।"},
+    {en:"He missed the deadline; on the other hand, the quality of his work was outstanding.", pron:"ही मिस्ड द डेडलाइन; ऑन द अदर हैंड, द क्वालिटी ऑफ हिज़ वर्क वॉज़ आउटस्टैंडिंग", hi:"वह समय-सीमा चूक गया; दूसरी ओर, उसके काम की गुणवत्ता शानदार थी।"}
+  ]
+},
+{
+  key:"register", name:"Formal vs Informal Register", devTag:"Register Shift",
+  rule:"Wahi baat kehne ke do tareeke hote hain — dost ke saath informal, boss/client ke saath formal. Formal English mein contractions (don't, can't) avoid karte hain, phrasal verbs ki jagah formal verb use hota hai, aur direct commands ki jagah polite request.",
+  formula:"Informal → Formal shift: contractions ka full form | 'get' → 'receive/obtain' | 'find out' → 'determine' | 'a lot of' → 'numerous/considerable' | direct imperative → 'Could you please...' / 'I would be grateful if...'",
+  examples:[
+    {en:"Informal: Can't make it today. → Formal: I am unable to attend today.", pron:"आइ एम अनेबल टू अटेंड टुडे", hi:"अनौपचारिक: आज नहीं आ सकता। → औपचारिक: मैं आज उपस्थित होने में असमर्थ हूं।"},
+    {en:"Informal: Let me know ASAP. → Formal: Please inform me at your earliest convenience.", pron:"प्लीज़ इन्फॉर्म मी एट योर अर्लिएस्ट कन्वीनियंस", hi:"अनौपचारिक: जल्दी बताना। → औपचारिक: कृपया अपनी सुविधानुसार शीघ्र सूचित करें।"},
+    {en:"Informal: Sorry, my bad. → Formal: I apologize for the oversight.", pron:"आइ अपोलोजाइज़ फॉर द ओवरसाइट", hi:"अनौपचारिक: सॉरी, मेरी गलती। → औपचारिक: मुझे इस चूक के लिए खेद है।"},
+    {en:"Informal: I need this fixed by tomorrow. → Formal: I would appreciate it if this could be resolved by tomorrow.", pron:"आइ वुड अप्रीशिएट इट इफ दिस कुड बी रिज़ॉल्व्ड बाइ टुमॉरो", hi:"अनौपचारिक: यह कल तक ठीक चाहिए। → औपचारिक: यदि यह कल तक हल हो जाए तो मैं आभारी रहूंगा।"},
+    {en:"Informal: Got your email, thanks. → Formal: I have received your email and appreciate your prompt response.", pron:"आइ हैव रिसीव्ड योर ईमेल एंड अप्रीशिएट योर प्रॉम्प्ट रिस्पॉन्स", hi:"अनौपचारिक: ईमेल मिल गई, थैंक्स। → औपचारिक: मुझे आपकी ईमेल प्राप्त हुई और आपकी त्वरित प्रतिक्रिया की सराहना करता हूं।"},
+    {en:"Informal: Big problem with the order. → Formal: There appears to be a significant issue with the order.", pron:"देयर अपीयर्स टू बी अ सिग्निफिकेंट इश्यू विद द ऑर्डर", hi:"अनौपचारिक: ऑर्डर में बड़ी दिक्कत है। → औपचारिक: ऑर्डर में एक गंभीर समस्या प्रतीत होती है।"}
+  ],
+  examples2:[
+    {en:"Informal: Wanna grab lunch? → Formal: Would you be available to join me for lunch?", pron:"वुड यू बी अवेलेबल टू जॉइन मी फॉर लंच", hi:"अनौपचारिक: लंच पर चलें? → औपचारिक: क्या आप मेरे साथ लंच के लिए उपलब्ध होंगे?"},
+    {en:"Informal: I dunno, maybe next week. → Formal: I am not certain; perhaps next week would work.", pron:"आइ एम नॉट सर्टेन; परहैप्स नेक्स्ट वीक वुड वर्क", hi:"अनौपचारिक: पता नहीं, शायद अगले हफ्ते। → औपचारिक: मुझे निश्चित नहीं है; शायद अगला सप्ताह उपयुक्त रहेगा।"},
+    {en:"Informal: Can you send it over? → Formal: Could you kindly forward it to me?", pron:"कुड यू काइंडली फॉरवर्ड इट टू मी", hi:"अनौपचारिक: भेज दोगे क्या? → औपचारिक: क्या आप कृपया यह मुझे भेज सकते हैं?"},
+    {en:"Informal: That's not gonna work. → Formal: I don't believe that approach will be effective.", pron:"आइ डोंट बिलीव दैट अप्रोच विल बी इफेक्टिव", hi:"अनौपचारिक: यह नहीं चलेगा। → औपचारिक: मुझे नहीं लगता कि यह तरीका प्रभावी होगा।"},
+    {en:"Informal: Thanks a ton! → Formal: I sincerely appreciate your assistance.", pron:"आइ सिंसियरली अप्रीशिएट योर असिस्टेंस", hi:"अनौपचारिक: बहुत-बहुत शुक्रिया! → औपचारिक: मैं आपकी सहायता के लिए हार्दिक आभार व्यक्त करता हूं।"},
+    {en:"Informal: We messed up. → Formal: We acknowledge that an error occurred on our part.", pron:"वी एक्नॉलेज दैट एन एरर ऑकर्ड ऑन आवर पार्ट", hi:"अनौपचारिक: हमसे गलती हो गई। → औपचारिक: हम स्वीकार करते हैं कि हमारी ओर से एक त्रुटि हुई।"}
+  ],
+  examples3:[
+    {en:"Informal: Hey, quick question. → Formal: I hope you don't mind me asking a brief question.", pron:"आइ होप यू डोंट माइंड मी आस्किंग अ ब्रीफ क्वेश्चन", hi:"अनौपचारिक: सुनो, एक सवाल है। → औपचारिक: आशा है आपको एक छोटा सवाल पूछने में आपत्ति नहीं होगी।"},
+    {en:"Informal: I'll get back to you. → Formal: I will follow up with you shortly.", pron:"आइ विल फॉलो अप विद यू शॉर्टली", hi:"अनौपचारिक: बाद में बताता हूं। → औपचारिक: मैं शीघ्र ही आपसे संपर्क करूंगा।"},
+    {en:"Informal: No worries if you can't. → Formal: Please do not hesitate to let me know if this is not feasible.", pron:"प्लीज़ डू नॉट हेज़िटेट टू लेट मी नो इफ दिस इज़ नॉट फीज़िबल", hi:"अनौपचारिक: न हो पाए तो कोई बात नहीं। → औपचारिक: यदि यह संभव न हो तो कृपया मुझे अवश्य बताएं।"},
+    {en:"Informal: This is kinda urgent. → Formal: This matter requires prompt attention.", pron:"दिस मैटर रिक्वायर्स प्रॉम्प्ट अटेंशन", hi:"अनौपचारिक: यह थोड़ा अर्जेंट है। → औपचारिक: इस मामले पर तत्काल ध्यान देने की आवश्यकता है।"},
+    {en:"Informal: Cool, sounds good. → Formal: That sounds satisfactory; please proceed accordingly.", pron:"दैट साउंड्स सेटिस्फैक्टरी; प्लीज़ प्रोसीड अकॉर्डिंगली", hi:"अनौपचारिक: ठीक है, बढ़िया। → औपचारिक: यह उचित लगता है; कृपया तदनुसार आगे बढ़ें।"},
+    {en:"Informal: Let's hop on a call. → Formal: Shall we schedule a call to discuss this further?", pron:"शैल वी शेड्यूल अ कॉल टू डिस्कस दिस फर्दर", hi:"अनौपचारिक: कॉल पर बात करते हैं। → औपचारिक: क्या हम इस पर आगे चर्चा हेतु कॉल तय करें?"}
+  ]
+}
+];
+
+// WRITING_PROMPTS — 30 entries (one per advanced day), rotating 6 types across 5 cycles.
+// Shape: {type, typeLabel, dev, prompt, promptHi, model, structure:[{label,text}]}
+var WRITING_PROMPTS = [
+// Cycle 1 (days 31-36)
+{type:"paragraph", typeLabel:"Paragraph Writing", dev:"अनुच्छेद लेखन",
+ prompt:"Write a short paragraph (4-5 sentences) describing your morning routine.",
+ promptHi:"अपनी सुबह की दिनचर्या के बारे में एक छोटा अनुच्छेद (4-5 वाक्य) लिखिए।",
+ model:"I wake up at six every morning and start my day with a glass of water. After a short walk, I get ready for work while listening to the news. I usually have a simple breakfast of toast and tea. By eight, I am out of the house, ready to face the day.",
+ modelHi:"मैं हर सुबह छह बजे उठता हूं और एक गिलास पानी से अपना दिन शुरू करता हूं। थोड़ी देर टहलने के बाद, समाचार सुनते हुए काम के लिए तैयार होता हूं। मैं आमतौर पर टोस्ट और चाय का साधारण नाश्ता करता हूं। आठ बजे तक, मैं घर से बाहर निकल जाता हूं, दिन का सामना करने के लिए तैयार।",
+ structure:[{label:"Opening line",text:"State the routine's starting point (time + first action)."},{label:"Middle detail",text:"Add 2-3 sentences with sequence connectors (after, then, usually)."},{label:"Closing line",text:"Wrap up with how the routine ends or how it makes you feel."}]},
+{type:"formal-email", typeLabel:"Formal Email — Leave Request", dev:"औपचारिक ईमेल",
+ prompt:"Write a formal email to your manager requesting two days of leave next week.",
+ promptHi:"अपने मैनेजर को अगले हफ्ते दो दिन की छुट्टी मांगने के लिए एक औपचारिक ईमेल लिखिए।",
+ model:"Subject: Leave Request — [Your Name]\n\nDear Mr. Sharma,\n\nI am writing to request two days of leave, from Monday to Tuesday next week, due to a family commitment. I will ensure that all my pending tasks are completed before I leave and will be reachable by email in case of urgent matters.\n\nKindly let me know if you need any further information.\n\nThank you for your consideration.\n\nRegards,\n[Your Name]",
+ modelHi:"विषय: छुट्टी का अनुरोध — [आपका नाम]\n\nप्रिय श्री शर्मा,\n\nमैं एक पारिवारिक ज़रूरत के कारण अगले हफ्ते सोमवार से मंगलवार तक दो दिन की छुट्टी के लिए लिख रहा हूं। मैं सुनिश्चित करूंगा कि जाने से पहले मेरे सभी लंबित कार्य पूरे हो जाएं और ज़रूरी मामलों में ईमेल पर उपलब्ध रहूंगा।\n\nकृपया बताएं अगर कोई और जानकारी चाहिए।\n\nविचार के लिए धन्यवाद।\n\nसादर,\n[आपका नाम]",
+ structure:[{label:"Subject line",text:"Clear and specific — state the purpose."},{label:"Greeting",text:"Dear [Name/Title] — never skip this in formal email."},{label:"Body",text:"Reason + dates + reassurance (work will be managed)."},{label:"Sign-off",text:"Regards / Sincerely + your name."}]},
+{type:"informal-email", typeLabel:"Informal Email — Inviting a Friend", dev:"अनौपचारिक ईमेल",
+ prompt:"Write an informal email to a friend inviting them to your birthday party.",
+ promptHi:"अपने जन्मदिन की पार्टी के लिए एक दोस्त को आमंत्रित करते हुए अनौपचारिक ईमेल लिखिए।",
+ model:"Hey Rohan,\n\nHope you're doing great! I'm turning 25 this Saturday and throwing a small get-together at my place around 7 PM. It would mean a lot if you could make it — there'll be good food, music, and of course, cake!\n\nLet me know if you're free. Can't wait to see you!\n\nCheers,\nAryan",
+ modelHi:"हे रोहन,\n\nउम्मीद है तुम बढ़िया हो! मैं इस शनिवार 25 साल का हो रहा हूं और शाम 7 बजे अपने घर पर एक छोटी सी पार्टी रख रहा हूं। अगर तुम आ पाओ तो बहुत अच्छा लगेगा — अच्छा खाना, म्यूज़िक, और बेशक केक भी होगा!\n\nबताना अगर फ्री हो। तुमसे मिलने का इंतज़ार है!\n\nचीयर्स,\nआर्यन",
+ structure:[{label:"Casual greeting",text:"Hey/Hi + name, no title needed."},{label:"The invite",text:"What, when, where — keep it warm and simple."},{label:"Friendly close",text:"Cheers / Take care + first name only."}]},
+{type:"essay", typeLabel:"Short Essay / Opinion Writing", dev:"लघु निबंध",
+ prompt:"Write a short opinion essay (3 paragraphs) on: \"Is social media good or bad for students?\"",
+ promptHi:"इस विषय पर एक लघु राय-निबंध (3 अनुच्छेद) लिखिए: \"क्या सोशल मीडिया छात्रों के लिए अच्छा है या बुरा?\"",
+ model:"Introduction: Social media has become a part of every student's daily life, and opinions about its impact remain divided.\n\nBody: On one hand, it helps students connect, share knowledge, and access information quickly. On the other hand, excessive use often leads to distraction, reduced focus on studies, and comparison-driven anxiety.\n\nConclusion: In my view, social media is neither entirely good nor bad — its effect depends on how responsibly a student uses it.",
+ modelHi:"परिचय: सोशल मीडिया हर छात्र के दैनिक जीवन का हिस्सा बन गया है, और इसके प्रभाव को लेकर राय बंटी हुई है।\n\nमुख्य भाग: एक तरफ, यह छात्रों को जुड़ने, ज्ञान साझा करने और जल्दी जानकारी पाने में मदद करता है। दूसरी तरफ, अत्यधिक उपयोग अक्सर ध्यान भटकाने, पढ़ाई पर कम फोकस, और तुलना से होने वाली चिंता की ओर ले जाता है।\n\nनिष्कर्ष: मेरी राय में, सोशल मीडिया न पूरी तरह अच्छा है न बुरा — इसका असर इस पर निर्भर करता है कि छात्र इसे कितनी ज़िम्मेदारी से इस्तेमाल करता है।",
+ structure:[{label:"Introduction",text:"State the topic and that opinions are divided (1-2 sentences)."},{label:"Body",text:"Use 'On one hand... on the other hand' to show both sides."},{label:"Conclusion",text:"Give your final opinion with 'In my view...'"}]},
+{type:"cover-letter", typeLabel:"Cover Letter Snippet", dev:"कवर लेटर",
+ prompt:"Write the opening paragraph of a cover letter applying for a Customer Support role.",
+ promptHi:"कस्टमर सपोर्ट पद के लिए आवेदन करते हुए कवर लेटर का पहला अनुच्छेद लिखिए।",
+ model:"Dear Hiring Manager,\n\nI am writing to express my interest in the Customer Support Executive position advertised on your careers page. With two years of experience in handling client queries and a strong track record of resolving issues efficiently, I am confident I can contribute positively to your team.",
+ modelHi:"प्रिय हायरिंग मैनेजर,\n\nमैं आपके करियर पेज पर विज्ञापित कस्टमर सपोर्ट एग्ज़ीक्यूटिव पद में अपनी रुचि व्यक्त करने के लिए लिख रहा हूं। ग्राहकों की समस्याओं को संभालने में दो साल के अनुभव और मुद्दों को कुशलता से हल करने के मजबूत रिकॉर्ड के साथ, मुझे विश्वास है कि मैं आपकी टीम में सकारात्मक योगदान दे सकता हूं।",
+ structure:[{label:"Opening line",text:"State the role and where you saw it advertised."},{label:"Value line",text:"One sentence highlighting relevant experience/skill."},{label:"Confidence close",text:"End the paragraph with 'I am confident that...'"}]},
+{type:"professional-msg", typeLabel:"Professional Message (Slack/WhatsApp style)", dev:"प्रोफेशनल मैसेज",
+ prompt:"Write a short professional Slack message informing your team that you'll join a meeting 10 minutes late.",
+ promptHi:"अपनी टीम को सूचित करते हुए एक छोटा प्रोफेशनल स्लैक मैसेज लिखिए कि आप मीटिंग में 10 मिनट देर से जुड़ेंगे।",
+ model:"Hi team, apologies in advance — I'm wrapping up a call and will join the meeting about 10 minutes late. Please go ahead and start without me; I'll catch up on what I miss. Thanks for your patience!",
+ modelHi:"हाय टीम, पहले से माफी — मैं एक कॉल खत्म कर रहा हूं और मीटिंग में लगभग 10 मिनट देर से जुड़ूंगा। कृपया बिना मेरे शुरू करें; जो मिस करूंगा वो बाद में समझ लूंगा। धैर्य के लिए धन्यवाद!"
+ ,structure:[{label:"Brief apology",text:"Short, no over-explaining."},{label:"The update",text:"State the delay and give a clear time estimate."},{label:"Considerate close",text:"Tell them not to wait, and thank them."}]},
+// Cycle 2 (days 37-42)
+{type:"paragraph", typeLabel:"Paragraph Writing", dev:"अनुच्छेद लेखन",
+ prompt:"Write a paragraph describing a place you would love to visit and why.",
+ promptHi:"एक ऐसी जगह के बारे में अनुच्छेद लिखिए जहां आप जाना पसंद करेंगे, और क्यों।",
+ model:"I have always wanted to visit Kyoto in Japan. The city is known for its peaceful temples, beautiful cherry blossoms, and rich culture. I am especially drawn to the idea of walking through quiet gardens early in the morning. Someday, I hope to experience its calm atmosphere for myself.",
+ modelHi:"मैं हमेशा से जापान के क्योटो जाना चाहता था। यह शहर अपने शांत मंदिरों, सुंदर चेरी ब्लॉसम और समृद्ध संस्कृति के लिए जाना जाता है। मुझे विशेष रूप से सुबह-सुबह शांत बगीचों में टहलने का विचार आकर्षित करता है। किसी दिन, मुझे उम्मीद है कि मैं इसका शांत वातावरण खुद महसूस करूंगा।",
+ structure:[{label:"Name the place",text:"State the place and one reason it appeals to you."},{label:"Details",text:"2-3 sentences on what makes it special."},{label:"Aspiration",text:"Close with a wish/hope sentence ('Someday, I hope...')."}]},
+{type:"formal-email", typeLabel:"Formal Email — Complaint", dev:"शिकायत ईमेल",
+ prompt:"Write a formal email to an online store complaining about a damaged product you received.",
+ promptHi:"एक ऑनलाइन स्टोर को औपचारिक ईमेल लिखिए, जिसमें आपको मिले खराब उत्पाद की शिकायत हो।",
+ model:"Subject: Complaint Regarding Damaged Product — Order #48213\n\nDear Customer Support Team,\n\nI recently received my order (#48213), but unfortunately, the item arrived damaged. I have attached photographs for your reference. I would appreciate a replacement or a full refund at the earliest.\n\nPlease let me know the next steps to resolve this issue.\n\nRegards,\n[Your Name]",
+ modelHi:"विषय: खराब उत्पाद की शिकायत — ऑर्डर #48213\n\nप्रिय ग्राहक सहायता टीम,\n\nमुझे हाल ही में अपना ऑर्डर (#48213) मिला, लेकिन दुर्भाग्यवश, वस्तु क्षतिग्रस्त अवस्था में पहुंची। मैंने संदर्भ के लिए तस्वीरें संलग्न की हैं। मैं जल्द से जल्द रिप्लेसमेंट या पूरा रिफंड चाहूंगा।\n\nकृपया इस समस्या को हल करने के अगले कदम बताएं।\n\nसादर,\n[आपका नाम]",
+ structure:[{label:"Subject line",text:"Mention 'Complaint' + order number for quick tracking."},{label:"State the problem",text:"Factual, no anger — just describe what went wrong."},{label:"Ask for resolution",text:"Be specific: replacement, refund, or repair."}]},
+{type:"informal-email", typeLabel:"Informal Email — Sharing Good News", dev:"अनौपचारिक ईमेल",
+ prompt:"Write an informal email to a family member sharing the good news that you got a new job.",
+ promptHi:"एक परिवार के सदस्य को अनौपचारिक ईमेल लिखिए, जिसमें आप नई नौकरी मिलने की खुशखबरी साझा करें।",
+ model:"Dear Didi,\n\nI have such exciting news — I finally got the job offer from the company I interviewed with last month! I start next week and I'm both nervous and thrilled. Thank you for all your encouragement, it really helped.\n\nWill call you this weekend to share all the details!\n\nLove,\nNeha",
+ modelHi:"प्रिय दीदी,\n\nमेरे पास एक बहुत बड़ी खुशखबरी है — मुझे आखिरकार उस कंपनी से नौकरी का ऑफर मिल गया जहां मैंने पिछले महीने इंटरव्यू दिया था! मैं अगले हफ्ते शुरू कर रही हूं और मैं घबराई हुई भी हूं और खुश भी। आपके सारे प्रोत्साहन के लिए धन्यवाद, इससे वाकई मदद मिली।\n\nइस वीकेंड कॉल करके सारी डिटेल्स बताऊंगी!\n\nप्यार सहित,\nनेहा",
+ structure:[{label:"Warm opening",text:"Address them affectionately, hint at exciting news."},{label:"The news",text:"State what happened and how you feel."},{label:"Personal close",text:"Thank them / promise to talk more + affectionate sign-off."}]},
+{type:"essay", typeLabel:"Short Essay / Opinion Writing", dev:"लघु निबंध",
+ prompt:"Write a short opinion essay (3 paragraphs) on: \"Should students be allowed to use mobile phones in school?\"",
+ promptHi:"इस विषय पर लघु राय-निबंध लिखिए: \"क्या छात्रों को स्कूल में मोबाइल फोन इस्तेमाल करने की अनुमति होनी चाहिए?\"",
+ model:"Introduction: The question of mobile phones in schools has sparked debate among parents, teachers, and students alike.\n\nBody: Supporters argue that phones are useful for emergencies and quick research, whereas critics point out that they distract students and encourage cheating. Moreover, constant notifications can interrupt the learning process.\n\nConclusion: I believe phones should be allowed only for emergencies, with clear rules restricting their use during class hours.",
+ modelHi:"परिचय: स्कूलों में मोबाइल फोन का सवाल माता-पिता, शिक्षकों और छात्रों के बीच बहस का विषय रहा है।\n\nमुख्य भाग: समर्थकों का तर्क है कि फोन आपातकाल और त्वरित शोध के लिए उपयोगी हैं, जबकि आलोचक बताते हैं कि ये छात्रों का ध्यान भटकाते हैं और नकल को बढ़ावा देते हैं। इसके अलावा, लगातार सूचनाएं सीखने की प्रक्रिया में बाधा डाल सकती हैं।\n\nनिष्कर्ष: मेरा मानना है कि फोन केवल आपातकाल के लिए अनुमति दी जानी चाहिए, कक्षा के समय उनके उपयोग को सीमित करने वाले स्पष्ट नियमों के साथ।",
+ structure:[{label:"Introduction",text:"Frame it as a debated question."},{label:"Body",text:"Use 'Supporters argue... whereas critics point out...'"},{label:"Conclusion",text:"Give a balanced, specific final opinion."}]},
+{type:"cover-letter", typeLabel:"Cover Letter Snippet", dev:"कवर लेटर",
+ prompt:"Write the closing paragraph of a cover letter, requesting an interview.",
+ promptHi:"इंटरव्यू का अनुरोध करते हुए कवर लेटर का अंतिम अनुच्छेद लिखिए।",
+ model:"I would welcome the opportunity to discuss how my skills align with your team's needs. Thank you for considering my application — I look forward to the possibility of an interview at your earliest convenience.\n\nSincerely,\n[Your Name]",
+ modelHi:"मुझे यह चर्चा करने का अवसर मिले तो खुशी होगी कि मेरी योग्यताएं आपकी टीम की ज़रूरतों से कैसे मेल खाती हैं। मेरे आवेदन पर विचार करने के लिए धन्यवाद — मुझे आपकी सुविधानुसार जल्द से जल्द इंटरव्यू की संभावना का इंतज़ार रहेगा।\n\nसादर,\n[आपका नाम]",
+ structure:[{label:"Invite dialogue",text:"'I would welcome the opportunity to discuss...'"},{label:"Thank + request",text:"Thank them and explicitly hint at wanting an interview."},{label:"Formal sign-off",text:"Sincerely + name."}]},
+{type:"professional-msg", typeLabel:"Professional Message (Slack/WhatsApp style)", dev:"प्रोफेशनल मैसेज",
+ prompt:"Write a professional WhatsApp message to a client confirming a meeting time.",
+ promptHi:"एक क्लाइंट को मीटिंग का समय कन्फर्म करते हुए प्रोफेशनल व्हाट्सऐप मैसेज लिखिए।",
+ model:"Hi Mr. Verma, just confirming our meeting tomorrow at 3 PM at your office. Please let me know if anything changes. Looking forward to it!",
+ modelHi:"हाय श्री वर्मा, बस कल दोपहर 3 बजे आपके ऑफिस में हमारी मीटिंग कन्फर्म कर रहा हूं। कुछ बदले तो बताइएगा। मिलने का इंतज़ार रहेगा!",
+ structure:[{label:"Polite address",text:"Use name/title even in a chat message for professionalism."},{label:"Clear confirmation",text:"State date, time, place plainly."},{label:"Open door",text:"Invite them to flag changes; end warmly."}]},
+// Cycle 3 (days 43-48)
+{type:"paragraph", typeLabel:"Paragraph Writing", dev:"अनुच्छेद लेखन",
+ prompt:"Write a paragraph explaining a skill you learned recently and how you learned it.",
+ promptHi:"हाल ही में सीखे गए किसी कौशल के बारे में अनुच्छेद लिखिए और आपने उसे कैसे सीखा।",
+ model:"Last month, I decided to learn basic video editing. I watched a series of free tutorials online and practiced by editing short clips of my own trips. At first, it felt overwhelming, but with regular practice, I became comfortable with the tools. Now, I can create simple videos in under an hour.",
+ modelHi:"पिछले महीने, मैंने बुनियादी वीडियो एडिटिंग सीखने का फैसला किया। मैंने ऑनलाइन मुफ्त ट्यूटोरियल की एक सीरीज़ देखी और अपनी यात्राओं के छोटे क्लिप्स एडिट करके अभ्यास किया। शुरुआत में, यह मुश्किल लगा, लेकिन नियमित अभ्यास से, मैं टूल्स में सहज हो गया। अब, मैं एक घंटे से कम में साधारण वीडियो बना सकता हूं।",
+ structure:[{label:"Name the skill",text:"State what and when you started learning."},{label:"The process",text:"How you learned (resources, practice)."},{label:"Result",text:"What you can do now."}]},
+{type:"formal-email", typeLabel:"Formal Email — Application", dev:"आवेदन ईमेल",
+ prompt:"Write a formal email applying for an internal transfer to a different department.",
+ promptHi:"किसी दूसरे विभाग में आंतरिक स्थानांतरण के लिए औपचारिक ईमेल आवेदन लिखिए।",
+ model:"Subject: Application for Internal Transfer — Marketing Department\n\nDear Ms. Iyer,\n\nI would like to formally express my interest in transferring to the Marketing department. Over the past year, I have supported several marketing initiatives and developed a strong interest in this field.\n\nI would be grateful for the opportunity to discuss this further at your convenience.\n\nThank you for your time and consideration.\n\nRegards,\n[Your Name]",
+ modelHi:"विषय: आंतरिक स्थानांतरण हेतु आवेदन — मार्केटिंग विभाग\n\nप्रिय सुश्री अय्यर,\n\nमैं मार्केटिंग विभाग में स्थानांतरण के लिए औपचारिक रूप से अपनी रुचि व्यक्त करना चाहूंगा। पिछले एक साल में, मैंने कई मार्केटिंग पहलों में सहयोग किया है और इस क्षेत्र में गहरी रुचि विकसित की है।\n\nमुझे इस पर आगे चर्चा करने का अवसर मिले तो आभारी रहूंगा।\n\nआपके समय और विचार के लिए धन्यवाद।\n\nसादर,\n[आपका नाम]",
+ structure:[{label:"Subject line",text:"State exactly what you're applying for."},{label:"Reason",text:"Give evidence of interest/experience, not just a wish."},{label:"Polite request",text:"Ask for a discussion, don't demand."}]},
+{type:"informal-email", typeLabel:"Informal Email — Asking a Favour", dev:"अनौपचारिक ईमेल",
+ prompt:"Write an informal email to a friend asking to borrow their notes before an exam.",
+ promptHi:"परीक्षा से पहले नोट्स उधार मांगते हुए दोस्त को अनौपचारिक ईमेल लिखिए।",
+ model:"Hey Priya,\n\nHope your prep is going well! I missed a couple of classes last week and I'm a bit behind on notes. Would you mind sharing yours before the exam? I'll return the favour anytime you need!\n\nThanks so much,\nSimran",
+ modelHi:"हे प्रिया,\n\nउम्मीद है तैयारी बढ़िया चल रही है! मैं पिछले हफ्ते कुछ क्लासेज़ मिस कर गई और नोट्स में थोड़ी पीछे हूं। क्या परीक्षा से पहले तुम अपने नोट्स शेयर कर सकती हो? जब भी ज़रूरत हो मैं भी मदद करूंगी!\n\nबहुत शुक्रिया,\nसिमरन",
+ structure:[{label:"Warm check-in",text:"Ask how they're doing before the ask."},{label:"The favour",text:"Explain briefly why, then ask politely with 'Would you mind...'"},{label:"Offer + thanks",text:"Offer something back, thank them."}]},
+{type:"essay", typeLabel:"Short Essay / Opinion Writing", dev:"लघु निबंध",
+ prompt:"Write a short opinion essay (3 paragraphs) on: \"Is working from home better than working in an office?\"",
+ promptHi:"इस विषय पर लघु राय-निबंध लिखिए: \"क्या घर से काम करना ऑफिस में काम करने से बेहतर है?\"",
+ model:"Introduction: Remote work has become increasingly common, raising the question of whether it truly outperforms office-based work.\n\nBody: Working from home offers flexibility and saves commuting time, whereas working in an office encourages collaboration and clearer boundaries between work and personal life. Furthermore, some people find it harder to stay motivated at home.\n\nConclusion: In my opinion, a hybrid approach that combines both options works best for most people.",
+ modelHi:"परिचय: दूरस्थ कार्य तेज़ी से आम हो गया है, जिससे यह सवाल उठता है कि क्या यह वाकई ऑफिस-आधारित काम से बेहतर है।\n\nमुख्य भाग: घर से काम करना लचीलापन देता है और आने-जाने का समय बचाता है, जबकि ऑफिस में काम करना सहयोग और काम व निजी जीवन के बीच स्पष्ट सीमाओं को बढ़ावा देता है। इसके अलावा, कुछ लोगों को घर पर प्रेरित रहना मुश्किल लगता है।\n\nनिष्कर्ष: मेरी राय में, दोनों विकल्पों को मिलाने वाला हाइब्रिड तरीका ज़्यादातर लोगों के लिए सबसे अच्छा है।",
+ structure:[{label:"Introduction",text:"Frame the trend and the question it raises."},{label:"Body",text:"Contrast both sides using 'whereas' / 'furthermore'."},{label:"Conclusion",text:"Give a nuanced final opinion, not just yes/no."}]},
+{type:"cover-letter", typeLabel:"Cover Letter Snippet", dev:"कवर लेटर",
+ prompt:"Write a middle paragraph of a cover letter highlighting a specific achievement.",
+ promptHi:"किसी विशेष उपलब्धि को उजागर करते हुए कवर लेटर का मध्य अनुच्छेद लिखिए।",
+ model:"In my previous role at Bright Solutions, I led a project that improved customer response time by 30%, which directly contributed to higher client satisfaction scores. This experience taught me the value of clear communication and efficient process design — skills I am eager to bring to your team.",
+ modelHi:"ब्राइट सॉल्यूशंस में अपनी पिछली भूमिका में, मैंने एक प्रोजेक्ट का नेतृत्व किया जिसने ग्राहक प्रतिक्रिया समय को 30% सुधारा, जिसने सीधे उच्च ग्राहक संतुष्टि स्कोर में योगदान दिया। इस अनुभव ने मुझे स्पष्ट संचार और कुशल प्रक्रिया डिज़ाइन का महत्व सिखाया — ऐसे कौशल जिन्हें मैं आपकी टीम में लाने के लिए उत्सुक हूं।",
+ structure:[{label:"Specific achievement",text:"Use a number/metric if possible — it's concrete."},{label:"The lesson/skill",text:"Connect the achievement to a transferable skill."},{label:"Forward link",text:"Tie it back to the role you're applying for."}]},
+{type:"professional-msg", typeLabel:"Professional Message (Slack/WhatsApp style)", dev:"प्रोफेशनल मैसेज",
+ prompt:"Write a Slack message to your manager summarizing what you completed today (end-of-day update).",
+ promptHi:"आज आपने क्या पूरा किया, इसका सारांश देते हुए मैनेजर को एंड-ऑफ-डे स्लैक अपडेट लिखिए।",
+ model:"Hi Sanya, quick end-of-day update: finished the client presentation and sent it for review, resolved the two open bug tickets, and started drafting next week's report. Will pick this up first thing tomorrow. Have a good evening!",
+ modelHi:"हाय सान्या, दिन के अंत का त्वरित अपडेट: क्लाइंट प्रेजेंटेशन पूरी करके रिव्यू के लिए भेजी, दो खुले बग टिकट हल किए, और अगले हफ्ते की रिपोर्ट का ड्राफ्ट शुरू किया। कल सुबह सबसे पहले इसे आगे बढ़ाऊंगा। शुभ संध्या!",
+ structure:[{label:"Label it",text:"'Quick end-of-day update' sets context immediately."},{label:"Bulleted wins",text:"List what got done — short phrases, not full stories."},{label:"Next step + close",text:"State what's next and sign off politely."}]},
+// Cycle 4 (days 49-54)
+{type:"paragraph", typeLabel:"Paragraph Writing", dev:"अनुच्छेद लेखन",
+ prompt:"Write a paragraph about a book or movie that changed your perspective.",
+ promptHi:"किसी किताब या फिल्म के बारे में अनुच्छेद लिखिए जिसने आपकी सोच बदल दी।",
+ model:"The book 'The Alchemist' had a lasting impact on how I see setbacks. It taught me that failures are often just part of a larger journey toward something meaningful. Since reading it, I have become more patient with myself during difficult times. I now see challenges as lessons rather than obstacles.",
+ modelHi:"किताब 'द अल्केमिस्ट' का असफलताओं के प्रति मेरी सोच पर स्थायी असर पड़ा। इसने मुझे सिखाया कि असफलताएं अक्सर किसी बड़ी और सार्थक यात्रा का ही हिस्सा होती हैं। इसे पढ़ने के बाद से, मैं मुश्किल समय में खुद के प्रति अधिक धैर्यवान हो गया हूं। अब मैं चुनौतियों को बाधाओं की बजाय सबक के रूप में देखता हूं।",
+ structure:[{label:"Name the work",text:"Book/movie title + one-line impact."},{label:"What it taught",text:"Explain the specific lesson or shift in thinking."},{label:"Present-day effect",text:"Show how it still affects you now."}]},
+{type:"formal-email", typeLabel:"Formal Email — Follow-up", dev:"फॉलो-अप ईमेल",
+ prompt:"Write a formal follow-up email after a job interview, thanking the interviewer.",
+ promptHi:"जॉब इंटरव्यू के बाद इंटरव्यूअर को धन्यवाद देते हुए औपचारिक फॉलो-अप ईमेल लिखिए।",
+ model:"Subject: Thank You — Marketing Executive Interview\n\nDear Mr. Kapoor,\n\nThank you for taking the time to interview me yesterday for the Marketing Executive position. I enjoyed our conversation and remain very enthusiastic about the opportunity to join your team.\n\nPlease let me know if you require any additional information from my end.\n\nBest regards,\n[Your Name]",
+ modelHi:"विषय: धन्यवाद — मार्केटिंग एग्ज़ीक्यूटिव इंटरव्यू\n\nप्रिय श्री कपूर,\n\nकल मार्केटिंग एग्ज़ीक्यूटिव पद के लिए मेरा इंटरव्यू लेने हेतु समय देने के लिए धन्यवाद। मुझे हमारी बातचीत अच्छी लगी और मैं आपकी टीम में शामिल होने के अवसर को लेकर बेहद उत्साहित हूं।\n\nकृपया बताएं यदि मेरी ओर से कोई अतिरिक्त जानकारी चाहिए।\n\nसादर,\n[आपका नाम]",
+ structure:[{label:"Subject line",text:"'Thank You' + role name, easy to spot in inbox."},{label:"Gratitude + reaffirm interest",text:"Thank them, then restate enthusiasm."},{label:"Open door",text:"Offer to provide more info; close formally."}]},
+{type:"informal-email", typeLabel:"Informal Email — Apologizing", dev:"अनौपचारिक ईमेल",
+ prompt:"Write an informal email to a friend apologizing for missing their event.",
+ promptHi:"किसी दोस्त के कार्यक्रम में न आ पाने के लिए माफी मांगते हुए अनौपचारिक ईमेल लिखिए।",
+ model:"Hi Karan,\n\nI'm really sorry I couldn't make it to your housewarming yesterday — something came up at the last minute and I couldn't get out of it. I heard it went really well, though! Can we catch up this weekend so I can see the new place?\n\nSorry again,\nVikas",
+ modelHi:"हाय करण,\n\nमुझे सच में अफसोस है कि मैं कल तुम्हारे हाउसवार्मिंग में नहीं आ सका — आखिरी वक्त में कुछ आ गया और मैं टाल नहीं सका। सुना है यह बहुत अच्छा रहा! क्या हम इस वीकेंड मिल सकते हैं ताकि मैं नई जगह देख सकूं?\n\nफिर से माफी,\nविकास",
+ structure:[{label:"Direct apology",text:"Say sorry early, don't bury it."},{label:"Brief reason",text:"One honest sentence — no long excuse."},{label:"Repair the plan",text:"Suggest making up for it."}]},
+{type:"essay", typeLabel:"Short Essay / Opinion Writing", dev:"लघु निबंध",
+ prompt:"Write a short opinion essay (3 paragraphs) on: \"Does technology make life simpler or more complicated?\"",
+ promptHi:"इस विषय पर लघु राय-निबंध लिखिए: \"क्या तकनीक जीवन को सरल बनाती है या और जटिल?\"",
+ model:"Introduction: Technology surrounds nearly every part of modern life, yet its true effect on daily living remains debatable.\n\nBody: On the one hand, technology has simplified communication, shopping, and access to information. On the other hand, it has also created constant distractions and a pressure to stay always connected, which many find exhausting.\n\nConclusion: Ultimately, I believe technology simplifies life only when used with clear boundaries and intention.",
+ modelHi:"परिचय: तकनीक आधुनिक जीवन के लगभग हर हिस्से में मौजूद है, फिर भी दैनिक जीवन पर इसका वास्तविक प्रभाव बहस का विषय बना हुआ है।\n\nमुख्य भाग: एक तरफ, तकनीक ने संचार, खरीदारी और जानकारी तक पहुंच को सरल बनाया है। दूसरी तरफ, इसने लगातार ध्यान भटकाने वाली चीज़ें और हमेशा जुड़े रहने का दबाव भी बनाया है, जो कई लोगों को थका देता है।\n\nनिष्कर्ष: अंततः, मेरा मानना है कि तकनीक जीवन को तभी सरल बनाती है जब इसे स्पष्ट सीमाओं और उद्देश्य के साथ इस्तेमाल किया जाए।",
+ structure:[{label:"Introduction",text:"State the topic as an ongoing debate."},{label:"Body",text:"Balance both views with 'on the one hand / on the other hand'."},{label:"Conclusion",text:"Give a conditional final opinion ('only when...')."}]},
+{type:"cover-letter", typeLabel:"Cover Letter Snippet", dev:"कवर लेटर",
+ prompt:"Write a paragraph explaining why you want to work at this specific company.",
+ promptHi:"आप इस विशेष कंपनी में क्यों काम करना चाहते हैं, यह बताते हुए एक अनुच्छेद लिखिए।",
+ model:"I have long admired your company's commitment to sustainable design, and I would be proud to contribute to a team that shares my values. Your recent project on eco-friendly packaging particularly inspired me, and I believe my background in product design aligns well with your goals.",
+ modelHi:"मैं लंबे समय से आपकी कंपनी की टिकाऊ डिज़ाइन के प्रति प्रतिबद्धता की सराहना करता रहा हूं, और मुझे गर्व होगा अगर मैं ऐसी टीम में योगदान दे सकूं जो मेरे मूल्यों को साझा करती है। आपकी हालिया इको-फ्रेंडली पैकेजिंग परियोजना ने मुझे विशेष रूप से प्रेरित किया, और मुझे विश्वास है कि उत्पाद डिज़ाइन में मेरा अनुभव आपके लक्ष्यों से अच्छी तरह मेल खाता है।",
+ structure:[{label:"Specific admiration",text:"Name something real about the company, not generic praise."},{label:"Personal connection",text:"Link it to your own values or background."},{label:"Alignment claim",text:"State clearly why you'd be a good fit."}]},
+{type:"professional-msg", typeLabel:"Professional Message (Slack/WhatsApp style)", dev:"प्रोफेशनल मैसेज",
+ prompt:"Write a polite Slack message declining a meeting time and proposing an alternative.",
+ promptHi:"किसी मीटिंग के समय को विनम्रता से मना करते हुए और वैकल्पिक समय सुझाते हुए स्लैक मैसेज लिखिए।",
+ model:"Hi Team, I have a conflict at the proposed time tomorrow — would 4 PM instead of 2 PM work for everyone? Happy to adjust further if needed. Let me know!",
+ modelHi:"हाय टीम, कल प्रस्तावित समय पर मेरा कोई और काम है — क्या दोपहर 2 बजे की जगह शाम 4 बजे सभी के लिए ठीक रहेगा? ज़रूरत हो तो मैं और भी समायोजित कर सकता हूं। बताइएगा!",
+ structure:[{label:"State the conflict",text:"Brief, no lengthy justification needed."},{label:"Propose alternative",text:"Offer a specific new time, not just 'sometime else'."},{label:"Flexible close",text:"Show willingness to adjust further."}]},
+// Cycle 5 (days 55-60)
+{type:"paragraph", typeLabel:"Paragraph Writing", dev:"अनुच्छेद लेखन",
+ prompt:"Write a paragraph giving advice to someone starting their first job.",
+ promptHi:"पहली नौकरी शुरू करने वाले किसी व्यक्ति को सलाह देते हुए अनुच्छेद लिखिए।",
+ model:"Starting your first job can feel overwhelming, but a few habits make it easier. Always ask questions instead of guessing, since clarity saves time in the long run. Build relationships with your colleagues early, as they often become your best support system. Most importantly, be patient with yourself — everyone learns at their own pace.",
+ modelHi:"पहली नौकरी शुरू करना भारी लग सकता है, लेकिन कुछ आदतें इसे आसान बनाती हैं। हमेशा अनुमान लगाने के बजाय सवाल पूछें, क्योंकि स्पष्टता लंबे समय में समय बचाती है। अपने सहकर्मियों के साथ जल्दी रिश्ते बनाएं, क्योंकि वे अक्सर आपका सबसे अच्छा सहारा बनते हैं। सबसे ज़रूरी, खुद के प्रति धैर्यवान रहें — हर कोई अपनी गति से सीखता है।",
+ structure:[{label:"Acknowledge the challenge",text:"Validate the feeling before giving advice."},{label:"2-3 concrete tips",text:"Use imperative verbs (ask, build, be)."},{label:"Reassuring close",text:"End with encouragement."}]},
+{type:"formal-email", typeLabel:"Formal Email — Requesting Information", dev:"जानकारी हेतु ईमेल",
+ prompt:"Write a formal email to a college requesting information about their admission process.",
+ promptHi:"किसी कॉलेज को उनकी प्रवेश प्रक्रिया की जानकारी मांगते हुए औपचारिक ईमेल लिखिए।",
+ model:"Subject: Inquiry Regarding Admission Process for MBA Programme\n\nDear Admissions Office,\n\nI am interested in applying for your MBA programme starting next year and would appreciate detailed information regarding the eligibility criteria, application deadlines, and required documents.\n\nI look forward to your response at your earliest convenience.\n\nRegards,\n[Your Name]",
+ modelHi:"विषय: एमबीए कार्यक्रम की प्रवेश प्रक्रिया संबंधी पूछताछ\n\nप्रिय प्रवेश कार्यालय,\n\nमैं अगले साल शुरू होने वाले आपके एमबीए कार्यक्रम में आवेदन करने में रुचि रखता हूं और पात्रता मानदंड, आवेदन की अंतिम तिथि, और आवश्यक दस्तावेज़ों के बारे में विस्तृत जानकारी चाहूंगा।\n\nआपकी सुविधानुसार शीघ्र प्रतिक्रिया का इंतज़ार रहेगा।\n\nसादर,\n[आपका नाम]",
+ structure:[{label:"Subject line",text:"State the exact inquiry topic."},{label:"Specific questions",text:"List exactly what information you need."},{label:"Polite close",text:"Request a timely response, not a demand."}]},
+{type:"informal-email", typeLabel:"Informal Email — Planning a Trip", dev:"अनौपचारिक ईमेल",
+ prompt:"Write an informal email to friends proposing a weekend trip and asking for their availability.",
+ promptHi:"दोस्तों को वीकेंड ट्रिप का प्रस्ताव देते हुए और उनकी उपलब्धता पूछते हुए अनौपचारिक ईमेल लिखिए।",
+ model:"Hey everyone,\n\nI was thinking we could plan a quick trip to Rishikesh next month — maybe the second weekend? It's been way too long since we all hung out properly. Let me know your availability so I can start looking at stays.\n\nExcited already!\nAman",
+ modelHi:"हे सभी,\n\nमैं सोच रहा था कि हम अगले महीने ऋषिकेश की एक छोटी ट्रिप प्लान करें — शायद दूसरे वीकेंड? हम सबको ठीक से मिले काफी समय हो गया है। अपनी उपलब्धता बताओ ताकि मैं ठहरने के लिए देखना शुरू कर सकूं।\n\nअभी से एक्साइटेड हूं!\nअमन",
+ structure:[{label:"Casual pitch",text:"Suggest the idea lightly, not as a fixed plan."},{label:"Practical ask",text:"Ask for availability so planning can move forward."},{label:"Enthusiastic close",text:"Show excitement, sign off casually."}]},
+{type:"essay", typeLabel:"Short Essay / Opinion Writing", dev:"लघु निबंध",
+ prompt:"Write a short opinion essay (3 paragraphs) on: \"Is it better to specialize in one skill or learn many skills?\"",
+ promptHi:"इस विषय पर लघु राय-निबंध लिखिए: \"क्या एक कौशल में विशेषज्ञता हासिल करना बेहतर है या कई कौशल सीखना?\"",
+ model:"Introduction: In a fast-changing job market, people often debate whether it is wiser to master one skill deeply or develop a broad range of abilities.\n\nBody: Specialists tend to command higher expertise and are often preferred for technical roles, whereas generalists can adapt more easily to changing demands. However, combining a core specialization with a few complementary skills often provides the best of both worlds.\n\nConclusion: Personally, I believe deep expertise in one area, supported by broader awareness, offers the most stable long-term advantage.",
+ modelHi:"परिचय: तेज़ी से बदलते नौकरी बाज़ार में, लोग अक्सर बहस करते हैं कि क्या एक कौशल में गहराई से महारत हासिल करना समझदारी है या कई क्षमताएं विकसित करना।\n\nमुख्य भाग: विशेषज्ञ आमतौर पर उच्च दक्षता रखते हैं और तकनीकी भूमिकाओं के लिए पसंद किए जाते हैं, जबकि सामान्यज्ञ बदलती मांगों के अनुसार आसानी से ढल जाते हैं। हालांकि, एक मुख्य विशेषज्ञता को कुछ पूरक कौशलों के साथ जोड़ना अक्सर दोनों का सबसे अच्छा फायदा देता है।\n\nनिष्कर्ष: व्यक्तिगत रूप से, मेरा मानना है कि व्यापक जागरूकता के साथ किसी एक क्षेत्र में गहरी विशेषज्ञता सबसे स्थिर दीर्घकालिक लाभ देती है।",
+ structure:[{label:"Introduction",text:"Frame the debate clearly."},{label:"Body",text:"Contrast pros of each, then offer a synthesis ('However...')."},{label:"Conclusion",text:"State a clear personal stance."}]},
+{type:"cover-letter", typeLabel:"Cover Letter Snippet", dev:"कवर लेटर",
+ prompt:"Write a paragraph addressing a career gap in your cover letter.",
+ promptHi:"अपने कवर लेटर में करियर गैप को संबोधित करते हुए एक अनुच्छेद लिखिए।",
+ model:"You may notice a gap in my employment history between 2023 and 2024, during which I took time to care for a family member. During this period, I also completed an online certification in project management to keep my skills current, and I am now fully ready to return to full-time work.",
+ modelHi:"आप देख सकते हैं कि मेरे कार्य इतिहास में 2023 और 2024 के बीच एक अंतराल है, जिस दौरान मैंने परिवार के किसी सदस्य की देखभाल के लिए समय निकाला। इस अवधि में, मैंने अपने कौशल को अद्यतन रखने के लिए प्रोजेक्ट मैनेजमेंट में एक ऑनलाइन प्रमाणपत्र भी पूरा किया, और अब मैं पूर्णकालिक काम पर लौटने के लिए पूरी तरह तैयार हूं।",
+ structure:[{label:"Name the gap plainly",text:"Don't hide it — state the dates and reason briefly."},{label:"Show productivity",text:"Mention any learning/growth during the gap."},{label:"Confidence close",text:"Affirm readiness to return."}]},
+{type:"professional-msg", typeLabel:"Professional Message (Slack/WhatsApp style)", dev:"प्रोफेशनल मैसेज",
+ prompt:"Write a professional message to a vendor asking for an updated quotation.",
+ promptHi:"किसी वेंडर को अपडेटेड कोटेशन मांगते हुए प्रोफेशनल मैसेज लिखिए।",
+ model:"Hello, could you please share an updated quotation for the order we discussed last week? We'd like to finalize the purchase by Friday, so an early response would be very helpful. Thank you!",
+ modelHi:"नमस्ते, क्या आप कृपया पिछले हफ्ते चर्चा किए गए ऑर्डर के लिए अपडेटेड कोटेशन भेज सकते हैं? हम शुक्रवार तक खरीद अंतिम रूप देना चाहते हैं, इसलिए जल्दी जवाब बहुत मददगार होगा। धन्यवाद!",
+ structure:[{label:"Polite request",text:"'Could you please...' keeps it professional but warm."},{label:"Context reminder",text:"Reference the earlier discussion so they know exactly what's needed."},{label:"Deadline + thanks",text:"State the deadline and thank them in advance."}]}
+];
+
+// ADV_MISTAKES — advanced/register-level mistakes (150 entries, 5 per day for 30 days).
+var ADV_MISTAKES = [
+{galat:"I am having a doubt regarding this matter.", sahi:"I have a query regarding this matter.", pron:"आइ हैव अ क्वेरी रिगार्डिंग दिस मैटर"},
+{galat:"Kindly do the needful at the earliest.", sahi:"Please take the necessary action as soon as possible.", pron:"प्लीज़ टेक द नेसेसरी एक्शन एज़ सून एज़ पॉसिबल"},
+{galat:"I am in receipt of your mail.", sahi:"I have received your email.", pron:"आइ हैव रिसीव्ड योर ईमेल"},
+{galat:"This is to inform that the meeting is postponed.", sahi:"This is to inform you that the meeting has been postponed.", pron:"दिस इज़ टू इन्फॉर्म यू दैट द मीटिंग हैज़ बीन पोस्टपोन्ड"},
+{galat:"Please revert on the below query.", sahi:"Please respond to the query below.", pron:"प्लीज़ रिस्पॉन्ड टू द क्वेरी बिलो"},
+{galat:"I would like to bring to your kind notice that I am facing some problem.", sahi:"I would like to inform you that I am facing an issue.", pron:"आइ वुड लाइक टू इन्फॉर्म यू दैट आइ एम फेसिंग एन इश्यू"},
+{galat:"He is having vast experience in this field.", sahi:"He has extensive experience in this field.", pron:"ही हैज़ एक्सटेंसिव एक्सपीरियंस इन दिस फील्ड"},
+{galat:"We are agreeable to your proposal.", sahi:"We agree to your proposal.", pron:"वी अग्री टू योर प्रपोज़ल"},
+{galat:"I am well versed with this software.", sahi:"I am well versed in this software.", pron:"आइ एम वेल वर्स्ड इन दिस सॉफ्टवेयर"},
+{galat:"Please find the attachment herewith.", sahi:"Please find the attachment attached.", pron:"प्लीज़ फाइंड द अटैचमेंट अटैच्ड"},
+{galat:"Whereas I have completed the task, but the client is unhappy.", sahi:"Although I have completed the task, the client is unhappy.", pron:"ऑलदो आइ हैव कम्प्लीटेड द टास्क, द क्लाइंट इज़ अनहैप्पी"},
+{galat:"He said that he is coming tomorrow.", sahi:"He said that he was coming the next day.", pron:"ही सेड दैट ही वॉज़ कमिंग द नेक्स्ट डे"},
+{galat:"Despite of the rain, the event continued.", sahi:"Despite the rain, the event continued.", pron:"डिस्पाइट द रेन, द इवेंट कंटिन्यूड"},
+{galat:"Although the budget was tight, but we finished on time.", sahi:"Although the budget was tight, we finished on time.", pron:"ऑलदो द बजट वॉज़ टाइट, वी फिनिश्ड ऑन टाइम"},
+{galat:"I am agree that the proposal needs changes.", sahi:"I agree that the proposal needs changes.", pron:"आइ अग्री दैट द प्रपोज़ल नीड्स चेंजेज़"},
+{galat:"He must have went to the office.", sahi:"He must have gone to the office.", pron:"ही मस्ट हैव गॉन टू द ऑफिस"},
+{galat:"She should have tell him earlier.", sahi:"She should have told him earlier.", pron:"शी शुड हैव टोल्ड हिम अर्लियर"},
+{galat:"It is recommended that everyone submits the form.", sahi:"It is recommended that everyone submit the form.", pron:"इट इज़ रेकमेंडेड दैट एवरीवन सबमिट द फॉर्म"},
+{galat:"The report must be finish by tomorrow.", sahi:"The report must be finished by tomorrow.", pron:"द रिपोर्ट मस्ट बी फिनिश्ड बाइ टुमॉरो"},
+{galat:"I would like to informed you about the delay.", sahi:"I would like to inform you about the delay.", pron:"आइ वुड लाइक टू इन्फॉर्म यू अबाउट द डिले"},
+{galat:"Kindly revert back with your response soon.", sahi:"Kindly respond at your earliest convenience.", pron:"काइंडली रिस्पॉन्ड एट योर अर्लिएस्ट कन्वीनियंस"},
+{galat:"I am hoping you are doing good.", sahi:"I hope you are doing well.", pron:"आइ होप यू आर डूइंग वेल"},
+{galat:"This mail is with regards to the pending payment.", sahi:"This email is regarding the pending payment.", pron:"दिस ईमेल इज़ रिगार्डिंग द पेंडिंग पेमेंट"},
+{galat:"As per my knowledge, the order is dispatch.", sahi:"As far as I know, the order has been dispatched.", pron:"एज़ फार एज़ आइ नो, द ऑर्डर हैज़ बीन डिस्पैच्ड"},
+{galat:"I am extremely sorry for the inconvenience caused.", sahi:"I sincerely apologize for the inconvenience caused.", pron:"आइ सिंसियरली अपोलोजाइज़ फॉर द इनकन्वीनियंस कॉज़्ड"},
+{galat:"Please do let me know your good self's availability.", sahi:"Please let me know your availability.", pron:"प्लीज़ लेट मी नो योर अवेलेबिलिटी"},
+{galat:"We regret to inform that your leave is not approved.", sahi:"We regret to inform you that your leave has not been approved.", pron:"वी रिग्रेट टू इन्फॉर्म यू दैट योर लीव हैज़ नॉट बीन अप्रूव्ड"},
+{galat:"I want to discuss about the contract terms.", sahi:"I want to discuss the contract terms.", pron:"आइ वॉन्ट टू डिस्कस द कॉन्ट्रैक्ट टर्म्स"},
+{galat:"He is senior to me since five years.", sahi:"He has been senior to me for five years.", pron:"ही हैज़ बीन सीनियर टू मी फॉर फाइव ईयर्स"},
+{galat:"I am understanding your concern completely.", sahi:"I understand your concern completely.", pron:"आइ अंडरस्टैंड योर कंसर्न कंप्लीटली"},
+{galat:"The committee suggested that he should resigns.", sahi:"The committee suggested that he resign.", pron:"द कमिटी सजेस्टेड दैट ही रिज़ाइन"},
+{galat:"Not only he is late, but also he forgot the documents.", sahi:"Not only was he late, but he also forgot the documents.", pron:"नॉट ओनली वॉज़ ही लेट, बट ही ऑल्सो फॉरगॉट द डॉक्युमेंट्स"},
+{galat:"Hardly he had reached when the call started.", sahi:"Hardly had he reached when the call started.", pron:"हार्डली हैड ही रीच्ड वेन द कॉल स्टार्टेड"},
+{galat:"This could have avoided if we had planned better.", sahi:"This could have been avoided if we had planned better.", pron:"दिस कुड हैव बीन अवॉइडेड इफ वी हैड प्लांड बेटर"},
+{galat:"I have a suggestion regarding to the new policy.", sahi:"I have a suggestion regarding the new policy.", pron:"आइ हैव अ सजेशन रिगार्डिंग द न्यू पॉलिसी"},
+{galat:"The manager insisted that he attends the training.", sahi:"The manager insisted that he attend the training.", pron:"द मैनेजर इंसिस्टेड दैट ही अटेंड द ट्रेनिंग"},
+{galat:"I look forward to hear from you.", sahi:"I look forward to hearing from you.", pron:"आइ लुक फॉरवर्ड टू हियरिंग फ्रॉम यू"},
+{galat:"Please share the details on same email.", sahi:"Please share the details on the same email.", pron:"प्लीज़ शेयर द डिटेल्स ऑन द सेम ईमेल"},
+{galat:"Being a manager, the decision was taken by him.", sahi:"Being a manager, he took the decision.", pron:"बीइंग अ मैनेजर, ही टुक द डिसीज़न"},
+{galat:"Considering the circumstances, a decision was made by us.", sahi:"Considering the circumstances, we made a decision.", pron:"कंसीडरिंग द सर्कमस्टांसेज़, वी मेड अ डिसीज़न"},
+{galat:"I have completed graduation in the year 2020.", sahi:"I graduated in 2020.", pron:"आइ ग्रेजुएटेड इन ट्वेंटी ट्वेंटी"},
+{galat:"The letter was written by me yesterday, isn't it?", sahi:"The letter was written by me yesterday, wasn't it?", pron:"द लेटर वॉज़ रिटन बाइ मी येस्टरडे, वाज़्ंट इट"},
+{galat:"Neither the manager nor the employees was informed.", sahi:"Neither the manager nor the employees were informed.", pron:"नीदर द मैनेजर नॉर द एम्प्लॉईज़ वर इन्फॉर्म्ड"},
+{galat:"I request you to please provide the details.", sahi:"I request you to provide the details.", pron:"आइ रिक्वेस्ट यू टू प्रोवाइड द डिटेल्स"},
+{galat:"With due respect, I beg to state that the invoice is wrong.", sahi:"With respect, I would like to point out that the invoice appears incorrect.", pron:"विद रिस्पेक्ट, आइ वुड लाइक टू पॉइंट आउट दैट द इनवॉइस अपीयर्स इनकरेक्ट"},
+{galat:"I have applied for the leave since last week.", sahi:"I applied for leave last week.", pron:"आइ अप्लाइड फॉर लीव लास्ट वीक"},
+{galat:"He explained about the process in detail.", sahi:"He explained the process in detail.", pron:"ही एक्सप्लेन्ड द प्रोसेस इन डिटेल"},
+{galat:"The proposal was discussed among the two of us.", sahi:"The proposal was discussed between the two of us.", pron:"द प्रपोज़ल वॉज़ डिस्कस्ड बिटवीन द टू ऑफ अस"},
+{galat:"I am comfortable working in flexible timing.", sahi:"I am comfortable working flexible hours.", pron:"आइ एम कम्फर्टेबल वर्किंग फ्लेक्सिबल आवर्स"},
+{galat:"Please note that the office will remain close tomorrow.", sahi:"Please note that the office will remain closed tomorrow.", pron:"प्लीज़ नोट दैट द ऑफिस विल रिमेन क्लोज़्ड टुमॉरो"},
+{galat:"I have few doubts which I want to clarify.", sahi:"I have a few doubts I would like to clarify.", pron:"आइ हैव अ फ्यू डाउट्स आइ वुड लाइक टू क्लैरिफाई"},
+{galat:"We were discussing regarding the merger.", sahi:"We were discussing the merger.", pron:"वी वर डिस्कसिंग द मर्जर"},
+{galat:"He is capable to handle this project.", sahi:"He is capable of handling this project.", pron:"ही इज़ केपेबल ऑफ हैंडलिंग दिस प्रोजेक्ट"},
+{galat:"I appreciate for your support during this project.", sahi:"I appreciate your support during this project.", pron:"आइ अप्रीशिएट योर सपोर्ट ड्यूरिंग दिस प्रोजेक्ट"},
+{galat:"We were compelled to postponed the launch.", sahi:"We were compelled to postpone the launch.", pron:"वी वर कम्पेल्ड टू पोस्टपोन द लॉन्च"},
+{galat:"Being an important matter, I want your immediate attention.", sahi:"As this is an important matter, I need your immediate attention.", pron:"एज़ दिस इज़ एन इम्पोर्टेंट मैटर, आइ नीड योर इमीडिएट अटेंशन"},
+{galat:"Attached is the file for your kind perusal, do the needful.", sahi:"Please find the file attached for your review.", pron:"प्लीज़ फाइंड द फाइल अटैच्ड फॉर योर रिव्यू"},
+{galat:"He is expert of financial planning.", sahi:"He is an expert in financial planning.", pron:"ही इज़ एन एक्सपर्ट इन फाइनेंशियल प्लानिंग"},
+{galat:"I would request to kindly extend the deadline.", sahi:"I would like to request an extension of the deadline.", pron:"आइ वुड लाइक टू रिक्वेस्ट एन एक्सटेंशन ऑफ द डेडलाइन"},
+{galat:"Since the project is delay, we need more resources.", sahi:"Since the project is delayed, we need more resources.", pron:"सिंस द प्रोजेक्ट इज़ डिलेड, वी नीड मोर रिसोर्सेज़"},
+{galat:"I am agreeing with your point of view.", sahi:"I agree with your point of view.", pron:"आइ अग्री विद योर पॉइंट ऑफ व्यू"},
+{galat:"The manager was insisting that we must to attend.", sahi:"The manager insisted that we attend.", pron:"द मैनेजर इंसिस्टेड दैट वी अटेंड"},
+{galat:"I hope this mail finds you in good health and prosperity, kindly do the needful at your earliest possible convenience.", sahi:"I hope you are well. Please action this at your earliest convenience.", pron:"आइ होप यू आर वेल, प्लीज़ एक्शन दिस एट योर अर्लिएस्ट कन्वीनियंस"},
+{galat:"This will effect the entire schedule.", sahi:"This will affect the entire schedule.", pron:"दिस विल अफेक्ट द एंटायर शेड्यूल"},
+{galat:"I am waiting from your reply since morning.", sahi:"I have been waiting for your reply since morning.", pron:"आइ हैव बीन वेटिंग फॉर योर रिप्लाई सिंस मॉर्निंग"},
+{galat:"The consequences of the decision was severe.", sahi:"The consequences of the decision were severe.", pron:"द कॉन्सिक्वेंसेज़ ऑफ द डिसीज़न वर सिवियर"},
+{galat:"He suggested me that I should apply again.", sahi:"He suggested that I apply again.", pron:"ही सजेस्टेड दैट आइ अप्लाई अगेन"},
+{galat:"I am really thankful of your guidance.", sahi:"I am really thankful for your guidance.", pron:"आइ एम रियली थैंकफुल फॉर योर गाइडेंस"},
+{galat:"Whom did you say sent this report?", sahi:"Who did you say sent this report?", pron:"हू डिड यू से सेंट दिस रिपोर्ट"},
+{galat:"The candidate whose he interviewed was excellent.", sahi:"The candidate he interviewed was excellent.", pron:"द कैंडिडेट ही इंटरव्यूड वॉज़ एक्सेलेंट"},
+{galat:"I could not able to attend the call yesterday.", sahi:"I was unable to attend the call yesterday.", pron:"आइ वॉज़ अनेबल टू अटेंड द कॉल येस्टरडे"},
+{galat:"Please to note the revised timings below.", sahi:"Please note the revised timings below.", pron:"प्लीज़ नोट द रिवाइज़्ड टाइमिंग्स बिलो"},
+{galat:"I am in the process to finalize the report.", sahi:"I am in the process of finalizing the report.", pron:"आइ एम इन द प्रोसेस ऑफ फाइनलाइज़िंग द रिपोर्ट"},
+{galat:"He denied to accept the mistake.", sahi:"He denied making the mistake.", pron:"ही डिनाइड मेकिंग द मिस्टेक"},
+{galat:"I have no objection in joining the new team.", sahi:"I have no objection to joining the new team.", pron:"आइ हैव नो ऑब्जेक्शन टू जॉइनिंग द न्यू टीम"},
+{galat:"We were four person in the meeting.", sahi:"There were four of us in the meeting.", pron:"देयर वर फोर ऑफ अस इन द मीटिंग"},
+{galat:"This scheme is beneficial for we retail investors.", sahi:"This scheme is beneficial for us retail investors.", pron:"दिस स्कीम इज़ बेनिफिशल फॉर अस रिटेल इन्वेस्टर्स"},
+{galat:"I could not helped noticing the error.", sahi:"I could not help noticing the error.", pron:"आइ कुड नॉट हेल्प नोटिसिंग द एरर"},
+{galat:"It has been observed that employees is arriving late.", sahi:"It has been observed that employees are arriving late.", pron:"इट हैज़ बीन ऑब्ज़र्व्ड दैट एम्प्लॉईज़ आर अराइविंग लेट"},
+{galat:"The board have decided to expand overseas.", sahi:"The board has decided to expand overseas.", pron:"द बोर्ड हैज़ डिसाइडेड टू एक्सपैंड ओवरसीज़"},
+{galat:"He is one of the employee who always helps.", sahi:"He is one of the employees who always help.", pron:"ही इज़ वन ऑफ द एम्प्लॉईज़ हू ऑलवेज़ हेल्प"},
+{galat:"I request your kind self to approve this leave.", sahi:"I kindly request you to approve this leave.", pron:"आइ काइंडली रिक्वेस्ट यू टू अप्रूव दिस लीव"},
+{galat:"We are pleased to inform that you are selected.", sahi:"We are pleased to inform you that you have been selected.", pron:"वी आर प्लीज़्ड टू इन्फॉर्म यू दैट यू हैव बीन सिलेक्टेड"},
+{galat:"The reason of the delay is due to weather.", sahi:"The reason for the delay is the weather.", pron:"द रीज़न फॉर द डिले इज़ द वेदर"},
+{galat:"Kindly note that the venue has been change.", sahi:"Kindly note that the venue has been changed.", pron:"काइंडली नोट दैट द वेन्यू हैज़ बीन चेंज्ड"},
+{galat:"I am writing this mail to seeking clarification.", sahi:"I am writing this email to seek clarification.", pron:"आइ एम राइटिंग दिस ईमेल टू सीक क्लैरिफिकेशन"},
+{galat:"He is more experienced than any employee in the office.", sahi:"He is more experienced than any other employee in the office.", pron:"ही इज़ मोर एक्सपीरियंस्ड दैन एनी अदर एम्प्लॉई इन द ऑफिस"},
+{galat:"I would appreciate if you could revert soon.", sahi:"I would appreciate it if you could respond soon.", pron:"आइ वुड अप्रीशिएट इट इफ यू कुड रिस्पॉन्ड सून"},
+{galat:"Please intimate us about the schedule change.", sahi:"Please notify us of the schedule change.", pron:"प्लीज़ नोटिफाई अस ऑफ द शेड्यूल चेंज"},
+{galat:"He is one of the most senior most employee here.", sahi:"He is one of the most senior employees here.", pron:"ही इज़ वन ऑफ द मोस्ट सीनियर एम्प्लॉईज़ हियर"},
+{galat:"The client is expecting a call back from our end.", sahi:"The client is expecting a callback from us.", pron:"द क्लाइंट इज़ एक्सपेक्टिंग अ कॉलबैक फ्रॉम अस"},
+{galat:"I hope the same finds favour with you.", sahi:"I hope this meets your approval.", pron:"आइ होप दिस मीट्स योर अप्रूवल"},
+{galat:"We have not received any confirmation as yet.", sahi:"We have not yet received any confirmation.", pron:"वी हैव नॉट येट रिसीव्ड एनी कन्फर्मेशन"},
+{galat:"Please arrange to send the documents on urgent basis.", sahi:"Please arrange to send the documents urgently.", pron:"प्लीज़ अरेंज टू सेंड द डॉक्युमेंट्स अर्जेंटली"},
+{galat:"I am sending this for your ready reference.", sahi:"I am sending this for your reference.", pron:"आइ एम सेंडिंग दिस फॉर योर रेफरेंस"},
+{galat:"This has reference to our telephonic conversation.", sahi:"This is with reference to our telephone conversation.", pron:"दिस इज़ विद रेफरेंस टू आवर टेलीफोन कन्वर्सेशन"},
+{galat:"I trust this mail finds you well and in good spirits.", sahi:"I hope this email finds you well.", pron:"आइ होप दिस ईमेल फाइंड्स यू वेल"},
+{galat:"Please be informed that the payment is process.", sahi:"Please be informed that the payment is being processed.", pron:"प्लीज़ बी इन्फॉर्म्ड दैट द पेमेंट इज़ बीइंग प्रोसेस्ड"},
+{galat:"I am forwarding herewith the requested documents.", sahi:"I am forwarding the requested documents.", pron:"आइ एम फॉरवर्डिंग द रिक्वेस्टेड डॉक्युमेंट्स"},
+{galat:"He has good command over English language.", sahi:"He has a good command of the English language.", pron:"ही हैज़ अ गुड कमांड ऑफ द इंग्लिश लैंग्वेज"},
+{galat:"I want to bring in your notice one issue.", sahi:"I want to bring an issue to your notice.", pron:"आइ वॉन्ट टू ब्रिंग एन इश्यू टू योर नोटिस"},
+{galat:"The team is working on it since two weeks.", sahi:"The team has been working on it for two weeks.", pron:"द टीम हैज़ बीन वर्किंग ऑन इट फॉर टू वीक्स"},
+{galat:"I regret for the delay caused in response.", sahi:"I regret the delay in my response.", pron:"आइ रिग्रेट द डिले इन माय रिस्पॉन्स"},
+{galat:"Our team is comprised of five engineers.", sahi:"Our team comprises five engineers.", pron:"आवर टीम कंप्राइज़ेज़ फाइव इंजीनियर्स"},
+{galat:"He talked about that he was leaving the company.", sahi:"He talked about leaving the company.", pron:"ही टॉक्ड अबाउट लीविंग द कंपनी"},
+{galat:"I would be oblige if you could confirm this.", sahi:"I would be obliged if you could confirm this.", pron:"आइ वुड बी ओब्लाइज्ड इफ यू कुड कन्फर्म दिस"},
+{galat:"This is regard to the invoice sent last week.", sahi:"This is with regard to the invoice sent last week.", pron:"दिस इज़ विद रिगार्ड टू द इनवॉइस सेंट लास्ट वीक"},
+{galat:"I have cc'ed the concern person on this mail.", sahi:"I have cc'ed the concerned person on this email.", pron:"आइ हैव सीसीड द कंसर्न्ड पर्सन ऑन दिस ईमेल"},
+{galat:"Please share your feedback and suggestion.", sahi:"Please share your feedback and suggestions.", pron:"प्लीज़ शेयर योर फीडबैक एंड सजेशन्स"},
+{galat:"We shall be highly obliged for early response.", sahi:"We would be grateful for an early response.", pron:"वी वुड बी ग्रेटफुल फॉर एन अर्ली रिस्पॉन्स"},
+{galat:"Kindly acknowledge the receipt of same.", sahi:"Kindly acknowledge receipt of this email.", pron:"काइंडली एक्नॉलेज रिसीट ऑफ दिस ईमेल"},
+{galat:"I was going through your mail and noted the point.", sahi:"I went through your email and noted the point.", pron:"आइ वेंट थ्रू योर ईमेल एंड नोटेड द पॉइंट"},
+{galat:"He is holding the designation of team lead.", sahi:"He holds the designation of team lead.", pron:"ही होल्ड्स द डेज़िग्नेशन ऑफ टीम लीड"},
+{galat:"We are into the business of software development.", sahi:"We are in the business of software development.", pron:"वी आर इन द बिज़नेस ऑफ सॉफ्टवेयर डेवलपमेंट"},
+{galat:"I want to know that whether the item is in stock.", sahi:"I want to know whether the item is in stock.", pron:"आइ वॉन्ट टू नो वेदर द आइटम इज़ इन स्टॉक"},
+{galat:"The proposal was rejected due to lack of budget only.", sahi:"The proposal was rejected only due to lack of budget.", pron:"द प्रपोज़ल वॉज़ रिजेक्टेड ओनली ड्यू टू लैक ऑफ बजट"},
+{galat:"He is the person whom I told you about him.", sahi:"He is the person I told you about.", pron:"ही इज़ द पर्सन आइ टोल्ड यू अबाउट"},
+{galat:"There is much confusions regarding the policy.", sahi:"There is much confusion regarding the policy.", pron:"देयर इज़ मच कन्फ्यूज़न रिगार्डिंग द पॉलिसी"},
+{galat:"I need to informed my supervisor about this.", sahi:"I need to inform my supervisor about this.", pron:"आइ नीड टू इन्फॉर्म माय सुपरवाइज़र अबाउट दिस"},
+{galat:"Our findings suggests that the market is growing.", sahi:"Our findings suggest that the market is growing.", pron:"आवर फाइंडिंग्स सजेस्ट दैट द मार्केट इज़ ग्रोइंग"},
+{galat:"I was hoping if you could clarify this point.", sahi:"I was hoping you could clarify this point.", pron:"आइ वॉज़ होपिंग यू कुड क्लैरिफाई दिस पॉइंट"},
+{galat:"The invoice amount and the payment doesn't match.", sahi:"The invoice amount and the payment do not match.", pron:"द इनवॉइस अमाउंट एंड द पेमेंट डू नॉट मैच"},
+{galat:"He always keep reminding me about the deadline.", sahi:"He always keeps reminding me about the deadline.", pron:"ही ऑलवेज़ कीप्स रिमाइंडिंग मी अबाउट द डेडलाइन"},
+{galat:"I am not in a position to comment upon this issue.", sahi:"I am not in a position to comment on this issue.", pron:"आइ एम नॉट इन अ पोज़िशन टू कमेंट ऑन दिस इश्यू"},
+{galat:"We appreciate your patience regarding this matter and apologize for any inconvenience caused, kindly bear with us.", sahi:"We appreciate your patience and apologize for the inconvenience.", pron:"वी अप्रीशिएट योर पेशेंस एंड अपोलोजाइज़ फॉर द इनकन्वीनियंस"},
+{galat:"He seldom does not attend the weekly meetings.", sahi:"He seldom attends the weekly meetings.", pron:"ही सेल्डम अटेंड्स द वीकली मीटिंग्स"},
+{galat:"I have no any idea about this topic.", sahi:"I have no idea about this topic.", pron:"आइ हैव नो आइडिया अबाउट दिस टॉपिक"},
+{galat:"The team members was informed about the update.", sahi:"The team members were informed about the update.", pron:"द टीम मेंबर्स वर इन्फॉर्म्ड अबाउट द अपडेट"},
+{galat:"I visited to the office yesterday for the interview.", sahi:"I visited the office yesterday for the interview.", pron:"आइ विज़िटेड द ऑफिस येस्टरडे फॉर द इंटरव्यू"},
+{galat:"He is answerable towards the entire department.", sahi:"He is answerable to the entire department.", pron:"ही इज़ आंसरेबल टू द एंटायर डिपार्टमेंट"},
+{galat:"We must to complete this before the deadline.", sahi:"We must complete this before the deadline.", pron:"वी मस्ट कम्प्लीट दिस बिफोर द डेडलाइन"},
+{galat:"I could not attend due to some personal reason.", sahi:"I could not attend due to a personal reason.", pron:"आइ कुड नॉट अटेंड ड्यू टू अ पर्सनल रीज़न"},
+{galat:"He shared his opinion regarding on the topic.", sahi:"He shared his opinion on the topic.", pron:"ही शेयर्ड हिज़ ओपिनियन ऑन द टॉपिक"},
+{galat:"There was a mis-communication between the two team.", sahi:"There was a miscommunication between the two teams.", pron:"देयर वॉज़ अ मिसकम्युनिकेशन बिटवीन द टू टीम्स"},
+{galat:"I have attached herewith my updated resume for your kind perusal and needful action.", sahi:"Please find my updated resume attached.", pron:"प्लीज़ फाइंड माय अपडेटेड रिज़्यूमे अटैच्ड"},
+{galat:"He always try to help everyone in the team.", sahi:"He always tries to help everyone in the team.", pron:"ही ऑलवेज़ ट्राइज़ टू हेल्प एवरीवन इन द टीम"},
+{galat:"I did not received any update from your side.", sahi:"I did not receive any update from your side.", pron:"आइ डिड नॉट रिसीव एनी अपडेट फ्रॉम योर साइड"},
+{galat:"Please share the updated file at your convenience time.", sahi:"Please share the updated file at your convenience.", pron:"प्लीज़ शेयर द अपडेटेड फाइल एट योर कन्वीनियंस"},
+{galat:"We were unable to resolved the issue on time.", sahi:"We were unable to resolve the issue on time.", pron:"वी वर अनेबल टू रिज़ॉल्व द इश्यू ऑन टाइम"},
+{galat:"He completed his task before the given deadline itself.", sahi:"He completed his task before the given deadline.", pron:"ही कम्प्लीटेड हिज़ टास्क बिफोर द गिवन डेडलाइन"},
+{galat:"I hope you will understand my situation and cooperate.", sahi:"I hope you will understand my situation and cooperate accordingly.", pron:"आइ होप यू विल अंडरस्टैंड माय सिचुएशन एंड कोऑपरेट अकॉर्डिंगली"},
+{galat:"This proposal is more better than the previous one.", sahi:"This proposal is better than the previous one.", pron:"दिस प्रपोज़ल इज़ बेटर दैन द प्रिवियस वन"},
+{galat:"I would like to know more further details about this.", sahi:"I would like to know further details about this.", pron:"आइ वुड लाइक टू नो फर्दर डिटेल्स अबाउट दिस"},
+{galat:"He confirmed that the shipment has been already dispatched.", sahi:"He confirmed that the shipment had already been dispatched.", pron:"ही कन्फर्म्ड दैट द शिपमेंट हैड ऑलरेडी बीन डिस्पैच्ड"},
+{galat:"I need your urgent attention on this matter please.", sahi:"I need your urgent attention on this matter.", pron:"आइ नीड योर अर्जेंट अटेंशन ऑन दिस मैटर"},
+{galat:"He always used to complains about the workload.", sahi:"He always used to complain about the workload.", pron:"ही ऑलवेज़ यूज़्ड टू कम्प्लेन अबाउट द वर्कलोड"},
+{galat:"The vendor has quoted us a very reasonable price only.", sahi:"The vendor has quoted us a very reasonable price.", pron:"द वेंडर हैज़ क्वोटेड अस अ वेरी रीज़नेबल प्राइस"},
+{galat:"Please do the needful to resolve this on urgent basis.", sahi:"Please resolve this issue urgently.", pron:"प्लीज़ रिज़ॉल्व दिस इश्यू अर्जेंटली"},
+{galat:"I will be grateful if you could please assist on this.", sahi:"I would be grateful if you could assist with this.", pron:"आइ वुड बी ग्रेटफुल इफ यू कुड असिस्ट विद दिस"},
+{galat:"This clearly indicates that the strategy did not worked.", sahi:"This clearly indicates that the strategy did not work.", pron:"दिस क्लियरली इंडिकेट्स दैट द स्ट्रेटजी डिड नॉट वर्क"},
+{galat:"We were having a discussion regarding the merger yesterday.", sahi:"We had a discussion regarding the merger yesterday.", pron:"वी हैड अ डिस्कशन रिगार्डिंग द मर्जर येस्टरडे"},
+{galat:"I am not sure whether should I proceed with this or not.", sahi:"I am not sure whether I should proceed with this.", pron:"आइ एम नॉट श्योर वेदर आइ शुड प्रोसीड विद दिस"},
+{galat:"He is always punctual and disciplined in nature.", sahi:"He is always punctual and disciplined.", pron:"ही इज़ ऑलवेज़ पंक्चुअल एंड डिसिप्लिन्ड"},
+{galat:"I am forwarding this mail for your necessary action please.", sahi:"I am forwarding this email for your necessary action.", pron:"आइ एम फॉरवर्डिंग दिस ईमेल फॉर योर नेसेसरी एक्शन"}
+];
+
+// ADV_WORDS_2 — formal/professional/academic vocabulary (60 entries).
+var ADV_WORDS_2 = [
+{en:"Facilitate", pron:"फैसिलिटेट", hi:"सुगम/आसान बनाना"},
+{en:"Substantiate", pron:"सब्स्टैंशिएट", hi:"पुष्टि करना, प्रमाण देना"},
+{en:"Corroborate", pron:"कोरॉबोरेट", hi:"पुष्टि करना (साक्ष्य से)"},
+{en:"Ambiguous", pron:"एम्बिग्युअस", hi:"अस्पष्ट/द्विअर्थी"},
+{en:"Comprehensive", pron:"कॉम्प्रिहेंसिव", hi:"व्यापक/संपूर्ण"},
+{en:"Discrepancy", pron:"डिस्क्रेपेंसी", hi:"विसंगति/अंतर"},
+{en:"Feasible", pron:"फीज़िबल", hi:"व्यवहार्य/संभव"},
+{en:"Implication", pron:"इम्प्लिकेशन", hi:"निहितार्थ/प्रभाव"},
+{en:"Meticulous", pron:"मेटिक्युलस", hi:"सूक्ष्म/बारीकी से ध्यान देने वाला"},
+{en:"Preliminary", pron:"प्रिलिमिनरी", hi:"प्रारंभिक"},
+{en:"Rationale", pron:"रैशनल", hi:"तर्काधार/कारण"},
+{en:"Redundant", pron:"रिडंडेंट", hi:"अनावश्यक/फालतू"},
+{en:"Stipulate", pron:"स्टिप्युलेट", hi:"शर्त रखना/निर्धारित करना"},
+{en:"Viable", pron:"वायबल", hi:"व्यवहार्य/टिकाऊ"},
+{en:"Concise", pron:"कन्साइज़", hi:"संक्षिप्त"},
+{en:"Discretion", pron:"डिस्क्रीशन", hi:"विवेक/समझदारी"},
+{en:"Elaborate", pron:"इलैबरेट", hi:"विस्तार से बताना"},
+{en:"Inevitable", pron:"इनएविटेबल", hi:"अनिवार्य/अपरिहार्य"},
+{en:"Jeopardize", pron:"जिओपर्डाइज़", hi:"खतरे में डालना"},
+{en:"Leverage", pron:"लीवरेज", hi:"लाभ उठाना/प्रभाव इस्तेमाल करना"},
+{en:"Mitigate", pron:"मिटिगेट", hi:"कम करना/शमन करना"},
+{en:"Notify", pron:"नोटिफाई", hi:"सूचित करना"},
+{en:"Optimize", pron:"ऑप्टिमाइज़", hi:"अनुकूलतम बनाना"},
+{en:"Prevalent", pron:"प्रेवलेंट", hi:"प्रचलित/व्यापक"},
+{en:"Reciprocate", pron:"रिसिप्रोकेट", hi:"बदले में करना/प्रत्युत्तर देना"},
+{en:"Scrutinize", pron:"स्क्रूटिनाइज़", hi:"बारीकी से जांचना"},
+{en:"Tentative", pron:"टेंटेटिव", hi:"अस्थायी/अनिश्चित"},
+{en:"Underlying", pron:"अंडरलाइंग", hi:"अंतर्निहित/मूल"},
+{en:"Verify", pron:"वेरिफाई", hi:"सत्यापित करना"},
+{en:"Warrant", pron:"वॉरंट", hi:"उचित ठहराना/ज़रूरत होना"},
+{en:"Accommodate", pron:"अकॉमोडेट", hi:"समायोजित करना, सुविधा देना"},
+{en:"Allocate", pron:"एलोकेट", hi:"आवंटित करना"},
+{en:"Coherent", pron:"कोहिरेंट", hi:"तर्कसंगत/सुसंगत"},
+{en:"Constitute", pron:"कॉन्स्टिट्यूट", hi:"गठित करना/होना"},
+{en:"Deficient", pron:"डिफिशिएंट", hi:"अपर्याप्त/कमी वाला"},
+{en:"Endorse", pron:"इनडोर्स", hi:"समर्थन करना/स्वीकृति देना"},
+{en:"Exemplify", pron:"एग्ज़ेम्प्लिफाई", hi:"उदाहरण देना/स्पष्ट करना"},
+{en:"Formulate", pron:"फॉर्म्युलेट", hi:"तैयार करना/रचना करना"},
+{en:"Hinder", pron:"हिंडर", hi:"बाधा डालना"},
+{en:"Imperative", pron:"इम्पेरेटिव", hi:"अनिवार्य/ज़रूरी"},
+{en:"Incorporate", pron:"इनकॉर्पोरेट", hi:"शामिल करना"},
+{en:"Inherent", pron:"इनहेरेंट", hi:"स्वाभाविक/अंतर्निहित"},
+{en:"Justify", pron:"जस्टिफाई", hi:"उचित ठहराना"},
+{en:"Negligible", pron:"नेग्लिजिबल", hi:"नगण्य/उपेक्षणीय"},
+{en:"Objective", pron:"ऑब्जेक्टिव", hi:"निष्पक्ष / उद्देश्य"},
+{en:"Perceive", pron:"परसीव", hi:"समझना/महसूस करना"},
+{en:"Plausible", pron:"प्लॉज़िबल", hi:"विश्वसनीय/संभावित"},
+{en:"Precede", pron:"प्रिसीड", hi:"पहले आना/पूर्ववर्ती होना"},
+{en:"Presumably", pron:"प्रिज़्यूमेबली", hi:"संभवतः/माना जाता है कि"},
+{en:"Prioritize", pron:"प्रायॉरिटाइज़", hi:"प्राथमिकता देना"},
+{en:"Proficient", pron:"प्रोफिशिएंट", hi:"निपुण/दक्ष"},
+{en:"Prospective", pron:"प्रोस्पेक्टिव", hi:"संभावित/भावी"},
+{en:"Reluctant", pron:"रिलक्टेंट", hi:"अनिच्छुक"},
+{en:"Resilient", pron:"रिज़िलिएंट", hi:"लचीला/जल्दी उबरने वाला"},
+{en:"Robust", pron:"रोबस्ट", hi:"मज़बूत/सुदृढ़"},
+{en:"Streamline", pron:"स्ट्रीमलाइन", hi:"सुव्यवस्थित करना"},
+{en:"Subsequent", pron:"सब्सिक्वेंट", hi:"बाद का/अगला"},
+{en:"Sufficient", pron:"सफिशिएंट", hi:"पर्याप्त"},
+{en:"Superficial", pron:"सुपरफिशल", hi:"सतही/ऊपरी"},
+{en:"Utilize", pron:"यूटिलाइज़", hi:"उपयोग करना"},
+{en:"Versatile", pron:"वर्सेटाइल", hi:"बहुमुखी"}
+];
+
+// PHRASAL_VERBS_2 — advanced/professional phrasal verbs (30 entries).
+var PHRASAL_VERBS_2 = [
+{verb:"Follow up on", pron:"फॉलो अप ऑन", hi:"आगे कार्रवाई करना", ex:{en:"I will follow up on this next week.", pron:"आइ विल फॉलो अप ऑन दिस नेक्स्ट वीक", hi:"मैं अगले हफ्ते इस पर आगे कार्रवाई करूंगा।"}},
+{verb:"Iron out", pron:"आयरन आउट", hi:"मतभेद/समस्या सुलझाना", ex:{en:"We need to iron out a few details before signing.", pron:"वी नीड टू आयरन आउट अ फ्यू डिटेल्स बिफोर साइनिंग", hi:"साइन करने से पहले हमें कुछ बातें सुलझानी होंगी।"}},
+{verb:"Roll out", pron:"रोल आउट", hi:"लॉन्च करना/शुरू करना", ex:{en:"The company will roll out the new policy next month.", pron:"द कंपनी विल रोल आउट द न्यू पॉलिसी नेक्स्ट मंथ", hi:"कंपनी अगले महीने नई नीति लागू करेगी।"}},
+{verb:"Scale up", pron:"स्केल अप", hi:"आकार/स्तर बढ़ाना", ex:{en:"We plan to scale up production next quarter.", pron:"वी प्लान टू स्केल अप प्रोडक्शन नेक्स्ट क्वार्टर", hi:"हम अगली तिमाही में उत्पादन बढ़ाने की योजना बना रहे हैं।"}},
+{verb:"Touch base", pron:"टच बेस", hi:"संपर्क करना/जानकारी लेना", ex:{en:"Let's touch base on Friday about the budget.", pron:"लेट्स टच बेस ऑन फ्राइडे अबाउट द बजट", hi:"शुक्रवार को बजट के बारे में बात करते हैं।"}},
+{verb:"Weigh in on", pron:"वे इन ऑन", hi:"राय देना (चर्चा में)", ex:{en:"The director wants to weigh in on this decision.", pron:"द डायरेक्टर वॉन्ट्स टू वे इन ऑन दिस डिसीज़न", hi:"निदेशक इस फैसले पर अपनी राय देना चाहते हैं।"}},
+{verb:"Drill down into", pron:"ड्रिल डाउन इंटू", hi:"गहराई से जांचना", ex:{en:"Let's drill down into the numbers before deciding.", pron:"लेट्स ड्रिल डाउन इंटू द नंबर्स बिफोर डिसाइडिंग", hi:"फैसला लेने से पहले आंकड़ों की गहराई से जांच करते हैं।"}},
+{verb:"Zero in on", pron:"ज़ीरो इन ऑन", hi:"सटीक ध्यान केंद्रित करना", ex:{en:"The team zeroed in on the main cause of the delay.", pron:"द टीम ज़ीरोड इन ऑन द मेन कॉज़ ऑफ द डिले", hi:"टीम ने देरी के मुख्य कारण पर ध्यान केंद्रित किया।"}},
+{verb:"Bring forward", pron:"ब्रिंग फॉरवर्ड", hi:"समय पहले करना/प्रस्तुत करना", ex:{en:"Can we bring the meeting forward to Monday?", pron:"कैन वी ब्रिंग द मीटिंग फॉरवर्ड टू मंडे", hi:"क्या हम मीटिंग सोमवार तक पहले कर सकते हैं?"}},
+{verb:"Carry out", pron:"कैरी आउट", hi:"संपन्न करना/निष्पादित करना", ex:{en:"They carried out a detailed survey before launch.", pron:"दे कैरीड आउट अ डिटेल्ड सर्वे बिफोर लॉन्च", hi:"लॉन्च से पहले उन्होंने एक विस्तृत सर्वे किया।"}},
+{verb:"Draw up", pron:"ड्रॉ अप", hi:"तैयार करना (दस्तावेज़)", ex:{en:"Our lawyer will draw up the contract this week.", pron:"आवर लॉयर विल ड्रॉ अप द कॉन्ट्रैक्ट दिस वीक", hi:"हमारे वकील इस हफ्ते कॉन्ट्रैक्ट तैयार करेंगे।"}},
+{verb:"Phase out", pron:"फेज़ आउट", hi:"धीरे-धीरे हटाना/बंद करना", ex:{en:"The company will phase out the old system by year-end.", pron:"द कंपनी विल फेज़ आउट द ओल्ड सिस्टम बाइ ईयर-एंड", hi:"कंपनी साल के अंत तक पुराने सिस्टम को धीरे-धीरे हटाएगी।"}},
+{verb:"Follow through on", pron:"फॉलो थ्रू ऑन", hi:"पूरी तरह निभाना/पूरा करना", ex:{en:"He always follows through on his commitments.", pron:"ही ऑलवेज़ फॉलोज़ थ्रू ऑन हिज़ कमिटमेंट्स", hi:"वह हमेशा अपने वादे पूरी तरह निभाता है।"}},
+{verb:"Hold off on", pron:"होल्ड ऑफ ऑन", hi:"टालना/रोकना", ex:{en:"Let's hold off on the launch until testing is complete.", pron:"लेट्स होल्ड ऑफ ऑन द लॉन्च अंटिल टेस्टिंग इज़ कम्प्लीट", hi:"टेस्टिंग पूरी होने तक लॉन्च टालते हैं।"}},
+{verb:"Map out", pron:"मैप आउट", hi:"विस्तार से योजना बनाना", ex:{en:"We need to map out the entire project timeline.", pron:"वी नीड टू मैप आउट द एंटायर प्रोजेक्ट टाइमलाइन", hi:"हमें पूरी प्रोजेक्ट समयरेखा की योजना बनानी होगी।"}},
+{verb:"Sign off on", pron:"साइन ऑफ ऑन", hi:"मंज़ूरी देना", ex:{en:"The director needs to sign off on this budget.", pron:"द डायरेक्टर नीड्स टू साइन ऑफ ऑन दिस बजट", hi:"निदेशक को इस बजट पर मंज़ूरी देनी होगी।"}},
+{verb:"Take stock of", pron:"टेक स्टॉक ऑफ", hi:"आकलन करना/जायज़ा लेना", ex:{en:"It's time to take stock of what we've achieved this year.", pron:"इट्स टाइम टू टेक स्टॉक ऑफ वॉट वीव अचीव्ड दिस ईयर", hi:"अब समय है इस साल की उपलब्धियों का जायज़ा लेने का।"}},
+{verb:"Account for", pron:"अकाउंट फॉर", hi:"स्पष्टीकरण देना/हिसाब देना", ex:{en:"These extra costs need to be accounted for.", pron:"दीज़ एक्स्ट्रा कॉस्ट्स नीड टू बी अकाउंटेड फॉर", hi:"इन अतिरिक्त खर्चों का हिसाब देना होगा।"}},
+{verb:"Level with", pron:"लेवल विद", hi:"साफ-साफ सच बताना", ex:{en:"I need to level with you about the budget shortfall.", pron:"आइ नीड टू लेवल विद यू अबाउट द बजट शॉर्टफॉल", hi:"मुझे बजट की कमी के बारे में तुम्हें साफ-साफ बताना होगा।"}},
+{verb:"Opt for", pron:"ऑप्ट फॉर", hi:"चुनना", ex:{en:"Most clients opt for the premium plan.", pron:"मोस्ट क्लाइंट्स ऑप्ट फॉर द प्रीमियम प्लान", hi:"ज़्यादातर क्लाइंट प्रीमियम प्लान चुनते हैं।"}},
+{verb:"Pin down", pron:"पिन डाउन", hi:"सटीक रूप से पहचानना", ex:{en:"We still can't pin down the exact cause of the error.", pron:"वी स्टिल कान्ट पिन डाउन द एग्ज़ैक्ट कॉज़ ऑफ द एरर", hi:"हम अभी भी त्रुटि का सटीक कारण नहीं पहचान पाए।"}},
+{verb:"Rule out", pron:"रूल आउट", hi:"संभावना खारिज करना", ex:{en:"We cannot rule out a delay in delivery.", pron:"वी कैनॉट रूल आउट अ डिले इन डिलीवरी", hi:"हम डिलीवरी में देरी की संभावना खारिज नहीं कर सकते।"}},
+{verb:"Spell out", pron:"स्पेल आउट", hi:"साफ-साफ समझाना", ex:{en:"The manager spelled out the expectations clearly.", pron:"द मैनेजर स्पेल्ड आउट द एक्सपेक्टेशन्स क्लियरली", hi:"मैनेजर ने उम्मीदें साफ-साफ समझाईं।"}},
+{verb:"Step up", pron:"स्टेप अप", hi:"प्रयास बढ़ाना/आगे आना", ex:{en:"The team stepped up their efforts before the deadline.", pron:"द टीम स्टेप्ड अप देयर एफर्ट्स बिफोर द डेडलाइन", hi:"डेडलाइन से पहले टीम ने अपनी कोशिशें बढ़ा दीं।"}},
+{verb:"Weed out", pron:"वीड आउट", hi:"अनुपयुक्त हटाना/छांटना", ex:{en:"The screening process helps weed out weak applications.", pron:"द स्क्रीनिंग प्रोसेस हेल्प्स वीड आउट वीक एप्लिकेशन्स", hi:"स्क्रीनिंग प्रक्रिया कमज़ोर आवेदनों को छांटने में मदद करती है।"}},
+{verb:"Bank on", pron:"बैंक ऑन", hi:"भरोसा करना", ex:{en:"We are banking on strong sales this festive season.", pron:"वी आर बैंकिंग ऑन स्ट्रॉन्ग सेल्स दिस फेस्टिव सीज़न", hi:"हम इस त्योहारी सीज़न में अच्छी बिक्री की उम्मीद कर रहे हैं।"}},
+{verb:"Chip in", pron:"चिप इन", hi:"योगदान देना", ex:{en:"Everyone chipped in ideas during the brainstorm.", pron:"एवरीवन चिप्ड इन आइडियाज़ ड्यूरिंग द ब्रेनस्टॉर्म", hi:"ब्रेनस्टॉर्म के दौरान सबने विचार दिए।"}},
+{verb:"Fall through", pron:"फॉल थ्रू", hi:"असफल होना/रद्द होना", ex:{en:"Unfortunately, the deal fell through at the last minute.", pron:"अनफॉर्चूनेटली, द डील फेल थ्रू एट द लास्ट मिनट", hi:"दुर्भाग्यवश, डील आखिरी वक्त में रद्द हो गई।"}},
+{verb:"Push back on", pron:"पुश बैक ऑन", hi:"असहमति जताना/विरोध करना", ex:{en:"The client pushed back on the proposed timeline.", pron:"द क्लाइंट पुश्ड बैक ऑन द प्रपोज़्ड टाइमलाइन", hi:"क्लाइंट ने प्रस्तावित समयरेखा पर आपत्ति जताई।"}}
+];
+
+// IDIOMS_2 — formal/professional/academic idioms (30 entries).
+var IDIOMS_2 = [
+{en:"Think outside the box", pron:"थिंक आउटसाइड द बॉक्स", hi:"पारंपरिक सोच से हटकर सोचना"},
+{en:"Move the needle", pron:"मूव द नीडल", hi:"वास्तविक फर्क डालना/असर करना"},
+{en:"Low-hanging fruit", pron:"लो-हैंगिंग फ्रूट", hi:"आसानी से हासिल होने वाला काम/फायदा"},
+{en:"Circle back", pron:"सर्कल बैक", hi:"बाद में दोबारा चर्चा करना"},
+{en:"On the same page", pron:"ऑन द सेम पेज", hi:"एक जैसी समझ/सहमति होना"},
+{en:"Get the ball rolling", pron:"गेट द बॉल रोलिंग", hi:"काम शुरू करना"},
+{en:"Read between the lines", pron:"रीड बिटवीन द लाइन्स", hi:"छिपे अर्थ को समझना"},
+{en:"Play devil's advocate", pron:"प्ले डेविल्स एडवोकेट", hi:"जान-बूझकर विरोधी पक्ष रखना (बहस के लिए)"},
+{en:"Raise the bar", pron:"रेज़ द बार", hi:"मानक ऊंचा करना"},
+{en:"Back to the drawing board", pron:"बैक टू द ड्रॉइंग बोर्ड", hi:"फिर से शुरुआत से योजना बनाना"},
+{en:"In the pipeline", pron:"इन द पाइपलाइन", hi:"तैयारी/प्रक्रिया में होना"},
+{en:"Cut to the chase", pron:"कट टू द चेज़", hi:"सीधे मुद्दे पर आना"},
+{en:"Give someone the benefit of the doubt", pron:"गिव समवन द बेनिफिट ऑफ द डाउट", hi:"बिना पूरे सबूत के भरोसा करना"},
+{en:"Keep someone in the loop", pron:"कीप समवन इन द लूप", hi:"किसी को जानकारी में रखना"},
+{en:"Go the extra mile", pron:"गो द एक्स्ट्रा माइल", hi:"ज़रूरत से ज़्यादा मेहनत करना"},
+{en:"On thin ice", pron:"ऑन थिन आइस", hi:"जोखिम भरी स्थिति में होना"},
+{en:"Par for the course", pron:"पार फॉर द कोर्स", hi:"सामान्य/अपेक्षित बात"},
+{en:"Hit the ground running", pron:"हिट द ग्राउंड रनिंग", hi:"तुरंत पूरी ऊर्जा से काम शुरू करना"},
+{en:"Take something with a pinch of salt", pron:"टेक समथिंग विद अ पिंच ऑफ सॉल्ट", hi:"पूरी तरह सच न मानना"},
+{en:"Bite off more than you can chew", pron:"बाइट ऑफ मोर दैन यू कैन च्यू", hi:"क्षमता से ज़्यादा काम ले लेना"},
+{en:"A win-win situation", pron:"अ विन-विन सिचुएशन", hi:"दोनों पक्षों के लिए फायदेमंद स्थिति"},
+{en:"Under the radar", pron:"अंडर द रडार", hi:"बिना ध्यान खींचे/छुपकर"},
+{en:"Streets ahead", pron:"स्ट्रीट्स अहेड", hi:"बहुत आगे/बेहतर"},
+{en:"Not see eye to eye", pron:"नॉट सी आइ टू आइ", hi:"असहमत होना"},
+{en:"Turn a blind eye", pron:"टर्न अ ब्लाइंड आइ", hi:"जानबूझकर अनदेखा करना"},
+{en:"Get down to business", pron:"गेट डाउन टू बिज़नेस", hi:"असली काम पर आना"},
+{en:"A double-edged sword", pron:"अ डबल-एज्ड्ड सॉर्ड", hi:"जिसके फायदे और नुकसान दोनों हों"},
+{en:"Food for thought", pron:"फूड फॉर थॉट", hi:"सोचने लायक बात"},
+{en:"The tip of the iceberg", pron:"द टिप ऑफ द आइसबर्ग", hi:"समस्या का बस छोटा हिस्सा दिखना"},
+{en:"Come to terms with", pron:"कम टू टर्म्स विद", hi:"किसी बात को स्वीकार करना"}
+];
+
+/* ============================================================
    DAY COMPOSER — slices the source arrays into a 30-day mix so
    every day is a light sampler instead of one deep topic.
    ============================================================ */
@@ -4192,6 +5021,7 @@ function freshSlice(arr, start, count){
 var DAY_SIZE = 30;
 
 function buildDay(day){
+  if(day > 30) return buildAdvancedDay(day);
   var idx = day - 1;
 
   var foundations = freshSlice(FOUNDATIONS, idx*DAY_SIZE, DAY_SIZE);
@@ -4242,6 +5072,38 @@ function buildDay(day){
   };
 }
 
+/* Advanced tier (Day 31-60) composer. Denser, hand-authored pools — direct
+   indexing (not freshSlice/wrap) since each pool is sized to the 30-day cycle. */
+function buildAdvancedDay(day){
+  var aidx = day - 31; // 0..29
+
+  var grammar = ADV_GRAMMAR[aidx % ADV_GRAMMAR.length];
+  var round = Math.floor(aidx / ADV_GRAMMAR.length); // 0,1,2
+  var grammarExamples = round===0 ? grammar.examples : (round===1 ? grammar.examples2 : grammar.examples3);
+
+  var writing = WRITING_PROMPTS[aidx % WRITING_PROMPTS.length];
+
+  var mistakeStart = (aidx * 5) % ADV_MISTAKES.length;
+  var mistakes = wrap(ADV_MISTAKES, mistakeStart, 5);
+
+  var wpType = aidx % 3;
+  var wordPower;
+  if(wpType===0) wordPower = {type:"word", item: ADV_WORDS_2[Math.floor(aidx/3) % ADV_WORDS_2.length]};
+  else if(wpType===1) wordPower = {type:"phrasal", item: PHRASAL_VERBS_2[Math.floor(aidx/3) % PHRASAL_VERBS_2.length]};
+  else wordPower = {type:"idiom", item: IDIOMS_2[Math.floor(aidx/3) % IDIOMS_2.length]};
+
+  return {
+    day: day,
+    tier: "advanced",
+    titleEn: grammar.name + " + " + writing.typeLabel,
+    titleHi: "Din " + day + " ka advanced mix",
+    grammar: grammar, grammarExamples: grammarExamples,
+    writing: writing,
+    mistakes: mistakes,
+    wordPower: wordPower
+  };
+}
+
 /* ============================================================
    PROGRESS LOCK — localStorage persists highest unlocked/completed
    day so a reload or a later visit resumes where the learner left off.
@@ -4253,8 +5115,8 @@ function loadProgress(){
     var raw = localStorage.getItem(PROGRESS_KEY);
     if(!raw) return {unlocked:1, completed:0};
     var p = JSON.parse(raw);
-    var unlocked = Math.min(30, Math.max(1, parseInt(p.unlocked,10) || 1));
-    var completed = Math.min(30, Math.max(0, parseInt(p.completed,10) || 0));
+    var unlocked = Math.min(60, Math.max(1, parseInt(p.unlocked,10) || 1));
+    var completed = Math.min(60, Math.max(0, parseInt(p.completed,10) || 0));
     return {unlocked:unlocked, completed:completed};
   }catch(e){
     return {unlocked:1, completed:0};
@@ -4266,7 +5128,7 @@ function saveProgress(p){
 }
 
 var progress = loadProgress();
-var currentDay = Math.min(progress.unlocked, 30);
+var currentDay = Math.min(progress.unlocked, 60);
 
 function showToast(msg){
   var t = document.getElementById("toast");
@@ -4279,7 +5141,8 @@ function showToast(msg){
 function renderMap(){
   var map = document.getElementById("journeyMap");
   var html = "";
-  for(var i=1;i<=30;i++){
+  for(var i=1;i<=60;i++){
+    if(i===31) html += '<div class="map-divider" aria-hidden="true"><span>Advanced</span></div>';
     var locked = i > progress.unlocked;
     var done = i <= progress.completed;
     var cls = "day-node" + (i===currentDay?" active":"") + (done?" done":"") + (locked?" locked":"");
@@ -4298,20 +5161,83 @@ function renderMap(){
   });
 }
 
-function flipCardHTML(word,pron,mean,ctx){
-  var id = "fc"+Math.random().toString(36).slice(2,9);
-  return '<div class="flip-card" id="'+id+'"><div class="flip-inner">'+
-    '<div class="flip-face flip-front"><div class="word">'+word+'</div><div class="hint">Tap to flip</div></div>'+
-    '<div class="flip-face flip-back"><div class="pron">'+pron+'</div><div class="mean">'+mean+'</div>'+(ctx?'<div class="ctx">'+ctx+'</div>':'')+'</div>'+
-    '</div></div>';
+/* ---------- Speak button (Web Speech API text-to-speech) ---------- */
+/* item can be a plain string (spoken as English) or {text, lang} where lang is "en" or "hi" */
+function speakOne(item){
+  if(!('speechSynthesis' in window)) return;
+  var isObj = item && typeof item === "object";
+  var text = isObj ? item.text : item;
+  var lang = isObj ? item.lang : "en";
+  if(!text) return;
+  var u = new SpeechSynthesisUtterance(text);
+  var voices = window.speechSynthesis.getVoices();
+  var voice;
+  if(lang === "hi"){
+    voice = voices.find(function(v){ return v.lang === "hi-IN"; });
+    u.lang = "hi-IN";
+  } else {
+    voice = voices.find(function(v){ return v.lang === "en-IN"; }) ||
+            voices.find(function(v){ return v.lang === "en-GB"; }) ||
+            voices.find(function(v){ return v.lang === "en-US"; }) ||
+            voices[0];
+    u.lang = "en-IN";
+  }
+  if(voice) u.voice = voice;
+  u.rate = 0.9;
+  window.speechSynthesis.speak(u);
 }
 
-function wireFlips(root){
-  root.querySelectorAll(".flip-card").forEach(function(card){
-    card.addEventListener("click", function(){ card.classList.toggle("open"); });
-    card.setAttribute("tabindex","0");
-    card.addEventListener("keydown", function(e){ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); card.classList.toggle("open"); } });
+/* speaks one string, or (if given a JSON array string) each part in order with a natural pause.
+   Array items may be plain strings (English) or {text,lang} objects. */
+function speakEnglish(raw){
+  if(!('speechSynthesis' in window)) return;
+  window.speechSynthesis.cancel();
+  var parts;
+  try{
+    var parsed = JSON.parse(raw);
+    parts = Array.isArray(parsed) ? parsed : [raw];
+  }catch(e){
+    parts = [raw];
+  }
+  parts.forEach(function(p){ if(p) speakOne(p); });
+}
+
+function escAttr(s){
+  return String(s).replace(/[&<>"']/g, function(c){
+    return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];
   });
+}
+
+function speakBtn(text){
+  return '<button type="button" class="speak-btn" aria-label="Sun kar seekho" data-speak="'+escAttr(text)+'">&#128266;</button>';
+}
+
+/* speaks multiple pieces of text in sequence via one button (card-level speak).
+   parts: array of plain strings (assumed English) or {text,lang} objects. */
+function speakBtnMulti(parts){
+  var arr = parts.filter(function(p){ return p && (typeof p === "string" ? p : p.text); });
+  return '<button type="button" class="speak-btn" aria-label="Sun kar seekho" data-speak="'+escAttr(JSON.stringify(arr))+'">&#128266;</button>';
+}
+
+/* shorthand: build a {text,lang:"en"} entry */
+function enPart(text){ return text ? {text:text, lang:"en"} : null; }
+/* shorthand: build a {text,lang:"hi"} entry */
+function hiPart(text){ return text ? {text:text, lang:"hi"} : null; }
+
+document.addEventListener("click", function(e){
+  var btn = e.target.closest(".speak-btn");
+  if(btn) speakEnglish(btn.dataset.speak);
+});
+
+/* word + pronunciation + meaning shown together (no flip/reveal needed) */
+function vocabCardHTML(word,pron,mean,ctx){
+  var cardSpeak = speakBtnMulti([enPart(word), hiPart(mean), enPart(ctx)]);
+  return '<div class="vocab-card">'+
+    '<div class="vw">'+word+cardSpeak+'</div>'+
+    '<div class="vpron hi">'+pron+'</div>'+
+    '<div class="vmean hi">'+mean+'</div>'+
+    (ctx?'<div class="vex">'+ctx+'</div>':'')+
+    '</div>';
 }
 
 function renderLockedContent(n){
@@ -4333,34 +5259,34 @@ function renderDayContent(d){
 
   html += '<section class="part"><div class="part-head"><span class="part-num">1</span><h3>Foundations</h3><span class="hi-tag">आज के tricky words</span></div>';
   html += '<div class="card-grid">';
-  d.foundations.forEach(function(w){ html += flipCardHTML(w.en, w.pron, w.hi); });
+  d.foundations.forEach(function(w){ html += vocabCardHTML(w.en, w.pron, w.hi); });
   html += '</div></section>';
 
   html += '<section class="part"><div class="part-head"><span class="part-num">2</span><h3>'+d.posName+'</h3><span class="hi-tag">'+d.posDev+'</span></div>';
   html += '<div class="card-grid">';
   d.posExamples.forEach(function(ex){
-    html += '<div class="vocab-card"><div class="vw">'+ex.en+'</div><div class="vpron hi">'+ex.pron+'</div><div class="vmean hi">'+ex.hi+'</div></div>';
+    html += '<div class="vocab-card"><div class="vw">'+ex.en+speakBtnMulti([enPart(ex.en), hiPart(ex.hi)])+'</div><div class="vpron hi">'+ex.pron+'</div><div class="vmean hi">'+ex.hi+'</div></div>';
   });
   html += '</div></section>';
 
   if(d.isTenseDay){
     var t = d.tense;
     html += '<section class="part"><div class="part-head"><span class="part-num">3</span><h3>'+t.name+'</h3><span class="hi-tag">'+t.devTag+'</span></div>';
-    html += '<div class="grammar-box"><div class="eng">'+t.rule+'</div></div>';
+    html += '<div class="grammar-box"><div class="eng">'+t.rule+speakBtn(t.rule)+'</div></div>';
     html += '<div class="breakdown">'+
-      '<div class="chip"><b>'+t.formula.aff.label+'</b> = '+t.formula.aff.f+'</div>'+
-      '<div class="chip"><b>'+t.formula.neg.label+'</b> = '+t.formula.neg.f+'</div>'+
-      '<div class="chip"><b>'+t.formula.q.label+'</b> = '+t.formula.q.f+'</div>'+
+      '<div class="chip"><b>'+t.formula.aff.label+'</b> = '+t.formula.aff.f+speakBtn(t.formula.aff.f)+'</div>'+
+      '<div class="chip"><b>'+t.formula.neg.label+'</b> = '+t.formula.neg.f+speakBtn(t.formula.neg.f)+'</div>'+
+      '<div class="chip"><b>'+t.formula.q.label+'</b> = '+t.formula.q.f+speakBtn(t.formula.q.f)+'</div>'+
     '</div>';
     html += '<ul class="situation-list">';
-    d.tenseExamples.forEach(function(ex){ html += '<li>'+ex.en+' <span class="hi" style="display:block;color:var(--muted);font-weight:400;font-size:.85rem;">'+ex.hi+'</span></li>'; });
+    d.tenseExamples.forEach(function(ex){ html += '<li>'+ex.en+speakBtnMulti([enPart(ex.en), hiPart(ex.hi)])+' <span class="hi" style="display:block;color:var(--muted);font-weight:400;font-size:.85rem;">'+ex.hi+'</span></li>'; });
     html += '</ul></section>';
   } else {
     var m = d.modal;
     html += '<section class="part"><div class="part-head"><span class="part-num">3</span><h3>Modal — '+m.modal+'</h3><span class="hi-tag">Modals</span></div>';
-    html += '<div class="grammar-box"><div class="eng">'+m.use+'</div></div>';
+    html += '<div class="grammar-box"><div class="eng">'+m.use+speakBtn(m.use)+'</div></div>';
     html += '<ul class="situation-list">';
-    d.tenseExamples.forEach(function(ex){ html += '<li>'+ex.en+' <span class="hi" style="display:block;color:var(--muted);font-weight:400;font-size:.85rem;">'+ex.hi+'</span></li>'; });
+    d.tenseExamples.forEach(function(ex){ html += '<li>'+ex.en+speakBtnMulti([enPart(ex.en), hiPart(ex.hi)])+' <span class="hi" style="display:block;color:var(--muted);font-weight:400;font-size:.85rem;">'+ex.hi+'</span></li>'; });
     html += '</ul></section>';
   }
 
@@ -4368,16 +5294,18 @@ function renderDayContent(d){
   html += '<div class="pair-box">';
   if(d.isVoiceDay){
     d.voicePairs.forEach(function(vp){
+      var vpSpeak = speakBtnMulti([enPart(vp.active.en), enPart(vp.passive.en), hiPart(vp.passive.hi)]);
       html += '<div class="pair-set">'+
         '<div class="pair-row"><div class="tag">Active</div><div class="txt">'+vp.active.en+'</div><div class="hi-line">'+vp.active.hi+'</div></div>'+
-        '<div class="pair-row sage"><div class="tag">Passive</div><div class="txt">'+vp.passive.en+'</div><div class="hi-line">'+vp.passive.hi+'</div></div>'+
+        '<div class="pair-row sage"><div class="tag">Passive</div><div class="txt">'+vp.passive.en+vpSpeak+'</div><div class="hi-line">'+vp.passive.hi+'</div></div>'+
       '</div>';
     });
   } else {
     d.narrationPairs.forEach(function(np){
+      var npSpeak = speakBtnMulti([enPart(np.direct.en), enPart(np.indirect.en), hiPart(np.indirect.hi)]);
       html += '<div class="pair-set">'+
         '<div class="pair-row"><div class="tag">Direct</div><div class="txt">'+np.direct.en+'</div><div class="hi-line">'+np.direct.hi+'</div></div>'+
-        '<div class="pair-row sage"><div class="tag">Indirect</div><div class="txt">'+np.indirect.en+'</div><div class="hi-line">'+np.indirect.hi+'</div></div>'+
+        '<div class="pair-row sage"><div class="tag">Indirect</div><div class="txt">'+np.indirect.en+npSpeak+'</div><div class="hi-line">'+np.indirect.hi+'</div></div>'+
       '</div>';
     });
   }
@@ -4386,14 +5314,15 @@ function renderDayContent(d){
   html += '<section class="part"><div class="part-head"><span class="part-num">5</span><h3>'+d.convoCat.cat+'</h3><span class="hi-tag">'+d.convoCat.dev+'</span></div>';
   html += '<div class="convo">';
   d.convoPhrases.forEach(function(p, i){
-    html += '<div class="convo-line"><span class="who">'+(i%2===0?'A':'B')+'</span><span class="say">'+p.en+'<span class="hi">'+p.hi+'</span></span></div>';
+    html += '<div class="convo-line"><span class="who">'+(i%2===0?'A':'B')+'</span><span class="say">'+p.en+speakBtnMulti([enPart(p.en), hiPart(p.hi)])+'<span class="hi">'+p.hi+'</span></span></div>';
   });
   html += '</div></section>';
 
   html += '<section class="part"><div class="part-head"><span class="part-num">6</span><h3>Galat vs Sahi</h3><span class="hi-tag">आम गलतियाँ</span></div>';
   html += '<div class="mistake-grid">';
   d.mistakes.forEach(function(m){
-    html += '<div class="mistake-row"><div class="galat"><div class="tag">Galat</div><div class="txt">'+m.galat+'</div></div><div class="sahi"><div class="tag">Sahi</div><div class="txt">'+m.sahi+'</div></div></div>';
+    var mSpeak = speakBtnMulti([m.galat, m.sahi]);
+    html += '<div class="mistake-row"><div class="galat"><div class="tag">Galat</div><div class="txt">'+m.galat+'</div></div><div class="sahi"><div class="tag">Sahi</div><div class="txt">'+m.sahi+mSpeak+'</div></div></div>';
   });
   html += '</div></section>';
 
@@ -4401,11 +5330,71 @@ function renderDayContent(d){
     var wp = d.wordPower;
     html += '<section class="part"><div class="part-head"><span class="part-num">7</span><h3>Word Power</h3><span class="hi-tag">Bonus</span></div>';
     if(wp.type==="word"){
-      html += '<div class="wp-card"><div class="lvl">Advanced Word</div><div class="headword">'+wp.item.en+'</div><div class="pron hi">'+wp.item.pron+'</div><div class="mean hi">'+wp.item.hi+'</div></div>';
+      html += '<div class="wp-card"><div class="lvl">Advanced Word</div><div class="headword">'+wp.item.en+speakBtnMulti([enPart(wp.item.en), hiPart(wp.item.hi)])+'</div><div class="pron hi">'+wp.item.pron+'</div><div class="mean hi">'+wp.item.hi+'</div></div>';
     } else if(wp.type==="phrasal"){
-      html += '<div class="wp-card"><div class="lvl">Phrasal Verb</div><div class="headword">'+wp.item.verb+'</div><div class="pron hi">'+wp.item.pron+'</div><div class="mean hi">'+wp.item.hi+'</div><div class="ex">'+wp.item.ex.en+'<span class="hi" style="display:block;color:var(--muted);margin-top:.2rem;">'+wp.item.ex.hi+'</span></div></div>';
+      var pvSpeak = speakBtnMulti([enPart(wp.item.verb), hiPart(wp.item.hi), enPart(wp.item.ex.en), hiPart(wp.item.ex.hi)]);
+      html += '<div class="wp-card"><div class="lvl">Phrasal Verb</div><div class="headword">'+wp.item.verb+pvSpeak+'</div><div class="pron hi">'+wp.item.pron+'</div><div class="mean hi">'+wp.item.hi+'</div><div class="ex">'+wp.item.ex.en+'<span class="hi" style="display:block;color:var(--muted);margin-top:.2rem;">'+wp.item.ex.hi+'</span></div></div>';
     } else {
-      html += '<div class="wp-card"><div class="lvl">Idiom</div><div class="headword">'+wp.item.en+'</div><div class="pron hi">'+wp.item.pron+'</div><div class="mean hi">'+wp.item.hi+'</div></div>';
+      html += '<div class="wp-card"><div class="lvl">Idiom</div><div class="headword">'+wp.item.en+speakBtnMulti([enPart(wp.item.en), hiPart(wp.item.hi)])+'</div><div class="pron hi">'+wp.item.pron+'</div><div class="mean hi">'+wp.item.hi+'</div></div>';
+    }
+    html += '</section>';
+  }
+
+  html += '<div class="complete-wrap"><button type="button" class="complete-btn" id="completeBtn">✓ Din Complete Karo</button></div>';
+
+  return html;
+}
+
+function renderAdvancedDayContent(d){
+  var html = "";
+  var totalItems = d.grammarExamples.length + 1 + d.mistakes.length + (d.wordPower?1:0);
+
+  html += '<div class="day-hero adv-hero">'+
+    '<div class="day-hero-title"><span class="num">'+d.day+'</span><div><h2 class="hi">'+d.titleHi+'</h2><div class="weektag">'+d.titleEn+'</div></div></div>'+
+    '<div class="day-stats">'+
+      '<div class="stat"><div class="n">'+d.grammarExamples.length+'</div><div class="lbl">Examples</div></div>'+
+      '<div class="stat"><div class="n">'+d.mistakes.length+'</div><div class="lbl">Mistakes</div></div>'+
+      '<div class="stat"><div class="n">'+totalItems+'</div><div class="lbl">Total Bites</div></div>'+
+    '</div></div>';
+
+  var g = d.grammar;
+  html += '<section class="part"><div class="part-head"><span class="part-num">1</span><h3>'+g.name+'</h3><span class="hi-tag">'+g.devTag+'</span></div>';
+  html += '<div class="grammar-box adv-grammar-box"><div class="hi-line">'+g.rule+'</div>'+
+    '<div class="adv-formula">'+g.formula+'</div></div>';
+  html += '<ul class="situation-list">';
+  d.grammarExamples.forEach(function(ex){ html += '<li>'+ex.en+speakBtnMulti([enPart(ex.en), hiPart(ex.hi)])+' <span class="hi" style="display:block;color:var(--muted);font-weight:400;font-size:.85rem;margin-top:.25rem;">'+ex.hi+'</span></li>'; });
+  html += '</ul></section>';
+
+  var w = d.writing;
+  html += '<section class="part"><div class="part-head"><span class="part-num">2</span><h3>Writing Practice — '+w.typeLabel+'</h3><span class="hi-tag">'+w.dev+'</span></div>';
+  html += '<div class="writing-prompt">'+
+    '<div class="wp-prompt"><div class="wp-label">Prompt</div><div class="wp-text">'+w.prompt+speakBtnMulti([enPart(w.prompt), hiPart(w.promptHi)])+'</div><div class="wp-text hi wp-text-hi">'+w.promptHi+'</div></div>';
+  if(w.structure && w.structure.length){
+    html += '<div class="wp-structure"><div class="wp-label">Structure</div><ul class="wp-structure-list">';
+    w.structure.forEach(function(s){ html += '<li><b>'+s.label+':</b> '+s.text+'</li>'; });
+    html += '</ul></div>';
+  }
+  html += '<div class="wp-model"><div class="wp-label">Model Answer</div><div class="wp-text wp-model-text">'+w.model.replace(/\n/g,'<br>')+speakBtnMulti([enPart(w.model), hiPart(w.modelHi)])+'</div><div class="wp-text hi wp-text-hi">'+w.modelHi.replace(/\n/g,'<br>')+'</div></div>'+
+  '</div></section>';
+
+  html += '<section class="part"><div class="part-head"><span class="part-num">3</span><h3>Galat vs Sahi — Advanced</h3><span class="hi-tag">Register aur formal mistakes</span></div>';
+  html += '<div class="mistake-grid">';
+  d.mistakes.forEach(function(m){
+    var mSpeak = speakBtnMulti([m.galat, m.sahi]);
+    html += '<div class="mistake-row"><div class="galat"><div class="tag">Galat</div><div class="txt">'+m.galat+'</div></div><div class="sahi"><div class="tag">Sahi</div><div class="txt">'+m.sahi+mSpeak+'</div></div></div>';
+  });
+  html += '</div></section>';
+
+  if(d.wordPower){
+    var wp = d.wordPower;
+    html += '<section class="part"><div class="part-head"><span class="part-num">4</span><h3>Word Power</h3><span class="hi-tag">Advanced Bonus</span></div>';
+    if(wp.type==="word"){
+      html += '<div class="wp-card"><div class="lvl">Advanced Word</div><div class="headword">'+wp.item.en+speakBtnMulti([enPart(wp.item.en), hiPart(wp.item.hi)])+'</div><div class="pron hi">'+wp.item.pron+'</div><div class="mean hi">'+wp.item.hi+'</div></div>';
+    } else if(wp.type==="phrasal"){
+      var pvSpeak2 = speakBtnMulti([enPart(wp.item.verb), hiPart(wp.item.hi), enPart(wp.item.ex.en), hiPart(wp.item.ex.hi)]);
+      html += '<div class="wp-card"><div class="lvl">Phrasal Verb</div><div class="headword">'+wp.item.verb+pvSpeak2+'</div><div class="pron hi">'+wp.item.pron+'</div><div class="mean hi">'+wp.item.hi+'</div><div class="ex">'+wp.item.ex.en+'<span class="hi" style="display:block;color:var(--muted);margin-top:.2rem;">'+wp.item.ex.hi+'</span></div></div>';
+    } else {
+      html += '<div class="wp-card"><div class="lvl">Idiom</div><div class="headword">'+wp.item.en+speakBtnMulti([enPart(wp.item.en), hiPart(wp.item.hi)])+'</div><div class="pron hi">'+wp.item.pron+'</div><div class="mean hi">'+wp.item.hi+'</div></div>';
     }
     html += '</section>';
   }
@@ -4416,7 +5405,7 @@ function renderDayContent(d){
 }
 
 function goToDay(n){
-  if(n<1||n>30) return;
+  if(n<1||n>60) return;
   var el = document.getElementById("dayContent");
   var apply = function(){
     currentDay = n;
@@ -4424,8 +5413,11 @@ function goToDay(n){
       el.innerHTML = renderLockedContent(n);
     } else {
       var d = buildDay(n);
-      el.innerHTML = renderDayContent(d);
-      wireFlips(el);
+      if(n > 30){
+        el.innerHTML = renderAdvancedDayContent(d);
+      } else {
+        el.innerHTML = renderDayContent(d);
+      }
       wireCompleteButton(n);
     }
     renderMap();
@@ -4447,16 +5439,16 @@ function wireCompleteButton(n){
   }
   btn.addEventListener("click", function(){
     progress.completed = Math.max(progress.completed, n);
-    progress.unlocked = Math.max(progress.unlocked, Math.min(30, n+1));
+    progress.unlocked = Math.max(progress.unlocked, Math.min(60, n+1));
     saveProgress(progress);
     btn.textContent = "✓ Complete! Agla din khul gaya";
     btn.disabled = true;
     btn.classList.add("done-state");
     renderMap();
-    if(n < 30){
+    if(n < 60){
       setTimeout(function(){ goToDay(n+1); }, 900);
     } else {
-      showToast("🎉 Saare 30 din complete!");
+      showToast("🎉 Saare 60 din complete!");
     }
   });
 }

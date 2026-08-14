@@ -371,16 +371,12 @@ header.site-nav{
 }
 .tri-card .eng{
   font-weight:700; font-size:1.02rem; margin-bottom:.5rem;
-}
-.tri-card .reveal-hint{
-  font-size:.72rem; color:var(--muted-2); letter-spacing:.06em; text-transform:uppercase;
+  display:flex; align-items:center; gap:.4rem;
 }
 .tri-card .detail{
-  display:grid; grid-template-rows:0fr; transition:grid-template-rows .28s ease;
+  display:grid; grid-template-rows:1fr;
 }
-.tri-card.open .detail{ grid-template-rows:1fr; }
 .tri-card .detail-inner{ overflow:hidden; }
-.tri-card.open .reveal-hint{ display:none; }
 .tri-card .pron{
   font-family:var(--font-dev); color:var(--coral); font-size:1rem; margin-top:.6rem;
   padding-top:.6rem; border-top:1px dashed var(--line);
@@ -390,6 +386,29 @@ header.site-nav{
 }
 .tri-card .pron::before{ content:"उच्चारण · "; color:var(--muted-2); font-size:.75rem; }
 .tri-card .meaning::before{ content:"अर्थ · "; color:var(--muted-2); font-size:.75rem; font-weight:400; }
+
+/* ============================================================
+   SPEAK BUTTON — 🔊 text-to-speech trigger
+   ============================================================ */
+.speak-btn{
+  display:inline-flex; align-items:center; justify-content:center;
+  width:1.7rem; height:1.7rem; flex:0 0 auto;
+  background:var(--paper-raised); border:1px solid var(--line);
+  border-radius:999px; cursor:pointer; padding:0; line-height:1;
+  font-size:.9rem; color:var(--accent);
+  transition:background-color .15s, border-color .15s, transform .1s;
+  position:relative;
+}
+.speak-btn:hover{ border-color:var(--accent); background:var(--sage-soft); }
+.speak-btn:active{ transform:scale(.92); }
+/* enlarge the invisible tap target on touch devices without changing the visible icon size */
+@media (pointer: coarse){
+  .speak-btn::after{
+    content:""; position:absolute; top:50%; left:50%;
+    width:max(40px, 100%); height:max(40px, 100%);
+    transform:translate(-50%,-50%);
+  }
+}
 
 /* ============================================================
    PARTS OF SPEECH mini-sections
@@ -445,7 +464,7 @@ header.site-nav{
 .formula-card code{
   display:block; font-family:var(--font-mono); font-size:.88rem; color:var(--accent); margin-bottom:.4rem; word-break:break-word;
 }
-.formula-card .fex{ font-size:.9rem; color:var(--muted); }
+.formula-card .fex{ font-size:.9rem; color:var(--muted); display:inline-flex; align-items:center; gap:.4rem; }
 .formula-card.affirmative{ border-color:var(--sage); }
 .formula-card.negative{ border-color:var(--coral); }
 .formula-card.question{ border-color:var(--accent); }
@@ -468,10 +487,10 @@ header.site-nav{
   background:var(--coral-soft); border-right:1px solid var(--line);
 }
 .mistake-row .galat .tag{ color:var(--coral); font-weight:700; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; }
-.mistake-row .galat .txt{ text-decoration:line-through; text-decoration-color:var(--coral); text-decoration-thickness:2px; opacity:.85; }
+.mistake-row .galat .txt{ text-decoration:line-through; text-decoration-color:var(--coral); text-decoration-thickness:2px; opacity:.85; display:inline-flex; align-items:center; gap:.4rem; }
 .mistake-row .sahi{ background:var(--sage-soft); }
 .mistake-row .sahi .tag{ color:var(--sage); font-weight:700; font-size:.7rem; text-transform:uppercase; letter-spacing:.08em; }
-.mistake-row .sahi .txt{ font-weight:600; }
+.mistake-row .sahi .txt{ font-weight:600; display:inline-flex; align-items:center; gap:.4rem; }
 .mistake-row .sahi .pron{ font-family:var(--font-dev); color:var(--muted); font-size:.85rem; margin-top:.25rem; }
 @media (max-width:600px){
   .mistake-row{ grid-template-columns:1fr; }
@@ -492,7 +511,7 @@ header.site-nav{
 .convert-card .c-tag{ font-size:.68rem; text-transform:uppercase; letter-spacing:.08em; font-weight:700; color:var(--muted-2); margin-bottom:.25rem; }
 .convert-card .c-half.from .c-tag{ color:var(--coral); }
 .convert-card .c-half.to .c-tag{ color:var(--sage); }
-.convert-card .c-eng{ font-weight:600; font-size:.95rem; }
+.convert-card .c-eng{ font-weight:600; font-size:.95rem; display:inline-flex; align-items:center; gap:.4rem; }
 .convert-card .c-arrow{ text-align:center; color:var(--muted-2); font-size:.9rem; margin:-.3rem 0; }
 .convert-card .c-pron{ font-family:var(--font-dev); color:var(--coral); font-size:.85rem; margin-top:.3rem; }
 .convert-card .c-hi{ font-family:var(--font-dev); color:var(--sage); font-weight:600; font-size:.9rem; margin-top:.15rem; }
@@ -524,6 +543,9 @@ header.site-nav{
   border-radius:8px; width:2.2rem; height:2.2rem; font-size:1rem;
 }
 .day-nav-btns button:hover{ border-color:var(--accent); }
+@media (pointer: coarse){
+  .day-nav-btns button{ width:2.5rem; height:2.5rem; }
+}
 .day-title{ font-family:var(--font-display); font-size:1.15rem; margin-left:auto; color:var(--muted); }
 .table-scroll{ overflow-x:auto; border:1px solid var(--line); border-radius:10px; }
 table.tri{
@@ -554,7 +576,7 @@ table.tri .c-hi{ font-family:var(--font-dev); color:var(--sage); }
   background:var(--paper-raised); border:1px solid var(--line); border-radius:12px;
   padding:1.4rem 1.5rem; margin-bottom:1.2rem;
 }
-.quiz-q{ font-weight:700; margin-bottom:.9rem; font-size:1.05rem; }
+.quiz-q{ font-weight:700; margin-bottom:.9rem; font-size:1.05rem; display:flex; align-items:center; gap:.4rem; flex-wrap:wrap; }
 .quiz-q .qn{ color:var(--accent); }
 .quiz-opts{ display:flex; flex-direction:column; gap:.5rem; }
 .quiz-opt{
@@ -603,7 +625,14 @@ footer.site-footer .en{ color:color-mix(in srgb, var(--paper) 65%, transparent);
 
 @media (max-width:640px){
   .zone{ padding:3.2rem 0; }
-  .nav-links{ display:none; }
+  .nav-inner{ padding:.6rem .8rem; gap:.6rem; }
+  .brand{ font-size:1.1rem; }
+  .nav-links{ gap:.1rem; }
+  .nav-links a{ padding:.4rem .5rem; font-size:.8rem; }
+  .theme-toggle{ padding:.4rem .6rem; font-size:.75rem; }
+}
+@media (max-width:420px){
+  .brand{ font-size:1rem; }
 }
 </style>
 </head>
@@ -685,8 +714,8 @@ footer.site-footer .en{ color:color-mix(in srgb, var(--paper) 65%, transparent);
     </div>
 
     <div class="reveal" style="margin:2rem 0 2.5rem">
-      <h3 style="font-size:1.2rem">Tricky Sounds — jinhe click karke practice karo</h3>
-      <p class="prose" style="color:var(--muted); font-size:.9rem; margin-bottom:1rem">English word par click/tap karo — Hindi pronunciation aur meaning reveal hoga.</p>
+      <h3 style="font-size:1.2rem">Tricky Sounds — inhe roz practice karo</h3>
+      <p class="prose" style="color:var(--muted); font-size:.9rem; margin-bottom:1rem">🔊 button dabao — English word sun kar pronunciation practice karo.</p>
       <div class="card-grid" id="foundationsGrid"></div>
     </div>
   </div>
@@ -804,7 +833,7 @@ footer.site-footer .en{ color:color-mix(in srgb, var(--paper) 65%, transparent);
 
     <div class="reveal" style="margin-bottom:2.8rem">
       <h3 style="font-size:1.3rem">Advanced Words — Daily Use</h3>
-      <p class="prose" style="color:var(--muted); font-size:.9rem; margin-bottom:1rem">Click/tap karo — pronunciation aur meaning dekho.</p>
+      <p class="prose" style="color:var(--muted); font-size:.9rem; margin-bottom:1rem">🔊 button dabao — sahi pronunciation suno.</p>
       <div class="card-grid" id="advWordsGrid"></div>
     </div>
 
@@ -4198,31 +4227,83 @@ const VOCAB_DAYS = [
     });
   }
 
-  /* ---------- Tri-card builder (English -> tap -> Pron + Meaning) ---------- */
+  /* ---------- Speak button (Web Speech API text-to-speech) ---------- */
+  /* item can be a plain string (spoken as English) or {text, lang} where lang is "en" or "hi" */
+  function speakOne(item){
+    if(!('speechSynthesis' in window)) return;
+    var isObj = item && typeof item === "object";
+    var text = isObj ? item.text : item;
+    var lang = isObj ? item.lang : "en";
+    if(!text) return;
+    var u = new SpeechSynthesisUtterance(text);
+    var voices = window.speechSynthesis.getVoices();
+    var voice;
+    if(lang === "hi"){
+      voice = voices.find(function(v){ return v.lang === "hi-IN"; });
+      u.lang = "hi-IN";
+    } else {
+      voice = voices.find(function(v){ return v.lang === "en-IN"; }) ||
+              voices.find(function(v){ return v.lang === "en-GB"; }) ||
+              voices.find(function(v){ return v.lang === "en-US"; }) ||
+              voices[0];
+      u.lang = "en-IN";
+    }
+    if(voice) u.voice = voice;
+    u.rate = 0.9;
+    window.speechSynthesis.speak(u);
+  }
+
+  /* speaks one string, or (if given a JSON array string) each part in order with a natural pause.
+     Array items may be plain strings (English) or {text,lang} objects. */
+  function speakEnglish(raw){
+    if(!('speechSynthesis' in window)) return;
+    window.speechSynthesis.cancel();
+    var parts;
+    try{
+      var parsed = JSON.parse(raw);
+      parts = Array.isArray(parsed) ? parsed : [raw];
+    }catch(e){
+      parts = [raw];
+    }
+    parts.forEach(function(p){ if(p) speakOne(p); });
+  }
+
+  function speakBtn(text){
+    return '<button type="button" class="speak-btn" aria-label="Sun kar seekho" data-speak="'+esc(text)+'">&#128266;</button>';
+  }
+
+  /* speaks multiple pieces of text in sequence via one button (card-level speak).
+     parts: array of plain strings (assumed English) or {text,lang} objects. */
+  function speakBtnMulti(parts){
+    const arr = parts.filter(function(p){ return p && (typeof p === "string" ? p : p.text); });
+    return '<button type="button" class="speak-btn" aria-label="Sun kar seekho" data-speak="'+esc(JSON.stringify(arr))+'">&#128266;</button>';
+  }
+
+  /* shorthand: build a {text,lang:"en"} entry */
+  function enPart(text){ return text ? {text:text, lang:"en"} : null; }
+  /* shorthand: build a {text,lang:"hi"} entry */
+  function hiPart(text){ return text ? {text:text, lang:"hi"} : null; }
+
+  document.addEventListener("click", function(e){
+    const btn = e.target.closest(".speak-btn");
+    if(btn) speakEnglish(btn.dataset.speak);
+  });
+
+  /* ---------- Tri-card builder (English + Pron + Meaning, shown together) ---------- */
+  /* item.speakExtra: optional extra English string(s) also spoken by the same card button (e.g. a phrasal verb's example sentence) */
   function triCard(item, idx){
     const id = "card-" + Math.random().toString(36).slice(2,9) + "-" + idx;
+    const extra = item.speakExtra ? item.speakExtra.map(enPart) : [];
+    const cardSpeak = speakBtnMulti([enPart(item.en), hiPart(item.hi)].concat(extra));
     return (
-      '<button type="button" class="tri-card" id="'+id+'" aria-expanded="false">'+
-        '<div class="eng">'+esc(item.en)+'</div>'+
-        '<div class="reveal-hint">Tap to reveal · टैप करें</div>'+
+      '<div class="tri-card" id="'+id+'">'+
+        '<div class="eng">'+esc(item.en)+cardSpeak+'</div>'+
         '<div class="detail"><div class="detail-inner">'+
           '<div class="pron hi">'+esc(item.pron)+'</div>'+
           '<div class="meaning hi">'+esc(item.hi)+'</div>'+
         '</div></div>'+
-      '</button>'
+      '</div>'
     );
-  }
-
-  function wireCardToggles(container){
-    container.querySelectorAll(".tri-card").forEach(function(card){
-      card.addEventListener("click", function(){
-        const open = card.classList.toggle("open");
-        card.setAttribute("aria-expanded", open ? "true" : "false");
-      });
-      card.addEventListener("keydown", function(e){
-        if(e.key === "Enter" || e.key === " "){ e.preventDefault(); card.click(); }
-      });
-    });
   }
 
   /* ============================================================
@@ -4231,7 +4312,6 @@ const VOCAB_DAYS = [
   const foundationsGrid = document.getElementById("foundationsGrid");
   if(foundationsGrid && typeof FOUNDATIONS !== "undefined"){
     foundationsGrid.innerHTML = FOUNDATIONS.map(triCard).join("");
-    wireCardToggles(foundationsGrid);
   }
 
   /* ============================================================
@@ -4248,7 +4328,6 @@ const VOCAB_DAYS = [
         '</div>'
       );
     }).join("");
-    wireCardToggles(posContainer);
   }
 
   /* ============================================================
@@ -4268,16 +4347,15 @@ const VOCAB_DAYS = [
           '<div class="tense-title"><span class="num">'+t.num+'.</span><h3 style="margin:0">'+esc(t.name)+'</h3></div>'+
           '<div class="tense-rule hi"><b>Kab use karein:</b> '+esc(t.rule)+'</div>'+
           '<div class="formula-grid">'+
-            '<div class="formula-card affirmative"><div class="flabel">'+esc(f.aff.label)+'</div><code>'+esc(f.aff.f)+'</code><div class="fex">'+esc(f.aff.ex)+'</div></div>'+
-            '<div class="formula-card negative"><div class="flabel">'+esc(f.neg.label)+'</div><code>'+esc(f.neg.f)+'</code><div class="fex">'+esc(f.neg.ex)+'</div></div>'+
-            '<div class="formula-card question"><div class="flabel">'+esc(f.q.label)+'</div><code>'+esc(f.q.f)+'</code><div class="fex">'+esc(f.q.ex)+'</div></div>'+
+            '<div class="formula-card affirmative"><div class="flabel">'+esc(f.aff.label)+'</div><code>'+esc(f.aff.f)+'</code><div class="fex">'+esc(f.aff.ex)+speakBtn(f.aff.ex)+'</div></div>'+
+            '<div class="formula-card negative"><div class="flabel">'+esc(f.neg.label)+'</div><code>'+esc(f.neg.f)+'</code><div class="fex">'+esc(f.neg.ex)+speakBtn(f.neg.ex)+'</div></div>'+
+            '<div class="formula-card question"><div class="flabel">'+esc(f.q.label)+'</div><code>'+esc(f.q.f)+'</code><div class="fex">'+esc(f.q.ex)+speakBtn(f.q.ex)+'</div></div>'+
           '</div>'+
           '<div class="ex-group-label">Example Sentences</div>'+
           '<div class="card-grid">'+ t.examples.map(triCard).join("") +'</div>'+
         '</div>'
       );
     }).join("");
-    wireCardToggles(tensePanels);
 
     const tabs = Array.from(tenseNav.querySelectorAll("button"));
     tabs.forEach(function(btn){
@@ -4303,7 +4381,6 @@ const VOCAB_DAYS = [
         '</div>'
       );
     }).join("");
-    wireCardToggles(modalsContainer);
   }
 
   /* ============================================================
@@ -4312,11 +4389,12 @@ const VOCAB_DAYS = [
   const voiceGrid = document.getElementById("voiceGrid");
   if(voiceGrid && typeof VOICE_PAIRS !== "undefined"){
     voiceGrid.innerHTML = VOICE_PAIRS.map(function(p){
+      const pairSpeak = speakBtnMulti([enPart(p.active.en), enPart(p.passive.en), hiPart(p.passive.hi)]);
       return (
         '<div class="convert-card">'+
           '<div class="c-half from"><div class="c-tag">Active</div><div class="c-eng">'+esc(p.active.en)+'</div></div>'+
           '<div class="c-arrow">&#8595;</div>'+
-          '<div class="c-half to"><div class="c-tag">Passive</div><div class="c-eng">'+esc(p.passive.en)+'</div>'+
+          '<div class="c-half to"><div class="c-tag">Passive</div><div class="c-eng">'+esc(p.passive.en)+pairSpeak+'</div>'+
             '<div class="c-pron hi">'+esc(p.passive.pron)+'</div>'+
             '<div class="c-hi hi">'+esc(p.passive.hi)+'</div>'+
           '</div>'+
@@ -4331,11 +4409,12 @@ const VOCAB_DAYS = [
   const narrationGrid = document.getElementById("narrationGrid");
   if(narrationGrid && typeof NARRATION_PAIRS !== "undefined"){
     narrationGrid.innerHTML = NARRATION_PAIRS.map(function(p){
+      const pairSpeak = speakBtnMulti([enPart(p.direct.en), enPart(p.indirect.en), hiPart(p.indirect.hi)]);
       return (
         '<div class="convert-card">'+
           '<div class="c-half from"><div class="c-tag">Direct</div><div class="c-eng">'+esc(p.direct.en)+'</div></div>'+
           '<div class="c-arrow">&#8595;</div>'+
-          '<div class="c-half to"><div class="c-tag">Indirect</div><div class="c-eng">'+esc(p.indirect.en)+'</div>'+
+          '<div class="c-half to"><div class="c-tag">Indirect</div><div class="c-eng">'+esc(p.indirect.en)+pairSpeak+'</div>'+
             '<div class="c-pron hi">'+esc(p.indirect.pron)+'</div>'+
             '<div class="c-hi hi">'+esc(p.indirect.hi)+'</div>'+
           '</div>'+
@@ -4357,7 +4436,6 @@ const VOCAB_DAYS = [
         '</div>'
       );
     }).join("");
-    wireCardToggles(convContainer);
   }
 
   /* ============================================================
@@ -4366,10 +4444,11 @@ const VOCAB_DAYS = [
   const mistakesGrid = document.getElementById("mistakesGrid");
   if(mistakesGrid && typeof MISTAKES !== "undefined"){
     mistakesGrid.innerHTML = MISTAKES.map(function(m){
+      const mSpeak = speakBtnMulti([m.galat, m.sahi]);
       return (
         '<div class="mistake-row">'+
           '<div class="galat"><div class="tag">Galat</div><div class="txt">'+esc(m.galat)+'</div></div>'+
-          '<div class="sahi"><div class="tag">Sahi</div><div class="txt">'+esc(m.sahi)+'</div><div class="pron hi">'+esc(m.pron)+'</div></div>'+
+          '<div class="sahi"><div class="tag">Sahi</div><div class="txt">'+esc(m.sahi)+mSpeak+'</div><div class="pron hi">'+esc(m.pron)+'</div></div>'+
         '</div>'
       );
     }).join("");
@@ -4381,7 +4460,6 @@ const VOCAB_DAYS = [
   const advWordsGrid = document.getElementById("advWordsGrid");
   if(advWordsGrid && typeof ADV_WORDS !== "undefined"){
     advWordsGrid.innerHTML = ADV_WORDS.map(triCard).join("");
-    wireCardToggles(advWordsGrid);
   }
 
   const phrasalGrid = document.getElementById("phrasalGrid");
@@ -4390,16 +4468,15 @@ const VOCAB_DAYS = [
       return triCard({
         en: p.verb,
         pron: p.pron,
-        hi: p.hi + " — \"" + p.ex.en + "\" (" + p.ex.pron + " — " + p.ex.hi + ")"
+        hi: p.hi + " — \"" + p.ex.en + "\" (" + p.ex.pron + " — " + p.ex.hi + ")",
+        speakExtra: [p.ex.en]
       }, idx);
     }).join("");
-    wireCardToggles(phrasalGrid);
   }
 
   const idiomsGrid = document.getElementById("idiomsGrid");
   if(idiomsGrid && typeof IDIOMS !== "undefined"){
     idiomsGrid.innerHTML = IDIOMS.map(triCard).join("");
-    wireCardToggles(idiomsGrid);
   }
 
   /* ============================================================
@@ -4413,7 +4490,7 @@ const VOCAB_DAYS = [
   const dayNext = document.getElementById("dayNext");
 
   function rowHtml(item){
-    return '<tr><td class="c-en">'+esc(item.en)+'</td><td class="c-pron hi">'+esc(item.pron)+'</td><td class="c-hi hi">'+esc(item.hi)+'</td></tr>';
+    return '<tr><td class="c-en">'+esc(item.en)+speakBtnMulti([enPart(item.en), hiPart(item.hi)])+'</td><td class="c-pron hi">'+esc(item.pron)+'</td><td class="c-hi hi">'+esc(item.hi)+'</td></tr>';
   }
 
   function renderDay(dayNum){
@@ -4452,7 +4529,7 @@ const VOCAB_DAYS = [
       QUIZ.map(function(item, qi){
         return (
           '<div class="quiz-card" data-qi="'+qi+'">'+
-            '<div class="quiz-q"><span class="qn">Q'+(qi+1)+'.</span> '+esc(item.q)+'</div>'+
+            '<div class="quiz-q"><span class="qn">Q'+(qi+1)+'.</span> '+esc(item.q)+speakBtn(item.q)+'</div>'+
             '<div class="quiz-opts">'+
               item.opts.map(function(opt, oi){
                 return '<button type="button" class="quiz-opt" data-oi="'+oi+'">'+esc(opt)+'</button>';
