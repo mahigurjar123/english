@@ -402,6 +402,8 @@ footer.site-footer .en{ color:color-mix(in srgb, var(--paper) 65%, transparent);
   <div class="nav-inner">
     <a href="index.html" class="brand"><span class="dev hi">सी</span>kho</a>
     <a href="index.html" class="back-link">&larr; Main site</a>
+    <a href="daily-practice.html" class="back-link">📚 Daily Practice</a>
+    <a href="timetable.html" class="back-link">⏰ Timetable</a>
     <div class="stars-total">&#11088; <span id="starsTotalNum">0</span></div>
     <button class="theme-toggle" id="themeToggle" type="button">Theme</button>
   </div>
@@ -1002,12 +1004,30 @@ var progress = loadProgress();
    ============================================================ */
 var reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+var indianVoice = null;
+function pickIndianVoice(){
+  if(!("speechSynthesis" in window)) return;
+  var voices = window.speechSynthesis.getVoices();
+  if(!voices || !voices.length) return;
+  indianVoice =
+    voices.find(function(v){ return v.lang === 'en-IN'; }) ||
+    voices.find(function(v){ return /en-IN/i.test(v.lang); }) ||
+    voices.find(function(v){ return /india/i.test(v.name); }) ||
+    voices.find(function(v){ return /Ravi|Heera|Neerja|Priya|Veena/i.test(v.name); }) ||
+    null;
+}
+if("speechSynthesis" in window){
+  pickIndianVoice();
+  window.speechSynthesis.onvoiceschanged = pickIndianVoice;
+}
+
 function speak(text, lang){
   if(!("speechSynthesis" in window)) return;
   try{
     window.speechSynthesis.cancel();
     var u = new SpeechSynthesisUtterance(text);
-    u.lang = lang || "en-US";
+    if(!lang && indianVoice){ u.voice = indianVoice; u.lang = indianVoice.lang; }
+    else{ u.lang = lang || "en-IN"; }
     u.rate = 0.92;
     window.speechSynthesis.speak(u);
   }catch(e){}
@@ -1145,7 +1165,7 @@ function renderGameShell(){
   buildParallaxDecor();
   buildThemeDecor(state.level.theme3d);
   document.getElementById("replayBtn").addEventListener("click", function(){
-    speak(state.order[state.idx].en, "en-US");
+    speak(state.order[state.idx].en);
   });
   setupStageParallax();
 }
@@ -1275,7 +1295,7 @@ function loadRound(){
     scene.appendChild(el);
   });
 
-  speak(target.en, "en-US");
+  speak(target.en);
   setMode("catch");
 }
 
@@ -1325,7 +1345,7 @@ function handleCatch(el, word, target){
     document.getElementById("scoreNum").textContent = state.score;
     var lines = ["Shabaash!", "Bahut acha!", "Zabardast!", "Great job!"];
     showFeedback(lines[Math.floor(Math.random()*lines.length)] + " ✨", "good");
-    speak(lines[0], "en-US");
+    speak(lines[0]);
     Array.prototype.forEach.call(scene.children, function(c){ if(c!==el) c.classList.add("fading-out"); });
     setTimeout(function(){ goToSpeakStep(target); }, 700);
   }else{
@@ -1396,7 +1416,7 @@ function startListening(target, micBtn, micStatus){
     micBtn.dataset.busy = "0";
     return;
   }
-  rec.lang = "en-US";
+  rec.lang = "en-IN";
   rec.interimResults = false;
   rec.maxAlternatives = 3;
 
@@ -1422,7 +1442,7 @@ function startListening(target, micBtn, micStatus){
       state.score += 15;
       state.speakSuccesses++;
       document.getElementById("scoreNum") && (document.getElementById("scoreNum").textContent = state.score);
-      speak("Shabaash!", "en-US");
+      speak("Shabaash!");
       var fakeEl = micBtn;
       burstStars(fakeEl);
       setTimeout(function(){ nextRound(); }, 1100);
@@ -1496,7 +1516,7 @@ function finishLevel(){
   }, 50);
 
   if(!reduceMotion) launchConfetti();
-  speak("Congratulations! Level complete!", "en-US");
+  speak("Congratulations! Level complete!");
 
   if(hasNext){
     document.getElementById("nextLevelBtn").addEventListener("click", function(){

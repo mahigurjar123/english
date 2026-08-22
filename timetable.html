@@ -1,0 +1,1065 @@
+<!doctype html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>⏰ Master Timetable — सीखो</title>
+<meta name="description" content="Har ghante ka clear schedule — Yoga, Flutter coding, English study aur office-safe micro-learning ka animated timetable.">
+
+<style>
+:root{
+  --ink:#2a2416;
+  --paper:#f7f2e7;
+  --paper-raised:#fffdf8;
+  --paper-sunk:#ede5d3;
+  --accent:#c97a1a;
+  --accent-soft:#f0d9ad;
+  --sage:#2f7566;
+  --sage-soft:#d3e7e1;
+  --coral:#c8503b;
+  --coral-soft:#f3d9d2;
+  --blue:#2f6a9e;
+  --blue-soft:#d6e6f3;
+  --line:#d9cbaa;
+  --line-strong:#b8a67e;
+  --muted:#6b6047;
+  --muted-2:#8a7d5e;
+
+  --font-dev: 'Nirmala UI','Noto Sans Devanagari','Noto Serif Devanagari','Mangal','Kohinoor Devanagari',sans-serif;
+  --font-display: 'Fraunces','Iowan Old Style','Palatino Linotype','Georgia',serif;
+  --font-body: 'Sora','Segoe UI',system-ui,-apple-system,sans-serif;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --ink:#f4ecd8; --paper:#1a1f3a; --paper-raised:#232a4d; --paper-sunk:#141833;
+    --accent:#e8952e; --accent-soft:#4a3a1e;
+    --sage:#4bab98; --sage-soft:#1d3c37;
+    --coral:#e0654f; --coral-soft:#432521;
+    --blue:#5b9bd9; --blue-soft:#1c3348;
+    --line:#3a4270; --line-strong:#525c92;
+    --muted:#a9a2c4; --muted-2:#8781a8;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"]{
+  --ink:#f4ecd8; --paper:#1a1f3a; --paper-raised:#232a4d; --paper-sunk:#141833;
+  --accent:#e8952e; --accent-soft:#4a3a1e;
+  --sage:#4bab98; --sage-soft:#1d3c37;
+  --coral:#e0654f; --coral-soft:#432521;
+  --blue:#5b9bd9; --blue-soft:#1c3348;
+  --line:#3a4270; --line-strong:#525c92;
+  --muted:#a9a2c4; --muted-2:#8781a8;
+  color-scheme: dark;
+}
+
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+@media (prefers-reduced-motion: reduce){ html{ scroll-behavior:auto; } *{ animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important; } }
+
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--font-body); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; overflow-x:hidden;
+}
+.hi{ font-family:var(--font-dev); }
+h1,h2,h3,h4{ font-family:var(--font-display); text-wrap:balance; margin:0 0 .4em; font-weight:600; }
+p{ margin:0 0 1em; }
+a{ color:var(--accent); }
+.container{ max-width:1000px; margin:0 auto; padding:0 1.5rem; }
+
+/* ambient background glow */
+body::before{
+  content:''; position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background:
+    radial-gradient(ellipse 50% 40% at 15% 0%, color-mix(in srgb, var(--sage) 18%, transparent), transparent 70%),
+    radial-gradient(ellipse 50% 40% at 85% 15%, color-mix(in srgb, var(--accent) 20%, transparent), transparent 70%),
+    radial-gradient(ellipse 60% 50% at 50% 100%, color-mix(in srgb, var(--coral) 12%, transparent), transparent 70%);
+}
+
+/* ============= NAV ============= */
+header.site-nav{
+  position:sticky; top:0; z-index:190;
+  background:color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter:blur(10px) saturate(1.2);
+  border-bottom:1px solid var(--line);
+}
+.nav-inner{
+  max-width:1200px; margin:0 auto; padding:.7rem 1.2rem;
+  display:flex; align-items:center; gap:1rem;
+}
+.brand{
+  font-family:var(--font-display); font-weight:700; font-size:1.25rem;
+  display:flex; align-items:baseline; gap:.35rem; white-space:nowrap;
+  color:var(--ink); text-decoration:none;
+}
+.brand .dev{ font-family:var(--font-dev); color:var(--accent); }
+.nav-links{ display:flex; gap:.2rem; overflow-x:auto; scrollbar-width:none; flex:1; }
+.nav-links::-webkit-scrollbar{ display:none; }
+.nav-links a{
+  white-space:nowrap; text-decoration:none; color:var(--muted);
+  font-size:.85rem; font-weight:600; letter-spacing:.02em;
+  padding:.45rem .65rem; border-radius:6px; transition:color .15s, background .15s;
+}
+.nav-links a:hover{ color:var(--ink); background:var(--paper-sunk); }
+.theme-toggle{
+  border:1px solid var(--line-strong); background:var(--paper-raised); color:var(--ink);
+  border-radius:20px; padding:.4rem .8rem; font-size:.8rem; font-weight:600; flex-shrink:0; cursor:pointer;
+}
+.theme-toggle:hover{ border-color:var(--accent); }
+
+/* ============= CHALLENGE BANNER ============= */
+.challenge-banner{
+  position:relative; overflow:hidden; padding:3rem 1.5rem 2.6rem;
+  background:
+    radial-gradient(ellipse 70% 60% at 20% 0%, color-mix(in srgb, var(--coral) 22%, transparent), transparent 70%),
+    radial-gradient(ellipse 70% 60% at 80% 100%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 70%),
+    linear-gradient(180deg, color-mix(in srgb, var(--coral) 6%, var(--paper)), var(--paper));
+  border-bottom:1px solid var(--line);
+}
+.challenge-inner{ text-align:center; position:relative; z-index:1; }
+.flame-row{
+  display:flex; align-items:center; justify-content:center; gap:.8rem; flex-wrap:wrap;
+  animation:float-in .7s ease both;
+}
+.flame{ font-size:2.2rem; animation:flame-flicker 1.6s ease-in-out infinite; filter:drop-shadow(0 0 12px color-mix(in srgb, var(--coral) 55%, transparent)); }
+.flame:nth-child(3){ animation-delay:.3s; }
+@keyframes flame-flicker{
+  0%,100%{ transform:scale(1) rotate(-2deg) translateY(0); }
+  25%{ transform:scale(1.08) rotate(2deg) translateY(-2px); }
+  50%{ transform:scale(0.96) rotate(-1deg) translateY(1px); }
+  75%{ transform:scale(1.05) rotate(1deg) translateY(-1px); }
+}
+.challenge-title{
+  font-size:clamp(1.5rem,4.4vw,2.4rem); line-height:1.2; margin:0;
+  background:linear-gradient(90deg,var(--coral),var(--accent));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+.challenge-title .accent{
+  background:linear-gradient(90deg,var(--accent),var(--sage));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+}
+
+.day-counter{
+  display:flex; align-items:center; justify-content:center; gap:1.1rem;
+  margin:1.8rem auto 0; animation:float-in .7s ease .15s both;
+}
+.day-nudge{
+  width:2.2rem; height:2.2rem; border-radius:50%; border:1.5px solid var(--line-strong);
+  background:var(--paper-raised); color:var(--ink); font-size:1.1rem; font-weight:700; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:border-color .15s, transform .15s;
+}
+.day-nudge:hover{ border-color:var(--accent); transform:scale(1.08); }
+.day-counter-mid{ display:flex; align-items:baseline; gap:.5rem; }
+.day-num{
+  font-family:var(--font-display); font-weight:800; font-size:clamp(2.6rem,8vw,4rem);
+  background:linear-gradient(180deg,var(--coral),var(--accent));
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  line-height:1;
+}
+.day-label{ font-size:.95rem; font-weight:700; color:var(--muted); letter-spacing:.03em; }
+.day-progress{
+  max-width:420px; margin:1rem auto 0; height:10px; border-radius:999px;
+  background:var(--paper-sunk); overflow:hidden; border:1px solid var(--line);
+  animation:float-in .7s ease .2s both;
+}
+.day-progress-fill{
+  height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg,var(--coral),var(--accent),var(--sage));
+  transition:width .5s ease;
+}
+.day-hint{
+  margin-top:.7rem; font-size:.88rem; font-weight:700; color:var(--coral);
+  animation:float-in .7s ease .25s both;
+}
+
+.goal-row{ margin-top:1.6rem; animation:float-in .7s ease .3s both; }
+.goal-pill{
+  display:inline-flex; align-items:center; gap:.5rem; flex-wrap:wrap; justify-content:center;
+  background:var(--accent-soft); color:var(--ink); border-radius:999px;
+  padding:.6rem 1.3rem; font-size:.9rem; font-weight:600;
+}
+.goal-pill b{ color:var(--coral); }
+
+.info-row{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:.7rem; margin-top:1rem;
+  animation:float-in .7s ease .35s both;
+}
+.info-pill{
+  display:flex; align-items:center; gap:.45rem;
+  background:var(--paper-raised); border:1px solid var(--line); border-radius:12px;
+  padding:.5rem .9rem; font-size:.82rem; font-weight:600; color:var(--muted);
+}
+.info-pill b{ color:var(--ink); }
+
+/* motivational footer banner */
+.motivate-banner{
+  text-align:center; margin:3.5rem auto 0; max-width:700px; padding:2rem 1.6rem;
+  border-radius:20px; position:relative; overflow:hidden;
+  background:linear-gradient(135deg, color-mix(in srgb, var(--coral) 14%, var(--paper-raised)), color-mix(in srgb, var(--accent) 14%, var(--paper-raised)));
+  border:1.5px solid color-mix(in srgb, var(--accent) 45%, var(--line));
+  opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease;
+}
+.motivate-banner.in-view{ opacity:1; transform:translateY(0); }
+.motivate-banner .flame{ font-size:1.8rem; }
+.motivate-banner p{
+  font-family:var(--font-display); font-weight:700; font-size:1.15rem; margin:.6rem 0 0;
+  color:var(--ink);
+}
+.motivate-banner .rocket{ display:inline-block; animation:rocket-bob 1.4s ease-in-out infinite; }
+@keyframes rocket-bob{ 0%,100%{ transform:translateY(0) rotate(0deg);} 50%{ transform:translateY(-6px) rotate(-6deg);} }
+
+/* ============= HERO ============= */
+.tt-hero{
+  text-align:center; padding:4.5rem 1.5rem 2.5rem; position:relative;
+}
+.tt-hero .eyebrow{
+  display:inline-flex; align-items:center; gap:.5rem;
+  font-size:.8rem; font-weight:700; letter-spacing:.12em; text-transform:uppercase;
+  color:var(--accent); background:var(--accent-soft); border-radius:999px;
+  padding:.35rem 1rem; margin-bottom:1.2rem;
+  animation:float-in .7s ease both;
+}
+.tt-hero h1{
+  font-size:clamp(2rem,5vw,3.2rem); margin-bottom:.5rem;
+  animation:float-in .8s ease .1s both;
+}
+.tt-hero h1 .accent{ color:var(--accent); }
+.tt-hero p.sub{
+  color:var(--muted); font-size:1.05rem; max-width:60ch; margin:0 auto;
+  animation:float-in .8s ease .2s both;
+}
+@keyframes float-in{
+  from{ opacity:0; transform:translateY(18px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+/* live clock */
+#liveClock{
+  margin-top:1.5rem; display:inline-flex; align-items:center; gap:.6rem;
+  background:var(--paper-raised); border:1px solid var(--line); border-radius:16px;
+  padding:.7rem 1.4rem; font-family:var(--font-display); font-weight:700; font-size:1.3rem;
+  box-shadow:0 8px 24px -12px hsl(20 16% 20% / .25);
+  animation:float-in .8s ease .3s both;
+}
+#liveClock .dot{
+  width:.6rem; height:.6rem; border-radius:50%; background:var(--sage);
+  animation:pulse-dot 1.6s ease-in-out infinite;
+}
+@keyframes pulse-dot{ 0%,100%{ opacity:1; transform:scale(1);} 50%{ opacity:.4; transform:scale(.7);} }
+#liveClock .now-label{ font-size:.75rem; font-weight:600; color:var(--muted); font-family:var(--font-body); }
+
+/* right now card */
+.right-now-card{
+  max-width:640px; margin:1.8rem auto 0; text-align:left;
+  background:linear-gradient(135deg, color-mix(in srgb, var(--sage) 14%, var(--paper-raised)), var(--paper-raised));
+  border:2px solid var(--sage); border-radius:20px;
+  padding:1.4rem 1.6rem; position:relative; overflow:hidden;
+  box-shadow:0 16px 40px -18px hsl(20 16% 20% / .4);
+  animation:float-in .8s ease .35s both, glow-pulse 3s ease-in-out infinite;
+}
+@keyframes glow-pulse{
+  0%,100%{ box-shadow:0 16px 40px -18px hsl(20 16% 20% / .4), 0 0 0 0 color-mix(in srgb, var(--sage) 35%, transparent); }
+  50%{ box-shadow:0 16px 40px -18px hsl(20 16% 20% / .4), 0 0 0 8px color-mix(in srgb, var(--sage) 0%, transparent); }
+}
+.right-now-card.is-free{ border-color:var(--line-strong); }
+.rn-label{
+  font-size:.72rem; font-weight:800; letter-spacing:.1em; text-transform:uppercase;
+  color:var(--sage); margin-bottom:.7rem;
+}
+.rn-main{ display:flex; align-items:center; gap:1rem; }
+.rn-icon{
+  font-size:2.4rem; flex-shrink:0; width:3.6rem; height:3.6rem; border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  background:var(--sage-soft);
+}
+.rn-title{ font-family:var(--font-display); font-weight:700; font-size:1.35rem; line-height:1.25; }
+.rn-desc{ color:var(--muted); font-size:.9rem; margin-top:.15rem; }
+.rn-footer{
+  display:flex; align-items:center; justify-content:space-between; gap:1rem;
+  margin-top:1rem;
+}
+#rnTimeLeft{ font-size:.82rem; font-weight:700; color:var(--sage); }
+.rn-jump-btn{
+  border:none; border-radius:999px; padding:.5rem 1.1rem; font-size:.8rem; font-weight:700;
+  background:var(--sage); color:var(--paper-raised); cursor:pointer; transition:transform .15s ease, background .15s ease;
+  font-family:var(--font-body);
+}
+.rn-jump-btn:hover{ transform:translateY(-2px); background:color-mix(in srgb, var(--sage) 85%, black); }
+.rn-btn-group{ display:flex; gap:.5rem; flex-wrap:wrap; }
+.rn-practice-btn{ background:var(--coral); }
+.rn-practice-btn:hover{ background:color-mix(in srgb, var(--coral) 85%, black); }
+.rn-bar{ height:6px; border-radius:999px; background:var(--paper-sunk); overflow:hidden; margin-top:.9rem; }
+.rn-bar-fill{ height:100%; width:0%; background:linear-gradient(90deg,var(--sage),var(--accent)); border-radius:999px; transition:width .5s ease; }
+
+/* summary chips */
+.summary-row{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:.7rem;
+  margin:2rem auto 0; max-width:900px; padding:0 1rem;
+}
+.chip{
+  display:flex; align-items:center; gap:.5rem;
+  background:var(--paper-raised); border:1px solid var(--line); border-radius:12px;
+  padding:.6rem 1rem; font-size:.85rem; font-weight:600;
+  animation:float-in .6s ease both;
+}
+.chip .ico{ font-size:1.1rem; }
+.chip.c-sage{ border-color:color-mix(in srgb, var(--sage) 40%, var(--line)); }
+.chip.c-accent{ border-color:color-mix(in srgb, var(--accent) 40%, var(--line)); }
+.chip.c-coral{ border-color:color-mix(in srgb, var(--coral) 40%, var(--line)); }
+.chip.c-blue{ border-color:color-mix(in srgb, var(--blue) 40%, var(--line)); }
+
+/* ============= MODULE SECTIONS ============= */
+.modules{ padding:3rem 0 5rem; position:relative; }
+.module{ margin-bottom:3.5rem; }
+.module-head{
+  display:flex; align-items:center; gap:.9rem; margin-bottom:1.4rem;
+  opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease;
+}
+.module-head.in-view{ opacity:1; transform:translateY(0); }
+.module-badge{
+  width:3rem; height:3rem; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:1.4rem; flex-shrink:0; box-shadow:0 6px 16px -6px hsl(20 16% 20% / .3);
+}
+.module-1 .module-badge{ background:linear-gradient(135deg,var(--accent),var(--coral)); }
+.module-2 .module-badge{ background:linear-gradient(135deg,var(--blue),var(--sage)); }
+.module-3 .module-badge{ background:linear-gradient(135deg,var(--coral),var(--sage)); }
+.module-head h2{ font-size:1.5rem; margin:0; }
+.module-head .mod-sub{ color:var(--muted); font-size:.85rem; font-family:var(--font-body); font-weight:600; }
+
+/* timeline */
+.timeline{ position:relative; padding-left:2.2rem; }
+.timeline::before{
+  content:''; position:absolute; left:.85rem; top:.4rem; bottom:.4rem; width:3px;
+  border-radius:3px;
+  background:linear-gradient(var(--line-strong),var(--line-strong));
+}
+.slot{
+  position:relative; margin-bottom:1.1rem;
+  opacity:0; transform:translateX(-24px);
+  transition:opacity .5s ease, transform .5s ease;
+}
+.slot.in-view{ opacity:1; transform:translateX(0); }
+.slot::before{
+  content:''; position:absolute; left:-2.2rem; top:1.15rem; width:.9rem; height:.9rem;
+  border-radius:50%; background:var(--paper-raised); border:3px solid var(--accent);
+  z-index:2; transition:transform .3s ease, box-shadow .3s ease;
+}
+.slot.active::before{
+  border-color:var(--sage); transform:scale(1.3);
+  box-shadow:0 0 0 6px var(--sage-soft);
+  animation:pulse-ring 1.8s ease-in-out infinite;
+}
+@keyframes pulse-ring{
+  0%,100%{ box-shadow:0 0 0 6px var(--sage-soft); }
+  50%{ box-shadow:0 0 0 10px transparent; }
+}
+.slot-card{
+  background:var(--paper-raised); border:1px solid var(--line); border-radius:14px;
+  padding:1rem 1.2rem; display:flex; flex-wrap:wrap; align-items:center; gap:.9rem;
+  transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.slot-card:hover{ transform:translateY(-3px); box-shadow:0 12px 24px -14px hsl(20 16% 20% / .35); }
+.slot.active .slot-card{
+  border-color:var(--sage); background:color-mix(in srgb, var(--sage-soft) 60%, var(--paper-raised));
+}
+.slot-time{
+  font-family:var(--font-display); font-weight:700; font-size:1rem; color:var(--accent);
+  min-width:9.5rem; flex-shrink:0;
+}
+.slot.active .slot-time{ color:var(--sage); }
+.slot-icon{ font-size:1.6rem; flex-shrink:0; }
+.slot-body{ flex:1; min-width:200px; }
+.slot-title{ font-weight:700; font-size:1rem; margin-bottom:.15rem; }
+.slot-desc{ color:var(--muted); font-size:.85rem; }
+.slot-resource{
+  font-size:.72rem; font-weight:700; letter-spacing:.03em;
+  background:var(--paper-sunk); color:var(--muted-2); border-radius:6px;
+  padding:.25rem .55rem; white-space:nowrap; font-family:var(--font-body);
+  text-decoration:none; display:inline-block; transition:background .15s, color .15s;
+}
+a.slot-resource:hover{ background:var(--accent-soft); color:var(--ink); }
+a.slot-resource::after{ content:' →'; }
+.slot-duration{
+  font-size:.72rem; font-weight:700; color:var(--paper-raised);
+  background:var(--accent); border-radius:999px; padding:.2rem .6rem; white-space:nowrap;
+}
+.slot.active .slot-duration{ background:var(--sage); }
+.slot-now-tag{
+  position:absolute; right:1rem; top:-.6rem;
+  background:var(--sage); color:var(--paper-raised); font-size:.68rem; font-weight:800;
+  letter-spacing:.06em; padding:.18rem .55rem; border-radius:999px; text-transform:uppercase;
+  box-shadow:0 4px 10px -4px hsl(20 16% 20% / .4);
+  display:none;
+}
+.slot.active .slot-now-tag{ display:inline-block; }
+
+/* progress history */
+.history-section{
+  background:var(--paper-raised); border:1px solid var(--line); border-radius:18px;
+  padding:1.8rem 1.6rem; margin:2.5rem auto 0; max-width:700px; text-align:center;
+  opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease;
+}
+.history-section.in-view{ opacity:1; transform:translateY(0); }
+.history-section h2{ font-size:1.25rem; margin-bottom:.3rem; }
+.history-sub{ color:var(--muted); font-size:.82rem; margin-bottom:1.2rem; }
+.history-grid{
+  display:grid; grid-template-columns:repeat(7, 1fr); gap:.5rem;
+  max-width:480px; margin:0 auto;
+}
+.history-day{
+  aspect-ratio:1; border-radius:8px; display:flex; align-items:center; justify-content:center;
+  font-size:.7rem; font-weight:700; color:var(--muted); border:1px solid var(--line);
+  position:relative; cursor:default; transition:transform .15s ease;
+}
+.history-day:hover{ transform:scale(1.12); z-index:2; }
+.history-day.today{ box-shadow:0 0 0 2px var(--coral); }
+.hd-0{ background:var(--paper-sunk); }
+.hd-1{ background:color-mix(in srgb, var(--sage) 22%, var(--paper-sunk)); }
+.hd-2{ background:color-mix(in srgb, var(--sage) 45%, var(--paper-sunk)); }
+.hd-3{ background:color-mix(in srgb, var(--sage) 70%, var(--paper-sunk)); }
+.hd-4{ background:var(--sage); color:var(--paper-raised); }
+.history-legend{
+  display:flex; flex-wrap:wrap; justify-content:center; gap:.9rem; margin-top:1.2rem;
+  font-size:.72rem; color:var(--muted); font-weight:600;
+}
+.history-legend span{ display:inline-flex; align-items:center; gap:.35rem; }
+.hl-box{ width:.8rem; height:.8rem; border-radius:3px; display:inline-block; border:1px solid var(--line); }
+.hl-0{ background:var(--paper-sunk); }
+.hl-1{ background:color-mix(in srgb, var(--sage) 22%, var(--paper-sunk)); }
+.hl-2{ background:color-mix(in srgb, var(--sage) 45%, var(--paper-sunk)); }
+.hl-3{ background:color-mix(in srgb, var(--sage) 70%, var(--paper-sunk)); }
+.hl-4{ background:var(--sage); }
+
+/* checklist */
+.checklist-section{
+  background:var(--paper-raised); border:1px solid var(--line); border-radius:18px;
+  padding:2rem 1.6rem; margin:3rem auto 0; max-width:700px;
+  opacity:0; transform:translateY(20px); transition:opacity .6s ease, transform .6s ease;
+}
+.checklist-section.in-view{ opacity:1; transform:translateY(0); }
+.checklist-section h2{ text-align:center; font-size:1.4rem; }
+.checklist-progress{
+  height:8px; border-radius:999px; background:var(--paper-sunk); overflow:hidden; margin:1rem 0 1.6rem;
+}
+.checklist-progress-fill{
+  height:100%; width:0%; border-radius:999px;
+  background:linear-gradient(90deg,var(--sage),var(--accent));
+  transition:width .4s ease;
+}
+.check-item{
+  display:flex; align-items:center; gap:.8rem; padding:.6rem .3rem;
+  border-bottom:1px solid var(--line); cursor:pointer; user-select:none;
+}
+.check-item:last-child{ border-bottom:none; }
+.check-item input{ width:1.2rem; height:1.2rem; accent-color:var(--sage); cursor:pointer; flex-shrink:0; }
+.check-item label{ cursor:pointer; font-size:.92rem; font-weight:600; flex:1; }
+.check-item.done label{ color:var(--muted); text-decoration:line-through; }
+.check-time{ font-size:.75rem; color:var(--accent); font-weight:700; }
+
+/* footer nav back */
+.back-home{
+  display:block; text-align:center; margin:3rem 0 1rem; color:var(--muted); text-decoration:none; font-size:.9rem;
+}
+.back-home:hover{ color:var(--accent); }
+
+@media (max-width:640px){
+  .timeline{ padding-left:1.6rem; }
+  .slot::before{ left:-1.6rem; }
+  .slot-time{ min-width:auto; width:100%; }
+  .slot-card{ padding:.9rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <a href="index.html#top" class="brand"><span class="dev">सी</span>kho</a>
+    <nav class="nav-links" aria-label="Section jump links">
+      <a href="daily-practice.html" style="color:var(--coral)">📚 Daily Practice ↗</a>
+      <a href="timetable.html" style="color:var(--sage)">⏰ Timetable ↗</a>
+      <a href="journey.html" style="color:var(--accent)">30-Day Journey ↗</a>
+      <a href="daily-mix.html" style="color:var(--accent)">Daily Mix ↗</a>
+      <a href="play.html" style="color:var(--coral)">🎮 Play &amp; Speak ↗</a>
+      <a href="index.html">Home</a>
+    </nav>
+    <button class="theme-toggle" id="themeToggle" type="button">Theme</button>
+  </div>
+</header>
+
+<section class="challenge-banner">
+  <div class="container challenge-inner">
+    <div class="flame-row">
+      <span class="flame">🔥</span>
+      <h1 class="challenge-title">60-DAY NON-STOP CHALLENGE<br><span class="accent">5 AM ROUTINE</span></h1>
+      <span class="flame">🔥</span>
+    </div>
+
+    <div class="day-counter" id="dayCounter">
+      <button type="button" class="day-nudge" id="dayMinus" title="Start date 1 din peeche">−</button>
+      <div class="day-counter-mid">
+        <span class="day-num" id="dayNum">1</span>
+        <span class="day-label">/ 60 DAYS</span>
+      </div>
+      <button type="button" class="day-nudge" id="dayPlus" title="Start date 1 din aage">+</button>
+    </div>
+    <div class="day-progress"><div class="day-progress-fill" id="dayProgressFill"></div></div>
+    <div class="day-hint" id="dayHint">Aaj Day 1 hai — challenge shuru! 🚀</div>
+
+    <div class="goal-row">
+      <div class="goal-pill"><span class="ico">🎯</span> Goals: English Fluency <b>4 Hrs/Day</b> + Flutter <b>1.5 Hrs/Day</b></div>
+    </div>
+    <div class="info-row">
+      <div class="info-pill"><span class="ico">🧘‍♂️</span> Yoga: <b>5:00–6:00 AM</b> Daily</div>
+      <div class="info-pill"><span class="ico">💼</span> Job: <b>9:00 AM–7:00 PM</b> (Office-Safe)</div>
+      <div class="info-pill"><span class="ico">😴</span> Sleep: <b>12:00–5:00 AM</b></div>
+    </div>
+  </div>
+</section>
+
+<section class="tt-hero">
+  <div class="container">
+    <span class="eyebrow">⏰ Daily Hour-by-Hour Timetable</span>
+    <h1>Master <span class="accent hi">समय-सारणी</span></h1>
+    <p class="sub">Har ghante mein kya padhna/karna hai — bilkul clear. Yoga se lekar sone tak, poora din ek jagah.</p>
+    <div id="liveClock"><span class="dot"></span><span id="clockTime">--:--</span><span class="now-label" id="clockStatus">Loading…</span></div>
+  </div>
+
+  <div class="container">
+    <div id="rightNowCard" class="right-now-card">
+      <div class="rn-label">👉 ABHI KYA KARNA HAI</div>
+      <div class="rn-main">
+        <div class="rn-icon" id="rnIcon">⏳</div>
+        <div class="rn-info">
+          <div class="rn-title" id="rnTitle">Loading…</div>
+          <div class="rn-desc" id="rnDesc"></div>
+        </div>
+      </div>
+      <div class="rn-footer">
+        <span id="rnTimeLeft"></span>
+        <span class="rn-btn-group">
+          <a id="rnPracticeBtn" class="rn-jump-btn rn-practice-btn" href="#" style="display:none">Practice kholo ↗</a>
+          <button type="button" id="rnJumpBtn" class="rn-jump-btn">Wahan jao ↓</button>
+        </span>
+      </div>
+      <div class="rn-bar"><div class="rn-bar-fill" id="rnBarFill"></div></div>
+    </div>
+  </div>
+
+  <div class="summary-row">
+    <div class="chip c-sage"><span class="ico">🧘‍♂️</span> Yoga — 1 Hour</div>
+    <div class="chip c-blue"><span class="ico">💻</span> Flutter — 1.5 Hours</div>
+    <div class="chip c-accent"><span class="ico">🗣️</span> English — 3.5–4 Hours</div>
+    <div class="chip c-coral"><span class="ico">🏢</span> Office — 9 AM–7 PM Safe</div>
+    <div class="chip c-sage"><span class="ico">😴</span> Sleep — 12 AM–5 AM</div>
+  </div>
+</section>
+
+<section class="modules">
+  <div class="container">
+
+    <!-- MODULE 1 -->
+    <div class="module module-1">
+      <div class="module-head">
+        <div class="module-badge">🌅</div>
+        <div>
+          <h2>Morning Power Routine</h2>
+          <div class="mod-sub">5:00 AM – 8:30 AM</div>
+        </div>
+      </div>
+      <div class="timeline" id="tl-1">
+        <div class="slot" data-start="05:00" data-end="06:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">5:00 – 6:00 AM</div>
+            <div class="slot-icon">🧘‍♂️</div>
+            <div class="slot-body">
+              <div class="slot-title">Yoga &amp; Physical Exercise</div>
+              <div class="slot-desc">Body stretch, Yoga, breathing exercises &amp; fresh up</div>
+            </div>
+            <span class="slot-resource">Health Prep</span>
+            <div class="slot-duration">60 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="06:00" data-end="06:30">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">6:00 – 6:30 AM</div>
+            <div class="slot-icon">📚</div>
+            <div class="slot-body">
+              <div class="slot-title">English Tenses &amp; Rules</div>
+              <div class="slot-desc">Daily 1 tense rule, formula &amp; 10 sentences notebook mein likhna</div>
+            </div>
+            <a class="slot-resource" href="index.html#tenses">Tenses padho</a>
+            <div class="slot-duration">30 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="06:30" data-end="07:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">6:30 – 7:00 AM</div>
+            <div class="slot-icon">🗣️</div>
+            <div class="slot-body">
+              <div class="slot-title">Speaking &amp; Shadowing</div>
+              <div class="slot-desc">Audio sunkar out-loud repeat karna + mirror speaking</div>
+            </div>
+            <a class="slot-resource" href="index.html#foundations">🔊 Shadowing karo</a>
+            <div class="slot-duration">30 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="07:00" data-end="08:30">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">7:00 – 8:30 AM</div>
+            <div class="slot-icon">💻</div>
+            <div class="slot-body">
+              <div class="slot-title">Flutter Coding (1.5 Hours)</div>
+              <div class="slot-desc">Daily quota finished! UI widgets, logic &amp; state management</div>
+            </div>
+            <span class="slot-resource">VS Code / Android Studio</span>
+            <div class="slot-duration">90 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="08:30" data-end="09:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">8:30 – 9:00 AM</div>
+            <div class="slot-icon">🍳</div>
+            <div class="slot-body">
+              <div class="slot-title">Breakfast &amp; Commute</div>
+              <div class="slot-desc">Office ke liye niklna</div>
+            </div>
+            <span class="slot-resource">Break</span>
+            <div class="slot-duration">30 min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 2 -->
+    <div class="module module-2">
+      <div class="module-head">
+        <div class="module-badge">🏢</div>
+        <div>
+          <h2>Office Safe Shift</h2>
+          <div class="mod-sub">9:00 AM – 7:00 PM — Discreet, low-profile learning</div>
+        </div>
+      </div>
+      <div class="timeline" id="tl-2">
+        <div class="slot" data-start="11:00" data-end="12:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">11:00 AM – 12:00 PM</div>
+            <div class="slot-icon">🎧</div>
+            <div class="slot-body">
+              <div class="slot-title">English Listening (Passive)</div>
+              <div class="slot-desc">Desk par 1 earbud se English audio &amp; conversations sunna</div>
+            </div>
+            <a class="slot-resource" href="daily-practice.html">🎧 Listening kholo</a>
+            <div class="slot-duration">60 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="14:00" data-end="15:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">2:00 – 3:00 PM</div>
+            <div class="slot-icon">📖</div>
+            <div class="slot-body">
+              <div class="slot-title">Reading &amp; Vocabulary</div>
+              <div class="slot-desc">30-day plan read karna + 5 new English words save karna</div>
+            </div>
+            <a class="slot-resource" href="daily-practice.html">📖 Reading kholo</a>
+            <div class="slot-duration">60 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="17:00" data-end="18:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">5:00 – 6:00 PM</div>
+            <div class="slot-icon">✍️</div>
+            <div class="slot-body">
+              <div class="slot-title">Quizzes &amp; Practice</div>
+              <div class="slot-desc">Interactive quizzes solve karna &amp; galat vs sahi sentences revise karna</div>
+            </div>
+            <a class="slot-resource" href="play.html">✍️ Quiz kholo</a>
+            <div class="slot-duration">60 min</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODULE 3 -->
+    <div class="module module-3">
+      <div class="module-head">
+        <div class="module-badge">🏠</div>
+        <div>
+          <h2>Evening &amp; Night Shift</h2>
+          <div class="mod-sub">7:00 PM – 5:00 AM (next day)</div>
+        </div>
+      </div>
+      <div class="timeline" id="tl-3">
+        <div class="slot" data-start="19:00" data-end="20:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">7:00 – 8:00 PM</div>
+            <div class="slot-icon">🍽️</div>
+            <div class="slot-body">
+              <div class="slot-title">Dinner &amp; Relax</div>
+              <div class="slot-desc">Family time, relaxation</div>
+            </div>
+            <span class="slot-resource">Break</span>
+            <div class="slot-duration">60 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="20:00" data-end="21:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">8:00 – 9:00 PM</div>
+            <div class="slot-icon">🗣️</div>
+            <div class="slot-body">
+              <div class="slot-title">Real Speaking &amp; Conversation</div>
+              <div class="slot-desc">Voice AI se conversation + din ki summary English mein out loud</div>
+            </div>
+            <a class="slot-resource" href="daily-practice.html">🗣️ Speaking kholo</a>
+            <div class="slot-duration">60 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="21:00" data-end="21:30">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">9:00 – 9:30 PM</div>
+            <div class="slot-icon">📝</div>
+            <div class="slot-body">
+              <div class="slot-title">Quiz Review &amp; Vocab Journal</div>
+              <div class="slot-desc">Office ke missed quizzes review &amp; daily vocab revision</div>
+            </div>
+            <a class="slot-resource" href="play.html">📝 Review kholo</a>
+            <div class="slot-duration">30 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="21:30" data-end="23:30">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">9:30 – 11:30 PM</div>
+            <div class="slot-icon">🛋️</div>
+            <div class="slot-body">
+              <div class="slot-title">Free Time / Relaxation</div>
+              <div class="slot-desc">Family time ya light reading, relax ya English tech/shows dekhna</div>
+            </div>
+            <span class="slot-resource">Family / Light Reading</span>
+            <div class="slot-duration">2 hrs</div>
+          </div>
+        </div>
+        <div class="slot" data-start="23:30" data-end="24:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">11:30 PM – 12:00 AM</div>
+            <div class="slot-icon">🧘</div>
+            <div class="slot-body">
+              <div class="slot-title">Wind-Down &amp; Setup</div>
+              <div class="slot-desc">Next day ka target book preparation &amp; sleep setup</div>
+            </div>
+            <span class="slot-resource">Planning</span>
+            <div class="slot-duration">30 min</div>
+          </div>
+        </div>
+        <div class="slot" data-start="00:00" data-end="05:00">
+          <span class="slot-now-tag">Abhi ⏱</span>
+          <div class="slot-card">
+            <div class="slot-time">12:00 – 5:00 AM</div>
+            <div class="slot-icon">😴</div>
+            <div class="slot-body">
+              <div class="slot-title">Bedtime Sleep</div>
+              <div class="slot-desc">5 hours sleep (12 AM to 5 AM)</div>
+            </div>
+            <span class="slot-resource">Rest</span>
+            <div class="slot-duration">5 hrs</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="container">
+  <div class="history-section" id="historySection">
+    <h2>📅 Pichle Din Kaise The</h2>
+    <p class="history-sub">Har box ek din hai — jitna hara, utna zyada complete hua tha</p>
+    <div class="history-grid" id="historyGrid"></div>
+    <div class="history-legend">
+      <span><i class="hl-box hl-0"></i> Kuch nahi</span>
+      <span><i class="hl-box hl-1"></i> Thoda</span>
+      <span><i class="hl-box hl-2"></i> Aadha</span>
+      <span><i class="hl-box hl-3"></i> Zyada</span>
+      <span><i class="hl-box hl-4"></i> Poora!</span>
+    </div>
+  </div>
+
+  <div class="checklist-section" id="checklistSection">
+    <h2>🎯 Aaj ka Checklist</h2>
+    <div class="checklist-progress"><div class="checklist-progress-fill" id="checklistFill"></div></div>
+    <div id="checklistItems"></div>
+  </div>
+  <div class="motivate-banner" id="motivateBanner">
+    <span class="flame">🔥</span>
+    <p><span class="rocket">🚀</span> 60-DAY CHALLENGE NON-STOP! Let's conquer it! <span class="rocket">🚀</span></p>
+  </div>
+
+  <a href="index.html" class="back-home">← Home page par wapas jao</a>
+</div>
+
+<script>
+// ---------- theme toggle ----------
+(function(){
+  const btn = document.getElementById('themeToggle');
+  const stored = localStorage.getItem('sikho-theme');
+  if(stored) document.documentElement.setAttribute('data-theme', stored);
+  btn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const next = cur === 'dark' ? 'light' : (cur === 'light' ? null : (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'light' : 'dark'));
+    if(next){ document.documentElement.setAttribute('data-theme', next); localStorage.setItem('sikho-theme', next); }
+    else { document.documentElement.removeAttribute('data-theme'); localStorage.removeItem('sikho-theme'); }
+  });
+})();
+
+// ---------- live clock + active slot highlight ----------
+function toMinutes(hhmm){
+  const [h,m] = hhmm.split(':').map(Number);
+  return h*60+m;
+}
+function updateClock(){
+  const now = new Date();
+  let hh = now.getHours(), mm = now.getMinutes();
+  const label = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit', hour12:true });
+  document.getElementById('clockTime').textContent = label;
+
+  const nowMin = hh*60+mm;
+  const slots = Array.from(document.querySelectorAll('.slot'));
+  let activeSlot = null, activeStart = 0, activeEnd = 0;
+
+  slots.forEach(slot => {
+    let start = toMinutes(slot.dataset.start);
+    let end = toMinutes(slot.dataset.end);
+    if(end <= start) end += 24*60;
+    const isActive = nowMin >= start && nowMin < end;
+    if(isActive){
+      slot.classList.add('active');
+      activeSlot = slot; activeStart = start; activeEnd = end;
+    } else {
+      slot.classList.remove('active');
+    }
+  });
+
+  document.getElementById('clockStatus').textContent = activeSlot
+    ? ('Abhi: ' + activeSlot.querySelector('.slot-title').textContent)
+    : 'Free time';
+
+  updateRightNowCard(activeSlot, activeStart, activeEnd, nowMin, slots);
+}
+
+function findNextSlot(nowMin, slots){
+  let best = null, bestStart = Infinity;
+  slots.forEach(slot => {
+    let start = toMinutes(slot.dataset.start);
+    let delta = start - nowMin;
+    if(delta < 0) delta += 24*60;
+    if(delta > 0 && delta < bestStart){ bestStart = delta; best = slot; }
+  });
+  return best ? { slot: best, minsAway: bestStart } : null;
+}
+
+function updateRightNowCard(activeSlot, activeStart, activeEnd, nowMin, slots){
+  const card = document.getElementById('rightNowCard');
+  const icon = document.getElementById('rnIcon');
+  const title = document.getElementById('rnTitle');
+  const desc = document.getElementById('rnDesc');
+  const timeLeft = document.getElementById('rnTimeLeft');
+  const barFill = document.getElementById('rnBarFill');
+  const jumpBtn = document.getElementById('rnJumpBtn');
+  const practiceBtn = document.getElementById('rnPracticeBtn');
+
+  if(activeSlot){
+    card.classList.remove('is-free');
+    icon.textContent = activeSlot.querySelector('.slot-icon').textContent;
+    title.textContent = activeSlot.querySelector('.slot-title').textContent;
+    desc.textContent = activeSlot.querySelector('.slot-desc').textContent;
+    const totalMin = activeEnd - activeStart;
+    const elapsed = nowMin - activeStart;
+    const remaining = Math.max(0, totalMin - elapsed);
+    timeLeft.textContent = '⏳ ' + remaining + ' min baaki hai';
+    barFill.style.width = Math.min(100, Math.round((elapsed/totalMin)*100)) + '%';
+    jumpBtn.onclick = () => activeSlot.scrollIntoView({ behavior:'smooth', block:'center' });
+
+    const resourceLink = activeSlot.querySelector('a.slot-resource');
+    if(resourceLink){
+      practiceBtn.href = resourceLink.getAttribute('href');
+      practiceBtn.textContent = resourceLink.textContent + ' ↗';
+      practiceBtn.style.display = 'inline-block';
+    } else {
+      practiceBtn.style.display = 'none';
+    }
+  } else {
+    const next = findNextSlot(nowMin, slots);
+    card.classList.add('is-free');
+    icon.textContent = '☕';
+    practiceBtn.style.display = 'none';
+    if(next){
+      const h = Math.floor(next.minsAway/60), m = next.minsAway%60;
+      const nextTitle = next.slot.querySelector('.slot-title').textContent;
+      const nextTime = next.slot.querySelector('.slot-time').textContent;
+      title.textContent = 'Abhi Free Time hai';
+      desc.textContent = 'Next: ' + nextTitle + ' (' + nextTime + ')';
+      timeLeft.textContent = '⏰ ' + (h > 0 ? h + ' ghante ' : '') + m + ' min mein shuru hoga';
+      barFill.style.width = '0%';
+      jumpBtn.onclick = () => next.slot.scrollIntoView({ behavior:'smooth', block:'center' });
+    } else {
+      title.textContent = 'Abhi Free Time hai';
+      desc.textContent = 'Aaj ka schedule dekhne ke liye neeche scroll karo';
+      timeLeft.textContent = '';
+      barFill.style.width = '0%';
+      jumpBtn.onclick = () => document.querySelector('.modules').scrollIntoView({ behavior:'smooth' });
+    }
+  }
+}
+
+updateClock();
+setInterval(updateClock, 15000);
+
+// ---------- scroll reveal ----------
+const revealEls = document.querySelectorAll('.module-head, .slot, .history-section, .checklist-section, .motivate-banner');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('in-view'); });
+}, { threshold: 0.15 });
+revealEls.forEach(el => io.observe(el));
+
+// ---------- checklist ----------
+const CHECKLIST = [
+  { t:'5:00 AM', label:'Yoga & Exercise done' },
+  { t:'6:00 AM', label:'English Tenses & Rules studied' },
+  { t:'6:30 AM', label:'Speaking & Shadowing practice done' },
+  { t:'7:00 AM', label:'1.5 Hours Flutter Coding quota finished!' },
+  { t:'11:00 AM', label:'60 min English Audio Listening done' },
+  { t:'2:00 PM', label:'60 min Reading (journey.html) & 5 vocab saved' },
+  { t:'5:00 PM', label:'60 min Quizzes (play.html) solved' },
+  { t:'8:00 PM', label:'60 min Real Speaking conversation practice done' },
+  { t:'12:00 AM', label:'Slept on time' },
+];
+const todayKey = 'sikho-checklist-' + new Date().toISOString().slice(0,10);
+const saved = JSON.parse(localStorage.getItem(todayKey) || '{}');
+const itemsWrap = document.getElementById('checklistItems');
+CHECKLIST.forEach((item, i) => {
+  const row = document.createElement('div');
+  row.className = 'check-item' + (saved[i] ? ' done' : '');
+  row.innerHTML = `<input type="checkbox" id="chk${i}" ${saved[i] ? 'checked' : ''}>
+    <label for="chk${i}">${item.label}</label>
+    <span class="check-time">${item.t}</span>`;
+  itemsWrap.appendChild(row);
+  const cb = row.querySelector('input');
+  cb.addEventListener('change', () => {
+    row.classList.toggle('done', cb.checked);
+    saved[i] = cb.checked;
+    localStorage.setItem(todayKey, JSON.stringify(saved));
+    updateProgress();
+  });
+});
+function updateProgress(){
+  const total = CHECKLIST.length;
+  const done = Object.values(saved).filter(Boolean).length;
+  document.getElementById('checklistFill').style.width = (done/total*100) + '%';
+}
+updateProgress();
+
+// ---------- progress history (last 14 days) ----------
+(function(){
+  const grid = document.getElementById('historyGrid');
+  const totalItems = CHECKLIST.length;
+  const DAYS = 14;
+  const todayStr = new Date().toISOString().slice(0,10);
+
+  for(let i = DAYS - 1; i >= 0; i--){
+    const d = new Date();
+    d.setDate(d.getDate() - i);
+    const dateStr = d.toISOString().slice(0,10);
+    const dayData = JSON.parse(localStorage.getItem('sikho-checklist-' + dateStr) || '{}');
+    const doneCount = Object.values(dayData).filter(Boolean).length;
+    const pct = totalItems ? doneCount / totalItems : 0;
+
+    let level = 0;
+    if(pct > 0 && pct < 0.35) level = 1;
+    else if(pct >= 0.35 && pct < 0.6) level = 2;
+    else if(pct >= 0.6 && pct < 0.95) level = 3;
+    else if(pct >= 0.95) level = 4;
+
+    const cell = document.createElement('div');
+    cell.className = 'history-day hd-' + level + (dateStr === todayStr ? ' today' : '');
+    cell.title = dateStr + ' — ' + doneCount + '/' + totalItems + ' complete';
+    cell.textContent = d.getDate();
+    grid.appendChild(cell);
+  }
+})();
+
+// ---------- 60-day challenge counter ----------
+(function(){
+  const KEY = 'sikho-challenge-start';
+  const TOTAL_DAYS = 60;
+  const MS_DAY = 86400000;
+
+  function todayMidnight(){
+    const d = new Date();
+    d.setHours(0,0,0,0);
+    return d;
+  }
+  function getStartDate(){
+    let stored = localStorage.getItem(KEY);
+    if(!stored){
+      stored = todayMidnight().getTime().toString();
+      localStorage.setItem(KEY, stored);
+    }
+    return parseInt(stored, 10);
+  }
+  function setStartDate(ts){
+    localStorage.setItem(KEY, ts.toString());
+    render();
+  }
+
+  const dayNum = document.getElementById('dayNum');
+  const fill = document.getElementById('dayProgressFill');
+  const hint = document.getElementById('dayHint');
+  const minusBtn = document.getElementById('dayMinus');
+  const plusBtn = document.getElementById('dayPlus');
+
+  function render(){
+    const start = getStartDate();
+    const diffDays = Math.floor((todayMidnight().getTime() - start) / MS_DAY);
+    const currentDay = Math.min(TOTAL_DAYS, Math.max(1, diffDays + 1));
+
+    dayNum.textContent = currentDay;
+    fill.style.width = (currentDay / TOTAL_DAYS * 100) + '%';
+
+    if(diffDays < 0){
+      hint.textContent = 'Challenge ' + Math.abs(diffDays) + ' din baad shuru hogi';
+    } else if(currentDay >= TOTAL_DAYS){
+      hint.textContent = '🏆 Challenge complete ho gayi! Zabardast!';
+    } else {
+      const left = TOTAL_DAYS - currentDay;
+      hint.textContent = 'Aaj Day ' + currentDay + ' hai — ' + left + ' din baaki, non-stop chalte raho! 🚀';
+    }
+  }
+
+  minusBtn.addEventListener('click', () => {
+    const start = getStartDate();
+    setStartDate(start + MS_DAY);
+  });
+  plusBtn.addEventListener('click', () => {
+    const start = getStartDate();
+    setStartDate(start - MS_DAY);
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>
